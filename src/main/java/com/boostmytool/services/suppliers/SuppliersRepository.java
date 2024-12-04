@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.boostmytool.model.suppliers.Supplier;
 
-public interface SuppliersRepository extends JpaRepository<Supplier, Integer>{
+public interface SuppliersRepository extends JpaRepository<Supplier, String>{
 
 
 }

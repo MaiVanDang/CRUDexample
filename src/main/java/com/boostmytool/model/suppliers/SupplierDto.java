@@ -5,10 +5,12 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.validation.constraints.*;
 
 public class SupplierDto {
+	@NotEmpty(message = "The ID is required")
+	private String id;
 	@NotEmpty(message = "The name is required")
 	private String name;
 	
-	@Size(min = 10, message = "The address should be at lease 10 chareacters")
+	@Size(min = 0, message = "The address should be at lease 10 chareacters")
 	@Size(max = 2000, message = "The address cannot exceed 2000 characters")	
 	private String address;
 	
@@ -49,6 +51,16 @@ public class SupplierDto {
 
 	public void setImageLogo(MultipartFile imageLogo) {
 		this.imageLogo = imageLogo;
+	}
+
+
+	public String getId() {
+		return id;
+	}
+
+
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 }

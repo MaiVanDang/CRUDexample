@@ -38,7 +38,7 @@
 					<td th:text="${#dates.format(supplier.createdAt, 'yyyy-MM-dd')}"></td>
 					<td th:text="${#dates.format(supplier.updatedAt, 'yyyy-MM-dd')}"></td>
 					<td>
-						<img th:src="@{'/imageLogo/' + ${supplier.imageLogo}}"
+						<img th:src="@{'/images/' + ${supplier.imageLogo}}"
 							alt="..." width="100">
 					</td>
 					<td style="white-space:nowrap">

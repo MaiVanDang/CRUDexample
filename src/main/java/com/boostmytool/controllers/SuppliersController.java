@@ -26,13 +26,13 @@ import jakarta.validation.Valid;
 @Controller
 @RequestMapping("/suppliers")
 public class SuppliersController {
-
+	
     @Autowired
     private SuppliersRepository repo;
 
     @GetMapping({"", "/"})
     public String showSupplierList(Model model) {
-        List<Supplier> suppliers = repo.findAll();
+    	List<Supplier> suppliers = repo.findAll();
         model.addAttribute("suppliers", suppliers);
         return "suppliers/index";
     }
@@ -52,6 +52,13 @@ public class SuppliersController {
         if (supplierDto.getImageLogo().isEmpty()) {
             result.addError(new FieldError("supplierDto", "imageLogo", "The Logo file is required"));
         }
+
+        // Kiểm tra ID tồn tại
+        String newID = supplierDto.getId();
+        if (repo.existsById(newID)) {
+            result.addError(new FieldError("supplierDto", "id", "ID này đã tồn tại làm ơn chọn 1 ID khác."));
+        }
+
         if (result.hasErrors()) {
             return "suppliers/CreateSupplier";
         }
@@ -76,7 +83,9 @@ public class SuppliersController {
             System.out.println("Exception: " + ex.getMessage());
         }
 
+        // Tạo và lưu đối tượng Supplier
         Supplier supplier = new Supplier();
+        supplier.setId(supplierDto.getId());
         supplier.setName(supplierDto.getName());
         supplier.setAddress(supplierDto.getAddress());
         supplier.setDescription(supplierDto.getDescription());
@@ -88,11 +97,12 @@ public class SuppliersController {
         return "redirect:/suppliers";
     }
 
+
     // Edit Supplier
     @GetMapping("/edit")
     public String showEditPage(
             Model model,
-            @RequestParam("id") int id) {
+            @RequestParam(value = "id", required = true) String id) {
 
         try {
             Supplier supplier = repo.findById(id).orElseThrow(() -> new RuntimeException("Supplier not found"));
@@ -115,7 +125,7 @@ public class SuppliersController {
     @PostMapping("/edit")
     public String updateSupplier(
             Model model,
-            @RequestParam int id,
+            @RequestParam(value = "id", required = true) String id,
             @Valid @ModelAttribute SupplierDto supplierDto,
             BindingResult result) {
 
@@ -126,7 +136,7 @@ public class SuppliersController {
             if (result.hasErrors()) {
                 return "suppliers/EditSupplier";
             }
-
+            supplier.setUpdatedAt(new Date());
             if (!supplierDto.getImageLogo().isEmpty()) {
                 // Delete old image if exists
                 String uploadDir = "public/imageLogo/";
@@ -163,27 +173,24 @@ public class SuppliersController {
 
         return "redirect:/suppliers";
     }
-    
+
     @GetMapping("/delete")
     public String deleteSupplier(
-    	@RequestParam int id
-    	){
-    	try {
-    		Supplier supplier = repo.findById(id).get();
-    		// delete supplier images
-    		Path imagePath = Paths.get("public/imageLogo/" + supplier.getImageLogo());
-    		try {
-    			Files.delete(imagePath);
-    		}
-    		catch(Exception ex) {
-    			System.out.println("Excepion:" + ex.getMessage());
-    		}
-    		
-    		repo.delete(supplier);
-    	}
-    	catch (Exception ex) {
-    		System.out.println("Exception: " + ex.getMessage());
-    	}
-    	return "redirect:/suppliers";
+            @RequestParam(value = "id", required = true) String id) {
+        try {
+            Supplier supplier = repo.findById(id).orElseThrow(() -> new RuntimeException("Supplier not found"));
+            // delete supplier images
+            Path imagePath = Paths.get("public/imageLogo/" + supplier.getImageLogo());
+            try {
+                Files.deleteIfExists(imagePath);
+            } catch (Exception ex) {
+                System.out.println("Exception: " + ex.getMessage());
+            }
+
+            repo.delete(supplier);
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+        }
+        return "redirect:/suppliers";
     }
 }
