@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.boostmytool.model.Product;
-import com.boostmytool.model.ProductDto;
-import com.boostmytool.services.ProductsRepository;
+import com.boostmytool.model.products.Product;
+import com.boostmytool.model.products.ProductDto;
+import com.boostmytool.services.products.ProductsRepository;
 
 import jakarta.validation.Valid;
 

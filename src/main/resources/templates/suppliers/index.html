@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CRUD</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+	crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+		<h1 class="text-center my-4">Suppliers</h1>
+
+		<a class="btn btn-primary" href="/suppliers/create">Create Supplier</a>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Address</th>
+					<th>Description</th>
+					<th>Created At</th>
+					<th>Updated At</th>
+					<th>Brand Logo</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="supplier : ${suppliers}">
+					<td th:text="${supplier.id}"></td>
+					<td th:text="${supplier.name}"></td>
+					<td th:text="${supplier.address}"></td>
+					<td th:text="${supplier.description}"></td>
+					<td th:text="${#dates.format(supplier.createdAt, 'yyyy-MM-dd')}"></td>
+					<td th:text="${#dates.format(supplier.updatedAt, 'yyyy-MM-dd')}"></td>
+					<td>
+						<img th:src="@{'/imageLogo/' + ${supplier.imageLogo}}"
+							alt="..." width="100">
+					</td>
+					<td style="white-space:nowrap">
+						<a class="btn btn-primary btn-sm"
+							th:href="@{/suppliers/edit(id=${supplier.id})}">Edit</a> 
+						<a class="btn btn-danger btn-sm"
+							th:href="@{/suppliers/delete(id=${supplier.id})}"
+							onclick="return confirm('Are you sure?')">Delete</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+		crossorigin="anonymous"></script>
+</body>
+</html>
