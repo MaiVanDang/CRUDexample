@@ -36,9 +36,9 @@
 						<label class="col-sm-4 col-form-label">Customer Gender</label>
 						<div class="col-sm-8">
 							<select class="form-select" th:field="${customerDto.customerGender}">
-								<option value="Other">Female</option>
-								<option value="Phones">Male</option>
-								<option value="Computers">Other</option>
+								<option value="Female">Female</option>
+								<option value="Male">Male</option>
+								<option value="Other">Other</option>
 							</select>
 							<p th:if="${#fields.hasErrors('customerGender')}" 
 								th:errorclass="text-danger" th:errors="${customerDto.customerGender}"></p>
