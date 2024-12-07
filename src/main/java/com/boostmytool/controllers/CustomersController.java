@@ -47,6 +47,11 @@ public class CustomersController {
 			BindingResult result
 			) {
 		
+		// Kiểm tra xem customerID đã tồn tại hay chưa
+	    if (repo.existsById(customerDto.getCustomerID())) {
+	        result.rejectValue("customerID", "error.customerDto", "Customer ID đã tồn tại. Vui lòng nhập lại.");
+	    }		
+		
 		if(result.hasErrors()) {
 			return "customers/CreateCustomer";
 		}
