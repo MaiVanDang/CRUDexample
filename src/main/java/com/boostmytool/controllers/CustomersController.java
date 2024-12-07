@@ -1,5 +1,7 @@
 package com.boostmytool.controllers;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,12 @@ public class CustomersController {
 	@GetMapping("/create")
 	public String showCreatePage(Model model) {
 		CustomerDto customerDto = new CustomerDto();
+		
+		LocalDate currentDate = LocalDate.now();
+	    Date sqlDate = Date.valueOf(currentDate);
+	    customerDto.setCustomerDateCreated(sqlDate);    
+	    customerDto.setCustomerDateUpdated(sqlDate); 
+	    
 		model.addAttribute("customerDto", customerDto);
 		return "customers/CreateCustomer";
 	}
@@ -65,6 +73,7 @@ public class CustomersController {
 		customer.setCustomerPhone(customerDto.getCustomerPhone());
 		customer.setCustomerEmail(customerDto.getCustomerEmail());
 		customer.setCustomerDateCreated(customerDto.getCustomerDateCreated());
+	    
 		customer.setCustomerDateUpdated(customerDto.getCustomerDateUpdated());
 		customer.setCustomerPaidAmount(customerDto.getCustomerPaidAmount());
 		customer.setCustomerSumDebt(customerDto.getCustomerSumDebt());
@@ -130,6 +139,12 @@ public class CustomersController {
 			customer.setCustomerDOB(customerDto.getCustomerDOB());
 			customer.setCustomerGender(customerDto.getCustomerGender());
 			customer.setCustomerAddress(customerDto.getCustomerAddress());
+			
+			LocalDate currentDate = LocalDate.now();
+		    Date sqlDate = Date.valueOf(currentDate);    
+		    customerDto.setCustomerDateUpdated(sqlDate);
+			
+//			customerDto.setCustomerDateUpdated(customer.getCustomerDateUpdated());
 			customer.setCustomerPhone(customerDto.getCustomerPhone());
 			customer.setCustomerEmail(customerDto.getCustomerEmail());
 			customer.setCustomerDateCreated(customerDto.getCustomerDateCreated());
