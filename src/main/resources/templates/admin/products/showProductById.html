@@ -6,10 +6,13 @@
 	<header th:replace="fragment/header :: header"
 		style="position: fixed; width: 100%;"></header>
 	<div class="wrapper">
+
+
+
 		<!-- =============================================== -->
 
 		<!-- Left side column. contains the sidebar -->
-		<div th:replace="fragment/sidebar :: sidebar"></div>
+		<div th:replace="fragment::sidebar :: sidebar"></div>
 		<!-- =============================================== -->
 
 		<!-- Content Wrapper. Contains page content -->
@@ -18,14 +21,13 @@
 			<!-- search form -->
 			<div
 				style="min-width: 550px; display: flex; align-items: center; padding: 20px;">
-				<select id="searchType"
+				<select name="searchType"
 					style="max-width: 150px; padding: 10px; border-radius: 5px; border: 1px solid #007bff;">
 					<option value="customers" selected="">customers</option>
 					<option value="products">products</option>
 					<option value="orders">orders</option>
-					<option value="suppliers">suppliers</option>
-				</select> <input id="searchInput" type="text"
-					class="form-control border border-primay" name="navbarsearch"
+				</select> <input type="text" class="form-control border border-primay"
+					name="navbarsearch"
 					style="border-radius: 5px; border: 1px solid #007bff; margin-left: 5px; height: 40px; width: 250px;">
 				<button class="btn btn-outline-primary" type="submit"
 					style="margin-left: 10px; background-color: #007bff; color: white; border: none; cursor: pointer; transition: background-color 0.3s;; padding: 10px; border-radius: 5px;"
@@ -38,11 +40,7 @@
 
 				<div class="box">
 					<div class="box-header with-border">
-						<h3 class="box-title">Products</h3>
-						<div>
-							<a class="btn btn-success" href="products/create">Create
-								Product</a>
-						</div>
+						<h3 class="box-title">Thông tin sản phẩm</h3>
 					</div>
 					<div class="box-body">
 						<table class="table">
@@ -60,8 +58,8 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="product : ${products}">
-									<td th:text="${product.id}"></td>
+								<tr th:if="${product}">
+									<td th:value="${product.id}"></td>
 									<td th:text="${product.name}"></td>
 									<td th:text="${product.brand}"></td>
 									<td th:text="${product.category}"></td>
@@ -82,6 +80,9 @@
 							</tbody>
 						</table>
 					</div>
+					<div th:if="${error}">
+						<p th:text="${error}"></p>
+					</div>
 				</div>
 				<!-- /.box -->
 			</section>
@@ -91,17 +92,23 @@
 	</div>
 	<!-- /.box -->
 
+
+	<!-- /.content -->
 	<!-- /.content -->
 
 	<!-- /.content-wrapper -->
+	<footer>
+		<div class="pull-right hidden-xs">
+			<a href="/products">Quay lại danh sách sản phẩm</a>
+		</div>
+	</footer>
 
-	<footer th:replace="fragment/footer :: footer"></footer>
 
 
 	<!-- ./wrapper -->
 
 	<!-- jQuery 3 -->
-	<div th:replace="fragment/script :: script"></div>
 
+	<div th:replace="fragment/script :: script"></div>
 </body>
 </html>

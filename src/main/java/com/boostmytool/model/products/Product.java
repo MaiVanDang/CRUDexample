@@ -9,7 +9,7 @@ import jakarta.persistence.*;
 public class Product {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	private String name;
@@ -19,8 +19,24 @@ public class Product {
 	
 	@Column (columnDefinition = "TEXT")
 	private String description;
-	private Date createdAt;
 	private String imageFileName;
+	@Column(name = "created_at", updatable = false)
+    private Date createdAt;
+
+    @Column(name = "updated_at")
+    private Date updatedAt;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = new Date(); // Gán thời gian hiện tại cho createdAt khi tạo mới
+        this.updatedAt = new Date(); // Gán thời gian hiện tại cho updatedAt lúc tạo mới
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = new Date(); // Chỉ cập nhật updatedAt khi cập nhật
+    }
+    
 	public int getId() {
 		return id;
 	}
@@ -57,17 +73,13 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
 	public String getImageFileName() {
 		return imageFileName;
 	}
 	public void setImageFileName(String imageFileName) {
 		this.imageFileName = imageFileName;
 	}
-	
+
+	public Date getCreatedAt() { return createdAt; }
+    public Date getUpdatedAt() { return updatedAt; }
 }

@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
-<head th:replace="fragment/head :: head"></head>
+<head th:replace="patials/head :: head"></head>
 <body class="hold-transition skin-blue sidebar-mini">
 	<!-- Site wrapper -->
-	<header th:replace="fragment/header :: header"
+	<header th:replace="patials/header :: header"
 		style="position: fixed; width: 100%;"></header>
 	<div class="wrapper">
 		<!-- =============================================== -->
 
 		<!-- Left side column. contains the sidebar -->
-		<div th:replace="fragment/sidebar :: sidebar"></div>
+		<div th:replace="patials/sidebar :: sidebar"></div>
 		<!-- =============================================== -->
 
 		<!-- Content Wrapper. Contains page content -->
@@ -88,20 +88,29 @@
 			<!-- /.content -->
 		</div>
 		<!-- /.box-body -->
+		<div class="box-footer clearfix">
+			<ul class="pagination pagination-sm no-margin pull-right">
+				<li><a href="#">«</a></li>
+				<li><a href="#">1</a></li>
+				<li><a href="#">2</a></li>
+				<li><a href="#">3</a></li>
+				<li><a href="#">»</a></li>
+			</ul>
+		</div>
 	</div>
 	<!-- /.box -->
 
 	<!-- /.content -->
+	<!-- /.content -->
 
 	<!-- /.content-wrapper -->
 
-	<footer th:replace="fragment/footer :: footer"></footer>
-
+	<footer th:replace="patials/footer :: footer"></footer>
 
 	<!-- ./wrapper -->
 
 	<!-- jQuery 3 -->
-	<div th:replace="fragment/script :: script"></div>
+	<div th:replace="patials/script :: script"></div>
 
 </body>
 </html>

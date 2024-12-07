@@ -1,5 +1,7 @@
 package com.boostmytool.model.products;
 
+import java.util.Date;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.constraints.*;
@@ -13,6 +15,8 @@ public class ProductDto {
 	
 	@NotEmpty(message = "The category is required")
 	private String category;
+	
+	private Date createdAt;
 	
 	@Min(0)
 	private double price;
@@ -69,6 +73,14 @@ public class ProductDto {
 
 	public void setImageFile(MultipartFile imageFile) {
 		this.imageFile = imageFile;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 	
 	
