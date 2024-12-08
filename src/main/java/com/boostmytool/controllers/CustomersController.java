@@ -179,5 +179,49 @@ public class CustomersController {
 		
 		return "redirect:/customers";
 	}	
-		
+
+	
+	@GetMapping("/search")
+	public String searchCustomers(@RequestParam("keyword") String keyword, Model model) {
+	    List<Customer> customers = repo.findByKeyword(keyword);
+	    model.addAttribute("customers", customers);
+	    model.addAttribute("keyword", keyword); // Truyền từ khóa về view
+	    return "customers/SearchCustomer"; // Tên file HTML
+	}
+	
+	@GetMapping("/report")
+	public String viewCustomerReport(
+	        @RequestParam(value = "statType", required = false, defaultValue = "") String statType,
+	        Model model) {
+	    
+	    List<Object[]> chartData;
+	    switch (statType) {
+	        case "ageGroup":
+	            chartData = repo.findStatisticsByAgeGroup();
+	            break;
+	        case "customerType":
+	            chartData = repo.findStatisticsByCustomerType();
+	            break;
+	        case "customerAddress":
+	            chartData = repo.findStatisticsByLocation();
+	            break;
+	        case "totalSpending":
+	            chartData = repo.findStatisticsByTotalSpending();
+	            break;
+	        case "customerDebt":
+	            chartData = repo.findStatisticsByDebt();
+	            break;
+	        case "newCustomer":
+	            chartData = repo.findStatisticsByNewCustomers();
+	            break;
+	        default:
+	            chartData = null; // Trả về danh sách rỗng
+	            break;
+	    }
+	    
+	    model.addAttribute("chartData", chartData);
+	    model.addAttribute("statType", statType);
+	    return "customers/ReportCustomer";
+	}
+	
 }

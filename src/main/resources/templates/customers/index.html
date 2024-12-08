@@ -252,6 +252,23 @@
 				<div class="box">
 					<div class="box-header with-border">
 						<h3 class="box-title">Customers</h3>
+						
+						
+						<!-- Xem report do chua co Report rieng trong menu -->
+						
+						<div>
+							<a class="btn btn-info mb-3" href="/customers/report">View Customer Report</a>
+						</div>
+						
+						
+						<!-- Thanh tìm kiếm -->
+						<form class="mb-4" method="GET" action="/customers/search">
+						    <div class="input-group">
+						        <input type="text" name="keyword" class="form-control" placeholder="Search by id, name, address, email, or phone number" />
+						        <button class="btn btn-primary" type="submit">Search</button>
+						    </div>
+						</form>
+						
 						<div>
 							<a class="btn btn-success" href="customers/create">Create Customer</a>
 						</div>
