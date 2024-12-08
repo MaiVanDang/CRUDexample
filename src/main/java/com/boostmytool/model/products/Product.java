@@ -9,18 +9,38 @@ import jakarta.persistence.*;
 public class Product {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	private String name;
 	private String brand;
 	private String category;
 	private double price;
-	
+	private double baseprice;
+    private String supplierID;
+    private int quantity;
+    private int discount;
+    
 	@Column (columnDefinition = "TEXT")
 	private String description;
-	private Date createdAt;
 	private String imageFileName;
+	@Column(name = "created_at", updatable = false)
+    private Date createdAt;
+    @Column(name = "updated_at")
+    private Date updatedAt;
+    
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = new Date(); // Gán thời gian hiện tại cho createdAt khi tạo mới
+        this.updatedAt = new Date(); // Gán thời gian hiện tại cho updatedAt lúc tạo mới
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = new Date(); // Chỉ cập nhật updatedAt khi cập nhật
+    }
+    
 	public int getId() {
 		return id;
 	}
@@ -57,12 +77,6 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
 	public String getImageFileName() {
 		return imageFileName;
 	}
@@ -70,4 +84,46 @@ public class Product {
 		this.imageFileName = imageFileName;
 	}
 	
+	public double getBaseprice() {
+		return baseprice;
+	}
+
+	public void setBaseprice(double baseprice) {
+		this.baseprice = baseprice;
+	}
+
+	public String getSupplierID() {
+		return supplierID;
+	}
+
+	public void setSupplierID(String supplierID) {
+		this.supplierID = supplierID;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public int getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(int discount) {
+		this.discount = discount;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public Date getCreatedAt() { return createdAt; }
+    public Date getUpdatedAt() { return updatedAt; }
 }

@@ -40,3 +40,8 @@
 .table-action a.label{
 	margin-left: 5px
 }
+
+.mvd:hover{
+	background-color:#0d6efd;
+	color:white;
+}

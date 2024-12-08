@@ -34,7 +34,7 @@ public class SuppliersController {
     public String showSupplierList(Model model) {
     	List<Supplier> suppliers = repo.findAll();
         model.addAttribute("suppliers", suppliers);
-        return "suppliers/index";
+        return "admin/suppliers/index";
     }
 
     @GetMapping("/create")

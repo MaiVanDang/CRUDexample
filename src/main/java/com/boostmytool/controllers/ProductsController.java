@@ -1,26 +1,25 @@
 package com.boostmytool.controllers;
 
-import java.io.InputStream;
-import java.nio.file.*;
-import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+//import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.boostmytool.model.products.Product;
 import com.boostmytool.model.products.ProductDto;
+import com.boostmytool.services.products.ProductService;
 import com.boostmytool.services.products.ProductsRepository;
 
 import jakarta.validation.Valid;
@@ -28,178 +27,132 @@ import jakarta.validation.Valid;
 @Controller
 @RequestMapping("/products")
 public class ProductsController {
-	
+
 	@Autowired
 	private ProductsRepository repo;
-	
-	@GetMapping({"","/"})
+
+	@Autowired
+	private ProductService productService;
+
+	// Show
+	@GetMapping({ "", "/" })
 	public String showProductList(Model model) {
 		List<Product> products = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));
-		model.addAttribute("products",products);
-		return "products/index";
+		model.addAttribute("products", products);
+		return "admin/products/index";
 	}
-	
+
+	// Search
+	@GetMapping("/ID/{id}")
+	public String searchProductById(Model model, @PathVariable int id) {
+		return productService.searchById(id, model);
+	}
+
+	@GetMapping("/search")
+	public String searchProducts(@RequestParam("name") String name, Model model) {
+		return productService.searchByName(name, model);
+	}
+
 	@GetMapping("/create")
 	public String showCreatePage(Model model) {
 		ProductDto productDto = new ProductDto();
-		model.addAttribute("productDto",productDto);
-		return "products/CreateProduct";
+		productDto.setCreatedAt(new Date());
+		model.addAttribute("productDto", productDto);
+		return "admin/products/CreateProduct";
 	}
-	
+
 	@PostMapping("/create")
-	public String createProduct(
-			@Valid @ModelAttribute ProductDto productDto,
-			BindingResult result
-			) {
-		
+	public String createProduct(@Valid @ModelAttribute ProductDto productDto, BindingResult result) {
+		// Kiểm tra validation
 		if (productDto.getImageFile().isEmpty()) {
 			result.addError(new FieldError("productDto", "imageFile", "The image file is required"));
 		}
-		
-		if(result.hasErrors()) {
-			return "products/CreateProduct";
+
+		if (result.hasErrors()) {
+			return "admin/products/CreateProduct";
 		}
-		
-		MultipartFile image = productDto.getImageFile();
-		Date createAt = new Date();
-		String storageFileName = createAt.getTime() + "_" + image.getOriginalFilename();
-		
+
 		try {
-			String uploadDir = "public/images/";
-			Path uploadPath = Paths.get(uploadDir);
-			
-			if(!Files.exists(uploadPath)) {
-				Files.createDirectories(uploadPath);
-			}
-			
-			try (InputStream inputStream = image.getInputStream()){
-				Files.copy(inputStream, Paths.get(uploadDir + storageFileName),
-						StandardCopyOption.REPLACE_EXISTING);
-			}
+			// Gọi service để tạo sản phẩm
+			productService.createProduct(productDto);
+			return "redirect:/products";
 		} catch (Exception ex) {
-			System.out.println("Exception: " + ex.getMessage());
+			// Xử lý ngoại lệ nếu cần
+			result.addError(new FieldError("productDto", "", "Error creating product"));
+			return "admin/products/CreateProduct";
 		}
-		
-		Product product = new Product(); 
-		product.setName(productDto.getName());
-		product.setBrand(productDto.getBrand());
-		product.setCategory(productDto.getCategory());
-		product.setPrice(productDto.getPrice());
-		product.setDescription(productDto.getDescription());
-		product.setCreatedAt(createAt);
-		product.setImageFileName(storageFileName);
-		
-		repo.save(product);
-		
-		return "redirect:/products";
 	}
-	
+
 	@GetMapping("/edit")
-	public String showEditPage(
-			Model model,
-			@RequestParam int id) {
-		
+	public String showEditPage(Model model, @RequestParam int id) {
+
 		try {
 			Product product = repo.findById(id).get();
-			model.addAttribute("product",product);
-			
-			ProductDto productDto = new ProductDto(); 
+			model.addAttribute("product", product);
+
+			ProductDto productDto = new ProductDto();
 			productDto.setName(product.getName());
 			productDto.setBrand(product.getBrand());
 			productDto.setCategory(product.getCategory());
 			productDto.setPrice(product.getPrice());
+			productDto.setBase_price(product.getBaseprice());
+			productDto.setDiscount(product.getDiscount());
+			productDto.setQuantity(product.getQuantity());
+			productDto.setSupplierID(product.getSupplierID());
+			productDto.setSupplierID(product.getSupplierID());
+			productDto.setCreatedAt(product.getCreatedAt());
 			productDto.setDescription(product.getDescription());
-			
-			model.addAttribute("productDto",productDto);
-		}catch(Exception ex){
+
+			model.addAttribute("productDto", productDto);
+		} catch (Exception ex) {
 			System.out.println("Exception: " + ex.getMessage());
 			return "redirect:/products";
 		}
-			
-		
-		return "products/EditProduct";
+
+		return "admin/products/EditProduct";
 	}
-	
+
 	@PostMapping("/edit")
-	public String updateProduct(
-			Model model,
-			@RequestParam int id,
-			@Valid @ModelAttribute ProductDto productDto,
-			BindingResult result
-			) {
-		
-		try {
+	public String updateProduct(Model model, @RequestParam int id, @Valid @ModelAttribute ProductDto productDto,
+			BindingResult result) {
+
 			Product product = repo.findById(id).get();
-			model.addAttribute("product",product);
-			
-			if(result.hasErrors()) {
-				return "products/EditProduct";
+			model.addAttribute("product", product);
+
+			if (result.hasErrors()) {
+				System.out.println("Có lỗi:");
+				result.getAllErrors().forEach(error -> {
+					System.out.println(error.getDefaultMessage());
+				});
+				result.getAllErrors().forEach(error -> {
+					System.out.println("Lỗi tại trường: " + error.getObjectName());
+					System.out.println("Thông điệp lỗi: " + error.getDefaultMessage());
+				});
+				model.addAttribute("product", product); // Thêm lại sản phẩm để hiển thị
+				return "admin/products/EditProduct";
 			}
-			
-			if (!productDto.getImageFile().isEmpty()) {
-				//delete old image
-				String uploadDir = "/public/images/";
-				Path oldImagePath = Paths.get(uploadDir + product.getImageFileName());
-				
-				try {
-					Files.delete(oldImagePath);
-				}catch (Exception ex) {
-					System.out.println("Exception: " + ex.getMessage());
-				}
-				
-				//save new image file
-				MultipartFile image = productDto.getImageFile();
-				Date createAt = new Date();
-				String storageFileName = createAt.getTime() + "_" + image.getOriginalFilename();
-					
-				try (InputStream inputStream = image.getInputStream()){
-						Files.copy(inputStream, Paths.get(uploadDir + storageFileName),
-								StandardCopyOption.REPLACE_EXISTING);
-				}
-				
-				product.setImageFileName(storageFileName);
-					
-			} 
-			
-			product.setName(productDto.getName());
-			product.setBrand(productDto.getBrand());
-			product.setCategory(productDto.getCategory());
-			product.setPrice(productDto.getPrice());
-			product.setDescription(productDto.getDescription());
-			
-			repo.save(product);
-		}
-		catch(Exception ex){
-			System.out.println("Exception: " + ex.getMessage());
-		}
-		
-		return "redirect:/products";
-	}
-	
-	@GetMapping("/delete")
-	public String deleteProduct(
-			@RequestParam int id
-			) {
-		
-		try {
-			Product product = repo.findById(id).get();
-			
-			//delete products image
-			Path imagePath = Paths.get("public.images/" + product.getImageFileName());
-			
+
 			try {
-				Files.delete(imagePath);
+				// Gọi service để cập nhật sản phẩm
+				productService.updateProduct(id, productDto);
+				return "redirect:/products";
+			} catch (Exception ex) {
+				// Xử lý ngoại lệ
+				model.addAttribute("errorMessage", "Error updating product: " + ex.getMessage());
+				return "admin/products/EditProduct";
 			}
-			catch(Exception ex){
-				System.out.println("Exception: " + ex.getMessage());
-			}
-			
-			//delete the product
-			repo.delete(product);
-		}catch(Exception ex){
+	}
+
+	@GetMapping("/delete")
+	public String deleteProduct(@RequestParam int id) {
+
+		try {
+			productService.deleteProduct(id);
+            return "redirect:/products";
+		} catch (Exception ex) {
 			System.out.println("Exception: " + ex.getMessage());
 		}
-		
+
 		return "redirect:/products";
 	}
 }

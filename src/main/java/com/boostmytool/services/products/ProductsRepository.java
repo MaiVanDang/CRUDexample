@@ -1,9 +1,10 @@
 package com.boostmytool.services.products;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import com.boostmytool.model.products.Product;
 
-public interface ProductsRepository extends JpaRepository<Product, Integer>{
-
+public interface ProductsRepository extends JpaRepository<Product, Integer> {
+	List<Product> findByNameContaining(String name);
 }
