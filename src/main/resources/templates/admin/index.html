@@ -35,55 +35,7 @@
 
 			<!-- Main content -->
 			<section class="content">
-
-				<div class="box">
-					<div class="box-header with-border">
-						<h3 class="box-title">Products</h3>
-						<div>
-							<a class="btn btn-success" href="products/create">Create
-								Product</a>
-						</div>
-					</div>
-					<div class="box-body">
-						<table class="table">
-							<thead>
-								<tr>
-									<th>ID</th>
-									<th>Name</th>
-									<th>Brand</th>
-									<th>Category</th>
-									<th>Price</th>
-									<th>Image</th>
-									<th>Created</th>
-									<th>Updated</th>
-									<th>Action</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="product : ${products}">
-									<td th:text="${product.id}"></td>
-									<td th:text="${product.name}"></td>
-									<td th:text="${product.brand}"></td>
-									<td th:text="${product.category}"></td>
-									<td th:text="@{${product.price} + '$'}"></td>
-									<td><img th:src="@{'/images/' + ${product.imageFileName}}"
-										alt="..." width="100"></td>
-									<td
-										th:text="${#dates.format(product.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
-									<td
-										th:text="${#dates.format(product.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
-									<td style="white-space: nowrap"><a
-										class="btn btn-primary btn-sm"
-										th:href="@{/products/edit(id=${product.id})}">Edit</a> <a
-										class="btn btn-danger btn-sm"
-										th:href="@{/products/delete(id=${product.id})}"
-										onclick="return confirm('Are you sure?')">Delete</a></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-				<!-- /.box -->
+			<h1>Trang quản trị</h1>
 			</section>
 			<!-- /.content -->
 		</div>

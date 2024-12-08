@@ -31,7 +31,7 @@ public class CustomersController {
 	public String showCustomerList(Model model) {
 		List<Customer> customers = repo.findAll(Sort.by(Sort.Direction.DESC, "customerID"));
 		model.addAttribute("customers", customers);
-		return "customers/index";
+		return "admin/customers/index";
 	}
 	
 	@GetMapping("/create")
