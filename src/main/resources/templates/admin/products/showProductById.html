@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragment/head :: head"></head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<header th:replace="fragment/header :: header"
+		style="position: fixed; width: 100%;"></header>
+	<div class="wrapper">
+
+
+
+		<!-- =============================================== -->
+
+		<!-- Left side column. contains the sidebar -->
+		<div th:replace="fragment/sidebar :: sidebar"></div>
+		<!-- =============================================== -->
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper" style="margin-top: 50px;">
+			<!-- Content Header (Page header) -->
+			<!-- search form -->
+			<div
+				style="min-width: 550px; display: flex; align-items: center; padding: 20px;">
+				<select name="searchType"
+					style="max-width: 150px; padding: 10px; border-radius: 5px; border: 1px solid #007bff;">
+					<option value="customers" selected="">customers</option>
+					<option value="products">products</option>
+					<option value="orders">orders</option>
+				</select> <input type="text" class="form-control border border-primay"
+					name="navbarsearch"
+					style="border-radius: 5px; border: 1px solid #007bff; margin-left: 5px; height: 40px; width: 250px;">
+				<button class="btn btn-outline-primary" type="submit"
+					style="margin-left: 10px; background-color: #007bff; color: white; border: none; cursor: pointer; transition: background-color 0.3s;; padding: 10px; border-radius: 5px;"
+					onclick="searchProduct()">Tìm kiếm</button>
+			</div>
+			<!-- /.search form -->
+
+			<!-- Main content -->
+			<section class="content">
+
+				<div class="box">
+					<div class="box-header with-border">
+						<h3 class="box-title">Thông tin sản phẩm</h3>
+					</div>
+					<div class="box-body">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Name</th>
+									<th>Brand</th>
+									<th>Category</th>
+									<th>Price</th>
+									<th>Image</th>
+									<th>Created</th>
+									<th>Updated</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:if="${product}">
+									<td th:value="${product.id}"></td>
+									<td th:text="${product.name}"></td>
+									<td th:text="${product.brand}"></td>
+									<td th:text="${product.category}"></td>
+									<td th:text="@{${product.price} + '$'}"></td>
+									<td><img th:src="@{'/images/' + ${product.imageFileName}}"
+										alt="..." width="100"></td>
+									<td
+										th:text="${#dates.format(product.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+									<td
+										th:text="${#dates.format(product.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+									<td style="white-space: nowrap"><a
+										class="btn btn-primary btn-sm"
+										th:href="@{/products/edit(id=${product.id})}">Edit</a> <a
+										class="btn btn-danger btn-sm"
+										th:href="@{/products/delete(id=${product.id})}"
+										onclick="return confirm('Are you sure?')">Delete</a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div th:if="${error}">
+						<p th:text="${error}"></p>
+					</div>
+				</div>
+				<!-- /.box -->
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.box-body -->
+	</div>
+	<!-- /.box -->
+
+
+	<!-- /.content -->
+	<!-- /.content -->
+
+	<!-- /.content-wrapper -->
+	<footer>
+		<div class="pull-right hidden-xs">
+			<a href="/products">Quay lại danh sách sản phẩm</a>
+		</div>
+	</footer>
+
+
+
+	<!-- ./wrapper -->
+
+	<!-- jQuery 3 -->
+
+	<div th:replace="fragment/script :: script"></div>
+</body>
+</html>

@@ -1,11 +1,6 @@
 package com.boostmytool.model.orders;
-
 import java.sql.Date;
-import java.util.List;
-
 import jakarta.persistence.*;
-
-
 @Entity
 @Table(name = "orders")
 public class Order {

@@ -1,9 +1,7 @@
 package com.boostmytool.controllers;
-
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -14,13 +12,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import com.boostmytool.model.orders.Order;
 import com.boostmytool.model.orders.OrderDto;
-import com.boostmytool.services.orders.OrdersRepository;
+import com.boostmytool.service.orders.OrdersRepository;
 
 import jakarta.validation.Valid;
-
 @Controller
 @RequestMapping("/orders")
 public class OrdersController {
@@ -32,14 +28,14 @@ public class OrdersController {
 	    public String showOrdersList(Model model) {
 	    	List<Order> orders = repo.findAll(Sort.by(Sort.Direction.DESC, "orderID"));
 	        model.addAttribute("orders", orders);
-	        return "orders/index";
+	        return "admin/orders/index";
 	    }
 	 
 	 @GetMapping({"/create"})
 		public String showCreateOrderPage(Model model) {
 			OrderDto orderDto = new OrderDto();
 			model.addAttribute("orderDto", orderDto);
-			return "orders/CreateOrder";
+			return "admin/orders/CreateOrder";
 		}
 	 @PostMapping("/create")
 		public String createOrder(
@@ -52,7 +48,7 @@ public class OrdersController {
 		    }		 
 		 
 			if (result.hasErrors()) {
-				return "orders/CreateOrder";
+				return "admin/orders/CreateOrder";
 			}
 			
 			LocalDate currentDate = LocalDate.now();
@@ -116,7 +112,7 @@ public class OrdersController {
 				return "redirect:/orders";
 			}
 			
-			return "orders/EditOrder";
+			return "admin/orders/EditOrder";
 		}
 	 @PostMapping("/edit")
 		public String updateOrder(
@@ -131,7 +127,7 @@ public class OrdersController {
 				model.addAttribute("order", order);
 				
 				if (result.hasErrors()) {
-					return "orders/EditOrder";
+					return "admin/orders/EditOrder";
 				}
 				
 				LocalDate currentDate = LocalDate.now();
