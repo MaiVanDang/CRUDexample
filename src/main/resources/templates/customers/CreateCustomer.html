@@ -263,8 +263,8 @@
 					<label>Gender</label>
 					<div>
 						<select class="form-select" th:field="${customerDto.customerGender}">
-							<option value="Female">Female</option>
 							<option value="Male">Male</option>
+							<option value="Female">Female</option>
 							<option value="Other">Other</option>
 						</select>
 						<p th:if="${#fields.hasErrors('customerGender')}" 
