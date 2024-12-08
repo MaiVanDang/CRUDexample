@@ -1,10 +1,114 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<head th:replace="patials/head :: head"></head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<header th:replace="patials/header :: header"
+		style="position: fixed; width: 100%;"></header>
+	<div class="wrapper">
+		<!-- =============================================== -->
+
+		<!-- Left side column. contains the sidebar -->
+		<div th:replace="patials/sidebar :: sidebar"></div>
+		<!-- =============================================== -->
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper" style="margin-top: 50px;">
+			<!-- Content Header (Page header) -->
+			<!-- search form -->
+			<div
+				style="min-width: 550px; display: flex; align-items: center; padding: 20px;">
+				<select id="searchType"
+					style="max-width: 150px; padding: 10px; border-radius: 5px; border: 1px solid #007bff;">
+					<option value="customers" selected="">customers</option>
+					<option value="products">products</option>
+					<option value="orders">orders</option>
+					<option value="suppliers">suppliers</option>
+				</select> <input id="searchInput" type="text"
+					class="form-control border border-primay" name="navbarsearch"
+					style="border-radius: 5px; border: 1px solid #007bff; margin-left: 5px; height: 40px; width: 250px;">
+				<button class="btn btn-outline-primary" type="submit"
+					style="margin-left: 10px; background-color: #007bff; color: white; border: none; cursor: pointer; transition: background-color 0.3s;; padding: 10px; border-radius: 5px;"
+					onclick="searchProduct()">Tìm kiếm</button>
+			</div>
+			<!-- /.search form -->
+
+			<!-- Main content -->
+			<section class="content">
+
+				<div class="box">
+					<div class="box-header with-border">
+						<h3 class="box-title">Products</h3>
+						<div>
+							<a class="btn btn-success" href="products/create">Create
+								Product</a>
+						</div>
+					</div>
+					<div class="box-body">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Name</th>
+									<th>Address</th>
+									<th>Description</th>
+									<th>Created At</th>
+									<th>Updated At</th>
+									<th>Brand Logo</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="supplier : ${suppliers}">
+									<td th:text="${supplier.id}"></td>
+									<td th:text="${supplier.name}"></td>
+									<td th:text="${supplier.address}"></td>
+									<td th:text="${supplier.description}"></td>
+									<td
+										th:text="${#dates.format(supplier.createdAt, 'yyyy-MM-dd')}"></td>
+									<td
+										th:text="${#dates.format(supplier.updatedAt, 'yyyy-MM-dd')}"></td>
+									<td><img th:src="@{'/images/' + ${supplier.imageLogo}}"
+										alt="..." width="100"></td>
+									<td style="white-space: nowrap"><a
+										class="btn btn-primary btn-sm"
+										th:href="@{/suppliers/edit(id=${supplier.id})}">Edit</a> <a
+										class="btn btn-danger btn-sm"
+										th:href="@{/suppliers/delete(id=${supplier.id})}"
+										onclick="return confirm('Are you sure?')">Delete</a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<!-- /.box -->
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.box-body -->
+		<div class="box-footer clearfix">
+			<ul class="pagination pagination-sm no-margin pull-right">
+				<li><a href="#">«</a></li>
+				<li><a href="#">1</a></li>
+				<li><a href="#">2</a></li>
+				<li><a href="#">3</a></li>
+				<li><a href="#">»</a></li>
+			</ul>
+		</div>
+	</div>
+	<!-- /.box -->
+
+	<!-- /.content -->
+	<!-- /.content -->
+
+	<!-- /.content-wrapper -->
+
+	<footer th:replace="patials/footer :: footer"></footer>
+
+	<!-- ./wrapper -->
+
+	<!-- jQuery 3 -->
+	<div th:replace="patials/script :: script"></div>
 
 </body>
 </html>

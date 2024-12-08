@@ -41,7 +41,7 @@ public class SuppliersController {
     public String showCreatePage(Model model) {
         SupplierDto supplierDto = new SupplierDto();
         model.addAttribute("supplierDto", supplierDto);
-        return "suppliers/CreateSupplier";
+        return "admin/suppliers/CreateSupplier";
     }
 
     @PostMapping("/create")
