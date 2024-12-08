@@ -9,9 +9,16 @@
   <body>
     <div class="container">
 		<h1 class="text-center my-4">Orders</h1>
-		
-		<a class="btn btn-primary" href="/orders/create">Create Order</a>
-		
+		<a class="btn btn-info mb-3" href="/orders/report">View Orders Report</a>
+
+		<!-- Thanh tìm kiếm -->
+		<form class="mb-4" method="GET" action="/orders/search">
+		    <div class="input-group">
+		        <input type="text" name="keyword" class="form-control" placeholder="Search by Orderid, customer, product, status, payment status or payment method" />
+		        <button class="btn btn-primary" type="submit">Search</button>
+		    </div>
+		</form>
+
 		<table class="table">
 				<thead>
 					<tr>

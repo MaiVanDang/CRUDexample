@@ -179,6 +179,52 @@ public class OrdersController {
 		 return "redirect:/orders";
 	 }
 	 
+	 @GetMapping("/search")
+		public String searchCustomers(@RequestParam("keyword") String keyword, Model model) {
+		    List<Order> orders = repo.findByKeyword(keyword);
+		    model.addAttribute("orders", orders);
+		    model.addAttribute("keyword", keyword); // Truyền từ khóa về view
+		    return "orders/SearchOrder"; // Tên file HTML
+		}
+	 
+	 @GetMapping("/report")
+		public String viewOrderReport(
+		        @RequestParam(value = "statType", required = false, defaultValue = "") String statType,
+		        Model model) {
+		    
+		    List<Object[]> chartData;
+		    switch (statType) {
+		        case "reneuveDay":
+		            chartData = repo.findTotalValueByDay();
+		            break;
+		        case "reneuveMonth":
+		            chartData = repo.findTotalValueByMonth();
+		            break;		
+		        case "reneuveYear":
+		            chartData = repo.findTotalValueByYear();
+		            break;			        
+//		        case "quantityDay":
+//		            chartData = repo.findOrderCountByDay();
+//		            break;	
+		        case "quantityMonth":
+		        	chartData = repo.findOrderCountByMonth();
+		        	break;
+		        case "quantityYear":
+		        	chartData = repo.findOrderCountByYear();
+		        	break;
+		        case "1":
+		        	chartData = repo.findOrderCountByDay();
+		        	break;
+		        default:
+		            chartData = repo.findTotalValueByYear();
+		            break;
+		    }
+		    
+		    model.addAttribute("chartData", chartData);
+		    model.addAttribute("statType", statType);
+		    return "orders/ReportOrder";
+		}
+	 
 	 
 	 
 }
