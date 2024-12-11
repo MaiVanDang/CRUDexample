@@ -54,4 +54,27 @@
 	        }
 	    }
 	</script>
+	<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchButton = document.getElementById('searchButton');
+    const categoryInput = document.getElementById('searchInputByCategory');
+    const minPriceInput = document.getElementById('searchMinValue');
+    const maxPriceInput = document.getElementById('searchMaxValue');
+
+    searchButton.addEventListener('click', function() {
+        // Lấy giá trị từ input
+        const category = categoryInput.value.trim();
+        const minPrice = minPriceInput.value.trim();
+        const maxPrice = maxPriceInput.value.trim();
+
+        // Kiểm tra xem đã nhập đủ thông tin chưa
+        if (category && minPrice && maxPrice) {
+            // Ví dụ về việc gọi API (bạn sẽ thay thế bằng mã thực tế của mình)
+        	window.location.href = `/admin/searchcatalogprice?category=${encodeURIComponent(category)}&minPrice=${minPrice}&maxPrice=${maxPrice}`;
+        } else {
+            alert('Vui lòng nhập đầy đủ thông tin');
+        }
+    });
+});
+</script>
 </div>

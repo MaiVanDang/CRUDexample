@@ -126,4 +126,22 @@ public class Product {
 
 	public Date getCreatedAt() { return createdAt; }
     public Date getUpdatedAt() { return updatedAt; }
+    
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                ", supplierID='" + supplierID + '\'' +
+                ", price=" + price +
+                ", baseprice=" + baseprice +
+                ", discount=" + discount +
+                ", quantity=" + quantity +
+                ", imageFileName='" + imageFileName + '\'' +
+                ", brand='" + brand + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 }

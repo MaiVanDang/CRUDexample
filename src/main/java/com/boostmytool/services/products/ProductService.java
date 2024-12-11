@@ -105,4 +105,15 @@ public class ProductService {
     	fileStorageService.deleteFile(product.getImageFileName());
     	repo.delete(product);
     }
+    
+    public List<Product> searchProducts(String category, float minPrice, float maxPrice) {
+    	
+    	List<Product> products = repo.searchProducts(category, minPrice, maxPrice);
+//        System.out.println("Mapped Products:");
+//        for (Product product : products) {
+//            System.out.println(product); // Assuming toString is implemented in Product
+//        }
+
+        return products;
+    }
 }
