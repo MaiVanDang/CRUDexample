@@ -15,8 +15,8 @@
 <link rel="stylesheet" href="css/_all-skins.min.css">
 <link rel="stylesheet" href="css/jquery-ui.css">
 <link rel="stylesheet" href="css/style.css" />
-<script src="js/angular.min.js"></script>
-<script src="js/app.js"></script>
+<script src="../js/angular.min.js"></script>
+<script src="../js/app.js"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 	<!-- Site wrapper -->
@@ -255,23 +255,23 @@
 						
 						
 						<!-- Xem report do chua co Report rieng trong menu -->
-						
+
 						<div>
+							<a class="btn btn-success" href="/customers/create">Create Customer</a>
 							<a class="btn btn-info mb-3" href="/customers/report">View Customer Report</a>
+							<!-- Thanh tìm kiếm -->
+							<form class="mb-4" method="GET" action="/customers/search" style = "float: right">
+							    <div class="input-group" style="
+									display: flex; /* Căn ô input và nút Search cùng hàng */
+									align-items: center;
+									gap: 5px; /* Khoảng cách giữa input và nút Search */"
+								>
+							        <input type="text" name="keyword" class="form-control" placeholder="Search by id, name, address, email, or phone number" />
+							        <button class="btn btn-primary" type="submit">Search</button>
+							    </div>
+							</form>
 						</div>
-						
-						
-						<!-- Thanh tìm kiếm -->
-						<form class="mb-4" method="GET" action="/customers/search">
-						    <div class="input-group">
-						        <input type="text" name="keyword" class="form-control" placeholder="Search by id, name, address, email, or phone number" />
-						        <button class="btn btn-primary" type="submit">Search</button>
-						    </div>
-						</form>
-						
-						<div>
-							<a class="btn btn-success" href="customers/create">Create Customer</a>
-						</div>
+
 					</div>
 					<div class="box-body">
 						<table class="table">
