@@ -203,21 +203,17 @@ public class OrdersController {
 		        case "reneuveYear":
 		            chartData = repo.findTotalValueByYear();
 		            break;			        
-//		        case "quantityDay":
-//		            chartData = repo.findOrderCountByDay();
-//		            break;	
+		        case "quantityDay":
+		            chartData = repo.findOrderCountByDay();
+		            break;	
 		        case "quantityMonth":
 		        	chartData = repo.findOrderCountByMonth();
 		        	break;
 		        case "quantityYear":
 		        	chartData = repo.findOrderCountByYear();
 		        	break;
-		        case "1":
-		        	chartData = repo.findOrderCountByDay();
-		        	break;
 		        default:
-		            chartData = repo.findTotalValueByYear();
-		            break;
+		            chartData = null;
 		    }
 		    
 		    model.addAttribute("chartData", chartData);

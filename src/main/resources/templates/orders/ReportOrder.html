@@ -20,18 +20,6 @@
 	        <input type="hidden" name="statType" value="reneuveYear">
 	        <button type="submit">Thống kê doanh thu theo năm</button>
 	    </form>
-		
-		<form action="/orders/report" method="get" style="display:inline;">
-		    <input type="hidden" name="statType" value="profitDay">
-		    <button type="submit">Thống kê lợi nhuận theo ngày</button>
-		</form>
-		<form action="/orders/report" method="get" style="display:inline;">
-		    <input type="hidden" name="statType" value="profitMonth">
-		    <button type="submit">Thống kê lợi nhuận theo tháng</button>
-		</form>
-		<form action="/orders/report" method="get" style="display:inline;">
-		    <input type="hidden" name="statType" value="profitYear">
-		    <button type="submit">Thống kê lợi nhuận theo năm</button>
 			
 		<form action="/orders/report" method="get" style="display:inline;">
 			<input type="hidden" name="statType" value="quantityDay">
@@ -48,8 +36,6 @@
 			
 		</form>	    
 	</div>
-
-
 
 
 	<div id="chartContainer" th:if="${chartData != null}" style="display: flex; justify-content: center; align-items: center; height: 66vh;">
