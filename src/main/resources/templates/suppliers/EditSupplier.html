@@ -259,6 +259,25 @@
 										th:errorclass="text-danger" th:errors="${supplierDto.name}"></p>
 								</div>
 							</div>
+
+							<div class="form-group">
+								<label>Phone</label>
+								<div>
+									<input class="form-control" type="text" th:field="*{phone}">
+									<p th:if="${#fields.hasErrors('phone')}"
+										th:errorclass="text-danger" th:errors="*{phone}"></p>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label>Email</label>
+								<div>
+									<input class="form-control" type="email" th:field="*{email}">
+									<p th:if="${#fields.hasErrors('email')}"
+										th:errorclass="text-danger" th:errors="*{email}"></p>
+								</div>
+							</div>
+							
 							<div class="form-group">
 								<label>Address</label>
 								<div>
@@ -278,6 +297,7 @@
 										th:errors="${supplierDto.description}"></p>
 								</div>
 							</div>
+							
 							<div class="form-group">
 								<label>Created At</label>
 								<div>
@@ -285,9 +305,18 @@
 										th:value="${supplier.createdAt}">
 								</div>
 							</div>
+							
+							<div class="form-group">
+								<label>Update At</label>
+								<div>
+									<input readonly class="form-control-plaintext"
+										th:value="${supplier.updatedAt}">
+								</div>
+							</div>
+							
 							<div class="form-group">
 								<div style="display: flex; justify-content: center;">
-									<img th:src="@{'/images/' + ${supplier.imageLogo}}"
+									<img th:src="@{'/imageLogo/' + ${supplier.imageLogo}}"
 										alt="..." width="150">
 								</div>
 							</div>
@@ -322,15 +351,6 @@
 			</div>
 		</div>
 		<!-- /.content-wrapper -->
-
-		<footer class="main-footer">
-			<div class="pull-right hidden-xs">
-				<b>Version</b> 0.0.1
-			</div>
-			<strong>Copyright &copy; 2018 <a href="https://adminlte.io">TTPM_BKAP</a>.
-			</strong>
-		</footer>
-
 	</div>
 	<!-- ./wrapper -->
 

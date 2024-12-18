@@ -22,6 +22,8 @@ public class Supplier {
 	private Date createdAt;
 	private Date updatedAt;
 	private String imageLogo;
+    private String phone;
+    private String email;	
 //    public Supplier(Long id, String name, String address, String description, Date createdAt, Date updatedAt, String imageLogo) {
 //        this.id = id;
 //        this.name = name;
@@ -74,5 +76,19 @@ public class Supplier {
 	public void setImageLogo(String imageLogo) {
 		this.imageLogo = imageLogo;
 	}
-	
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }	
 }

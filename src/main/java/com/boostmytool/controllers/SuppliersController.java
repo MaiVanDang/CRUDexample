@@ -27,14 +27,34 @@ import jakarta.validation.Valid;
 @RequestMapping("/suppliers")
 public class SuppliersController {
 	
+	
+
     @Autowired
     private SuppliersRepository repo;
 
     @GetMapping({"", "/"})
     public String showSupplierList(Model model) {
-    	List<Supplier> suppliers = repo.findAll();
+        List<Supplier> suppliers = repo.findAll();
         model.addAttribute("suppliers", suppliers);
         return "suppliers/index";
+    }
+
+    // Tìm kiếm nhà cung cấp
+    @GetMapping("/search")
+    public String searchSuppliers(@RequestParam("keyword") String keyword, Model model) {
+        List<Supplier> suppliers;
+        if (keyword == null || keyword.isEmpty()) {
+            // Nếu không có từ khóa, khong tra ve gi
+            suppliers = null;
+        } else {
+            // Tìm kiếm nhà cung cấp theo từ khóa trên nhiều trường
+            suppliers = repo.searchSuppliersByKeyword(keyword);
+        }
+        
+        // Tìm kiếm nhà cung cấp theo từ khóa trên nhiều trường
+        model.addAttribute("suppliers", suppliers);
+        model.addAttribute("keyword", keyword); // Giữ lại từ khóa để hiển thị trên form
+        return "suppliers/SearchSupplier";
     }
 
     @GetMapping("/create")
@@ -48,52 +68,48 @@ public class SuppliersController {
     public String createSupplier(
             @Valid @ModelAttribute SupplierDto supplierDto,
             BindingResult result) {
-
         if (supplierDto.getImageLogo().isEmpty()) {
             result.addError(new FieldError("supplierDto", "imageLogo", "The Logo file is required"));
         }
 
-        // Kiểm tra ID tồn tại
-        String newID = supplierDto.getId();
-        if (repo.existsById(newID)) {
-            result.addError(new FieldError("supplierDto", "id", "ID này đã tồn tại làm ơn chọn 1 ID khác."));
+        if (repo.existsById(supplierDto.getId())) {
+            result.addError(new FieldError("supplierDto", "id", "This ID already exists. Please choose another ID."));
         }
 
         if (result.hasErrors()) {
             return "suppliers/CreateSupplier";
         }
 
-        // Save image file
-        MultipartFile image = supplierDto.getImageLogo();
-        Date createAt = new Date();
-        String storageFileName = createAt.getTime() + "_" + image.getOriginalFilename();
-
-        try {
-            String uploadDir = "public/imageLogo/";
-            Path uploadPath = Paths.get(uploadDir);
-
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
-
-            try (InputStream inputStream = image.getInputStream()) {
-                Files.copy(inputStream, uploadPath.resolve(storageFileName), StandardCopyOption.REPLACE_EXISTING);
-            }
-        } catch (Exception ex) {
-            System.out.println("Exception: " + ex.getMessage());
-        }
-
-        // Tạo và lưu đối tượng Supplier
         Supplier supplier = new Supplier();
         supplier.setId(supplierDto.getId());
         supplier.setName(supplierDto.getName());
         supplier.setAddress(supplierDto.getAddress());
         supplier.setDescription(supplierDto.getDescription());
+        supplier.setPhone(supplierDto.getPhone());
+        supplier.setEmail(supplierDto.getEmail());
+
+        Date createAt = new Date();
         supplier.setCreatedAt(createAt);
         supplier.setUpdatedAt(createAt);
-        supplier.setImageLogo(storageFileName);
-        repo.save(supplier);
 
+        // Lưu ảnh và thêm thông tin ảnh
+        MultipartFile image = supplierDto.getImageLogo();
+        String storageFileName = createAt.getTime() + "_" + image.getOriginalFilename();
+        String uploadDir = "public/imageLogo/";
+        try {
+            Path uploadPath = Paths.get(uploadDir);
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+            try (InputStream inputStream = image.getInputStream()) {
+                Files.copy(inputStream, uploadPath.resolve(storageFileName), StandardCopyOption.REPLACE_EXISTING);
+            }
+            supplier.setImageLogo(storageFileName);
+        } catch (Exception e) {
+            System.out.println("Error uploading image: " + e.getMessage());
+        }
+
+        repo.save(supplier);
         return "redirect:/suppliers";
     }
 
@@ -110,6 +126,8 @@ public class SuppliersController {
 
             SupplierDto supplierDto = new SupplierDto();
             supplierDto.setName(supplier.getName());
+            supplierDto.setEmail(supplier.getEmail());
+            supplierDto.setPhone(supplier.getPhone());
             supplierDto.setAddress(supplier.getAddress());
             supplierDto.setDescription(supplier.getDescription());
             model.addAttribute("supplierDto", supplierDto);
@@ -131,48 +149,48 @@ public class SuppliersController {
 
         try {
             Supplier supplier = repo.findById(id).orElseThrow(() -> new RuntimeException("Supplier not found"));
-            model.addAttribute("supplier", supplier);
 
             if (result.hasErrors()) {
+                model.addAttribute("supplier", supplier);
                 return "suppliers/EditSupplier";
-            }
-            supplier.setUpdatedAt(new Date());
-            if (!supplierDto.getImageLogo().isEmpty()) {
-                // Delete old image if exists
-                String uploadDir = "public/imageLogo/";
-                Path oldImagePath = Paths.get(uploadDir + supplier.getImageLogo());
-
-                try {
-                    Files.deleteIfExists(oldImagePath);
-                } catch (Exception ex) {
-                    System.out.println("Exception deleting old image: " + ex.getMessage());
-                }
-
-                // Save new image
-                MultipartFile image = supplierDto.getImageLogo();
-                Date createAt = new Date();
-                String storageFileName = createAt.getTime() + "_" + image.getOriginalFilename();
-
-                try (InputStream inputStream = image.getInputStream()) {
-                    Files.copy(inputStream, Paths.get(uploadDir + storageFileName), StandardCopyOption.REPLACE_EXISTING);
-                }
-
-                supplier.setImageLogo(storageFileName);
             }
 
             supplier.setName(supplierDto.getName());
+            supplier.setEmail(supplierDto.getEmail());
+            supplier.setPhone(supplierDto.getPhone());
             supplier.setAddress(supplierDto.getAddress());
             supplier.setDescription(supplierDto.getDescription());
+            supplier.setPhone(supplierDto.getPhone());
+            supplier.setEmail(supplierDto.getEmail());
 
-            supplier.setUpdatedAt(new Date()); // Update the 'updatedAt' field
+            // Cập nhật ảnh nếu được tải lên
+            if (!supplierDto.getImageLogo().isEmpty()) {
+                String uploadDir = "public/imageLogo/";
+                Path oldImagePath = Paths.get(uploadDir + supplier.getImageLogo());
+                try {
+                    Files.deleteIfExists(oldImagePath);
+                } catch (Exception ex) {
+                    System.out.println("Error deleting old image: " + ex.getMessage());
+                }
+
+                MultipartFile image = supplierDto.getImageLogo();
+                String storageFileName = new Date().getTime() + "_" + image.getOriginalFilename();
+                try (InputStream inputStream = image.getInputStream()) {
+                    Files.copy(inputStream, Paths.get(uploadDir + storageFileName), StandardCopyOption.REPLACE_EXISTING);
+                }
+                supplier.setImageLogo(storageFileName);
+            }
+
+            supplier.setUpdatedAt(new Date());
             repo.save(supplier);
 
-        } catch (Exception ex) {
-            System.out.println("Exception: " + ex.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error updating supplier: " + e.getMessage());
         }
 
         return "redirect:/suppliers";
     }
+
 
     @GetMapping("/delete")
     public String deleteSupplier(

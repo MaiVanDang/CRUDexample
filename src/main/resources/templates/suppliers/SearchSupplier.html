@@ -3,24 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Create Supplier</title>
+<title>Suppliers</title>
 <!-- Tell the browser to be responsive to screen width -->
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 	name="viewport">
 <!-- Bootstrap 3.3.7 -->
-<link rel="stylesheet" href="/css/bootstrap.min.css">
-<link rel="stylesheet" href="/css/font-awesome.min.css">
-<link rel="stylesheet" href="/css/AdminLTE.css">
-<link rel="stylesheet" href="/css/_all-skins.min.css">
-<link rel="stylesheet" href="/css/jquery-ui.css">
-<link rel="stylesheet" href="/css/style.css" />
-<script tsrc="/js/angular.min.js"></script>
-<script src="/js/app.js"></script>
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/font-awesome.min.css">
+<link rel="stylesheet" href="../css/AdminLTE.css">
+<link rel="stylesheet" href="../css/_all-skins.min.css">
+<link rel="stylesheet" href="../css/jquery-ui.css">
+<link rel="stylesheet" href="../css/style.css" />
+<script src="../js/angular.min.js"></script>
+<script src="../js/app.js"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 	<!-- Site wrapper -->
-	<div class="wrapper">
+	<div class="wrapper" style = "overflow:auto">
 
 		<header class="main-header">
 			<!-- Logo -->
@@ -52,7 +52,7 @@
 										<li>
 											<!-- start message --> <a href="#">
 												<div class="pull-left">
-													<img src="/images/user2-160x160.jpg" class="img-circle"
+													<img src="../images/user2-160x160.jpg" class="img-circle"
 														alt="User Image">
 												</div>
 												<h4>
@@ -116,15 +116,14 @@
 						<!-- User Account: style can be found in dropdown.less -->
 						<li class="dropdown user user-menu"><a href="#"
 							class="dropdown-toggle" data-toggle="dropdown"> <img
-								src="/images/user2-160x160.jpg" class="user-image"
+								src="../images/user2-160x160.jpg" class="user-image"
 								alt="User Image"> <span class="hidden-xs">Alexander
 									Pierce</span>
 						</a>
 							<ul class="dropdown-menu">
 								<!-- User image -->
-								<li class="user-header"><img
-									src="/images/user2-160x160.jpg" class="img-circle"
-									alt="User Image">
+								<li class="user-header"><img src="../images/user2-160x160.jpg"
+									class="img-circle" alt="User Image">
 
 									<p>
 										Alexander Pierce - Web Developer <small>Member since
@@ -169,7 +168,7 @@
 				<!-- Sidebar user panel -->
 				<div class="user-panel">
 					<div class="pull-left image">
-						<img src="/images/user2-160x160.jpg" class="img-circle"
+						<img src="../images/user2-160x160.jpg" class="img-circle"
 							alt="User Image">
 					</div>
 					<div class="pull-left info">
@@ -234,120 +233,131 @@
 		<!-- =============================================== -->
 
 		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper"
-			style="display: flex; justify-content: center;">
-			<div class="col-md-6" style="margin-top: 40px;">
-				<div class="box box-primary">
-					<div class="box-header with-border" style="text-align: center;">
-						<h3 class="box-title">New Supplier</h3>
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1>
+					Blank page <small>it all starts here</small>
+				</h1>
+				<ol class="breadcrumb">
+					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="#">Examples</a></li>
+					<li class="active">Blank page</li>
+				</ol>
+			</section>
+
+			<!-- Main content -->
+			<section class="content">
+
+				<div class="box">
+					<div class="box-header with-border">
+						<h3 class="box-title">Suppliers</h3>
+						<div>
+							<a class="btn btn-success" href="/suppliers/create">Create Supplier</a>
+							
+							<!-- Form tìm kiếm -->
+							<form class="mb-4" method="GET" action="/suppliers/search" style = "float: right">
+								<div class="input-group" style="
+								    display: flex; /* Căn ô input và nút Search cùng hàng */
+								    align-items: center;
+								    gap: 5px; /* Khoảng cách giữa input và nút Search */
+								">
+								<input class="form-control me-2" type="text" name="keyword" placeholder="Search suppliers..." aria-label="Search" >
+								<button class="btn btn-outline-success" type="submit">Search</button>
+								</div>
+							</form>
+							
+						</div>
+						
 					</div>
-					<!-- /.box-header -->
-					<!-- form start -->
-					<form method="post" enctype="multipart/form-data" th:object="${supplierDto}">
-						<div class="box-body">
-							<div class="form-group">
-								<label>ID</label>
-								<div>
-									<input class="form-control" th:field="${supplierDto.id}">
-									<p th:if="${#fields.hasErrors('id')}"
-										th:errorclass="text-danger" th:errors="${supplierDto.id}"></p>
-								</div>
-							</div>
-							<div class="form-group">
-								<label>Name</label>
-								<div>
-									<input class="form-control" th:field="${supplierDto.name}">
-									<p th:if="${#fields.hasErrors('name')}"
-										th:errorclass="text-danger" th:errors="${supplierDto.name}"></p>
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label>Phone</label>
-								<div>
-									<input class="form-control" type="text" th:field="*{phone}">
-									<p th:if="${#fields.hasErrors('phone')}"
-										th:errorclass="text-danger" th:errors="*{phone}"></p>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label>Email</label>
-								<div>
-									<input class="form-control" type="email" th:field="*{email}">
-									<p th:if="${#fields.hasErrors('email')}"
-										th:errorclass="text-danger" th:errors="*{email}"></p>
-								</div>
-							</div>
-							
-							
-							<div class="form-group">
-								<label>Address</label>
-								<div>
-									<textarea class="form-control"
-										th:field="${supplierDto.address}"></textarea>
-									<p th:if="${#fields.hasErrors('address')}"
-										th:errorclass="text-danger"
-										th:errors="${supplierDto.address}"></p>
-								</div>
-							</div>
-							
-				
-							
-							<div class="form-group">
-								<label>Description</label>
-								<div>
-									<textarea class="form-control"
-										th:field="${supplierDto.description}"></textarea>
-									<p th:if="${#fields.hasErrors('description')}"
-										th:errorclass="text-danger"
-										th:errors="${supplierDto.description}"></p>
-								</div>
-							</div>		
-								
-							
-							<div class="form-group">
-								<label>Image</label>
-								<div>
-									<input class="form-control" type="file" th:field="${supplierDto.imageLogo}">
-									<p th:if="${#fields.hasErrors('imageLogo')}"
-										th:errorclass="text-danger" th:errors="${supplierDto.imageLogo}"></p>
-								</div>
-							</div>
-						</div>
-						<!-- /.box-body -->
-
-						<div class="box-footer">
-							<div class="row">
-								<div class="col-sm-6"
-									style="display: flex; justify-content: flex-start;">
-									<a class="btn btn-outline-primary" href="/suppliers"
-										role="button" style="background-color: red; color: white;">Cancel</a>
-								</div>
-								<div class="col-sm-6"
-									style="display: flex; justify-content: flex-end;">
-									<button type="submit" class="btn btn-primary">Submit</button>
-								</div>
-							</div>
-						</div>
-					</form>
+					<div class="box-body">
+						<table class="table">
+												<thead>
+													<tr>
+														<th>ID</th>
+														<th>Name</th>
+														<th>Address</th>
+														<th>Description</th>
+														<th>Phone</th>
+														<th>Email</th>
+														<th>Created At</th>
+														<th>Updated At</th>
+														<th>Brand Logo</th>
+														<th>Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr th:each="supplier : ${suppliers}">
+														<td th:text="${supplier.id}"></td>
+														<td th:text="${supplier.name}"></td>
+														<td th:text="${supplier.address}"></td>
+														<td th:text="${supplier.description}"></td>
+														<td th:text="${supplier.phone}"></td>
+														<td th:text="${supplier.email}"></td>
+														<td th:text="${#dates.format(supplier.createdAt, 'yyyy-MM-dd')}"></td>
+														<td th:text="${#dates.format(supplier.updatedAt, 'yyyy-MM-dd')}"></td>
+														<td>
+															<img th:src="@{'/imageLogo/' + ${supplier.imageLogo}}"
+																alt="Brand Logo" width="100">
+														</td>
+														<td>
+															<a class="btn btn-primary btn-sm"
+																th:href="@{/suppliers/edit(id=${supplier.id})}">Edit</a> 
+															<a class="btn btn-danger btn-sm"
+																th:href="@{/suppliers/delete(id=${supplier.id})}"
+																onclick="return confirm('Are you sure?')">Delete</a>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+					</div>
 				</div>
-			</div>
+				<!-- /.box -->
+			</section>
+			<!-- /.content -->
 		</div>
-		<!-- /.content-wrapper -->
+		<!-- /.box-body -->
+		<div class="box-footer clearfix">
+			<ul class="pagination pagination-sm no-margin pull-right">
+				<li><a href="#">«</a></li>
+				<li><a href="#">1</a></li>
+				<li><a href="#">2</a></li>
+				<li><a href="#">3</a></li>
+				<li><a href="#">»</a></li>
+			</ul>
+		</div>
+	</div>
+	<!-- /.box -->
+
+	</section>
+	<!-- /.content -->
+	<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+
+	<footer class="main-footer">
+		<div class="pull-right hidden-xs">
+			<b>Version</b> 0.0.1
+		</div>
+		<strong>Copyright &copy; 2018 <a href="https://adminlte.io">TTPM_BKAP</a>.
+		</strong>
+	</footer>
 
 	</div>
 	<!-- ./wrapper -->
 
 	<!-- jQuery 3 -->
 
-	<script src="/js/jquery.min.js"></script>
-	<script src="/js/jquery-ui.js"></script>
-	<script src="/js/bootstrap.min.js"></script>
-	<script src="/js/adminlte.min.js"></script>
-	<script src="/js/dashboard.js"></script>
-	<script src="/tinymce/tinymce.min.js"></script>
-	<script src="/tinymce/config.js"></script>
-	<script src="/js/function.js"></script>
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery-ui.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/adminlte.min.js"></script>
+	<script src="../js/dashboard.js"></script>
+	<script src="../tinymce/tinymce.min.js"></script>
+	<script src="../tinymce/config.js"></script>
+	<script src="../js/function.js"></script>
 </body>
 </html>
+
+
+

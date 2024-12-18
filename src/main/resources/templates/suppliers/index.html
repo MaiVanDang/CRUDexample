@@ -9,14 +9,14 @@
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 	name="viewport">
 <!-- Bootstrap 3.3.7 -->
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/font-awesome.min.css">
-<link rel="stylesheet" href="css/AdminLTE.css">
-<link rel="stylesheet" href="css/_all-skins.min.css">
-<link rel="stylesheet" href="css/jquery-ui.css">
-<link rel="stylesheet" href="css/style.css" />
-<script src="js/angular.min.js"></script>
-<script src="js/app.js"></script>
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/font-awesome.min.css">
+<link rel="stylesheet" href="../css/AdminLTE.css">
+<link rel="stylesheet" href="../css/_all-skins.min.css">
+<link rel="stylesheet" href="../css/jquery-ui.css">
+<link rel="stylesheet" href="../css/style.css" />
+<script src="../js/angular.min.js"></script>
+<script src="../js/app.js"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 	<!-- Site wrapper -->
@@ -52,7 +52,7 @@
 										<li>
 											<!-- start message --> <a href="#">
 												<div class="pull-left">
-													<img src="images/user2-160x160.jpg" class="img-circle"
+													<img src="../images/user2-160x160.jpg" class="img-circle"
 														alt="User Image">
 												</div>
 												<h4>
@@ -116,13 +116,13 @@
 						<!-- User Account: style can be found in dropdown.less -->
 						<li class="dropdown user user-menu"><a href="#"
 							class="dropdown-toggle" data-toggle="dropdown"> <img
-								src="images/user2-160x160.jpg" class="user-image"
+								src="../images/user2-160x160.jpg" class="user-image"
 								alt="User Image"> <span class="hidden-xs">Alexander
 									Pierce</span>
 						</a>
 							<ul class="dropdown-menu">
 								<!-- User image -->
-								<li class="user-header"><img src="images/user2-160x160.jpg"
+								<li class="user-header"><img src="../images/user2-160x160.jpg"
 									class="img-circle" alt="User Image">
 
 									<p>
@@ -168,7 +168,7 @@
 				<!-- Sidebar user panel -->
 				<div class="user-panel">
 					<div class="pull-left image">
-						<img src="images/user2-160x160.jpg" class="img-circle"
+						<img src="../images/user2-160x160.jpg" class="img-circle"
 							alt="User Image">
 					</div>
 					<div class="pull-left info">
@@ -253,7 +253,20 @@
 					<div class="box-header with-border">
 						<h3 class="box-title">Suppliers</h3>
 						<div>
-							<a class="btn btn-success" href="suppliers/create">Create Supplier</a>
+							<a class="btn btn-success" href="/suppliers/create">Create Supplier</a>
+							
+							<!-- Form tìm kiếm -->
+							<form class="mb-4" method="GET" action="/suppliers/search" style = "float: right">
+								<div class="input-group" style="
+								    display: flex; /* Căn ô input và nút Search cùng hàng */
+								    align-items: center;
+								    gap: 5px; /* Khoảng cách giữa input và nút Search */
+								">
+								<input class="form-control me-2" type="text" name="keyword" placeholder="Search suppliers..." aria-label="Search" >
+								<button class="btn btn-outline-success" type="submit">Search</button>
+								</div>
+							</form>
+							
 						</div>
 					</div>
 					<div class="box-body">
@@ -264,6 +277,8 @@
 									<th>Name</th>
 									<th>Address</th>
 									<th>Description</th>
+									<th>Phone</th>
+									<th>Email</th>
 									<th>Created At</th>
 									<th>Updated At</th>
 									<th>Brand Logo</th>
@@ -276,18 +291,21 @@
 									<td th:text="${supplier.name}"></td>
 									<td th:text="${supplier.address}"></td>
 									<td th:text="${supplier.description}"></td>
-									<td
-										th:text="${#dates.format(supplier.createdAt, 'yyyy-MM-dd')}"></td>
-									<td
-										th:text="${#dates.format(supplier.updatedAt, 'yyyy-MM-dd')}"></td>
-									<td><img th:src="@{'/images/' + ${supplier.imageLogo}}"
-										alt="..." width="100"></td>
-									<td style="white-space: nowrap"><a
-										class="btn btn-primary btn-sm"
-										th:href="@{/suppliers/edit(id=${supplier.id})}">Edit</a> <a
-										class="btn btn-danger btn-sm"
-										th:href="@{/suppliers/delete(id=${supplier.id})}"
-										onclick="return confirm('Are you sure?')">Delete</a></td>
+									<td th:text="${supplier.phone}"></td>
+									<td th:text="${supplier.email}"></td>
+									<td th:text="${#dates.format(supplier.createdAt, 'yyyy-MM-dd')}"></td>
+									<td th:text="${#dates.format(supplier.updatedAt, 'yyyy-MM-dd')}"></td>
+									<td>
+										<img th:src="@{'/imageLogo/' + ${supplier.imageLogo}}"
+											alt="Brand Logo" width="100">
+									</td>
+									<td>
+										<a class="btn btn-primary btn-sm"
+											th:href="@{/suppliers/edit(id=${supplier.id})}">Edit</a> 
+										<a class="btn btn-danger btn-sm"
+											th:href="@{/suppliers/delete(id=${supplier.id})}"
+											onclick="return confirm('Are you sure?')">Delete</a>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -311,31 +329,21 @@
 	<!-- /.box -->
 
 	</section>
-	<!-- /.content -->
-	<!-- /.content -->
 	</div>
 	<!-- /.content-wrapper -->
-
-	<footer class="main-footer">
-		<div class="pull-right hidden-xs">
-			<b>Version</b> 0.0.1
-		</div>
-		<strong>Copyright &copy; 2018 <a href="https://adminlte.io">TTPM_BKAP</a>.
-		</strong>
-	</footer>
 
 	</div>
 	<!-- ./wrapper -->
 
 	<!-- jQuery 3 -->
 
-	<script src="js/jquery.min.js"></script>
-	<script src="js/jquery-ui.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/adminlte.min.js"></script>
-	<script src="js/dashboard.js"></script>
-	<script src="tinymce/tinymce.min.js"></script>
-	<script src="tinymce/config.js"></script>
-	<script src="js/function.js"></script>
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery-ui.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/adminlte.min.js"></script>
+	<script src="../js/dashboard.js"></script>
+	<script src="../tinymce/tinymce.min.js"></script>
+	<script src="../tinymce/config.js"></script>
+	<script src="../js/function.js"></script>
 </body>
 </html>
