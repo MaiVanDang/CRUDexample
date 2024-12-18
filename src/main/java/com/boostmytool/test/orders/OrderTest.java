@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.boostmytool.model.orders.Order;
-import com.boostmytool.services.orders.OrderReport;
+import com.boostmytool.services.orders.orderReport;
 
 public class OrderTest {
 
@@ -37,7 +37,7 @@ public class OrderTest {
                 Date.valueOf("2024-11-29"), null, null, "Credit Card", "Paid", "Delivered", ""));
 
         // Tạo một dịch vụ báo cáo
-        OrderReport report = new OrderReport(orders);
+        orderReport report = new orderReport(orders);
         
         report.dailyRevenueReport();
         report.monthlyRevenueReport(2024, 11);

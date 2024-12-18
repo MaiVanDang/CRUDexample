@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 
 import com.boostmytool.model.orders.Order;
 
-public class OrderReport {
+public class orderReport {
 	List<Order> orders = new ArrayList<>();
 
-	public OrderReport(List<Order> orders) {
+	public orderReport(List<Order> orders) {
 	        this.orders = orders;
 	    }
 	
