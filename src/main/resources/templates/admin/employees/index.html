@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="patials/head :: head"></head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<header th:replace="patials/header :: header" style="position: fixed; width: 100%;"></header>
+	<div class="wrapper">
+		<!-- =============================================== -->
+		<!-- Left side column. contains the sidebar -->
+		<div th:replace="patials/sidebar :: sidebar"></div>
+		<!-- =============================================== -->
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper" style="margin-top: 50px;">
+			<!-- Content Header (Page header) -->
+			<!-- search form -->
+			<div style="min-width: 550px; display: flex; align-items: center; padding: 20px;">
+				<select id="searchType" style="max-width: 150px; padding: 10px; border-radius: 5px; border: 1px solid #007bff;">
+					<option value="employees" selected="">Employees</option>
+					<option value="products">Products</option>
+					<option value="orders">Orders</option>
+					<option value="suppliers">Suppliers</option>
+				</select>
+				<input id="searchInput" type="text" class="form-control border border-primary" name="navbarsearch" style="border-radius: 5px; border: 1px solid #007bff; margin-left: 5px; height: 40px; width: 250px;">
+				<button class="btn btn-outline-primary" type="submit" style="margin-left: 10px; background-color: #007bff; color: white; border: none; cursor: pointer; transition: background-color 0.3s; padding: 10px; border-radius: 5px;" onclick="searchEmployee()">Tìm kiếm</button>
+			</div>
+			<!-- /.search form -->
+
+			<!-- Main content -->
+			<section class="content">
+
+				<div class="box">
+					<div class="box-header with-border">
+						<h3 class="box-title">Employees</h3>
+						<div>
+							<a class="btn btn-success" href="employees/create">Create Employee</a>
+						</div>
+					</div>
+					<div class="box-body">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Employee ID</th>
+									<th>Name</th>
+									<th>Gender</th>
+									<th>Date of Birth</th>
+									<th>Phone Number</th>
+									<th>Email</th>
+									<th>Position</th>
+									<th>Salary</th>
+									<th>Status</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="employee : ${employees}">
+									<td th:text="${employee.employeeID}"></td>
+									<td th:text="${employee.employeeName}"></td>
+									<td th:text="${employee.gender}"></td>
+									<td th:text="${#dates.format(employee.dateOfBirth, 'yyyy-MM-dd')}"></td>
+									<td th:text="${employee.employeePhoneNumber}"></td>
+									<td th:text="${employee.employeeEmail}"></td>
+									<td th:text="${employee.position}"></td>
+									<td th:text="${employee.salary}"></td>
+									<td th:text="${employee.employeeStatus}"></td>
+									<td style="white-space: nowrap">
+										<a class="btn btn-primary btn-sm" th:href="@{/employees/edit(employeeID=${employee.employeeID})}">Edit</a>
+										<a class="btn btn-danger btn-sm" th:href="@{/employees/delete(employeeID=${employee.employeeID})}" onclick="return confirm('Are you sure?')">Delete</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<!-- /.box -->
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+
+		<footer th:replace="patials/footer :: footer"></footer>
+	</div>
+	<!-- ./wrapper -->
+
+	<!-- jQuery 3 -->
+	<div th:replace="patials/script :: script"></div>
+</body>
+</html>
