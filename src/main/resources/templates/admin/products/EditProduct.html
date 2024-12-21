@@ -45,6 +45,38 @@
 								</div>
 							</div>
 							<div class="form-group">
+								<label>Base Price</label>
+								<div>
+									<input class="form-control" th:field="${productDto.base_price}">
+									<p th:if="${#fields.hasErrors('base_price')}"
+										th:errorclass="text-danger" th:errors="${productDto.base_price}"></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Discount</label>
+								<div>
+									<input class="form-control" th:field="${productDto.discount}">
+									<p th:if="${#fields.hasErrors('discount')}"
+										th:errorclass="text-danger" th:errors="${productDto.discount}"></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Quantity</label>
+								<div>
+									<input class="form-control" th:field="${productDto.quantity}">
+									<p th:if="${#fields.hasErrors('quantity')}"
+										th:errorclass="text-danger" th:errors="${productDto.quantity}"></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label>SupplierID</label>
+								<div>
+									<input class="form-control" th:field="${productDto.supplierID}">
+									<p th:if="${#fields.hasErrors('supplierID')}"
+										th:errorclass="text-danger" th:errors="${productDto.supplierID}"></p>
+								</div>
+							</div>
+							<div class="form-group">
 								<label>Category</label>
 								<div>
 									<select class="form-select" th:field="${productDto.category}">

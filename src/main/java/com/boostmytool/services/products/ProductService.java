@@ -54,13 +54,16 @@ public class ProductService {
         
         // Lưu file và lấy tên file
         String storageFileName = fileStorageService.saveFile(image);
-
         // Tạo đối tượng Product
         Product product = new Product();
         product.setName(productDto.getName());
         product.setBrand(productDto.getBrand());
         product.setCategory(productDto.getCategory());
         product.setPrice(productDto.getPrice());
+        product.setQuantity(productDto.getQuantity());
+        product.setBaseprice(productDto.getBase_price());
+        product.setDiscount(productDto.getDiscount());
+        product.setSupplierID(productDto.getSupplierID());
         product.setDescription(productDto.getDescription());
         product.preUpdate();
         product.setImageFileName(storageFileName);
@@ -85,6 +88,10 @@ public class ProductService {
         product.setBrand(productDto.getBrand());
         product.setCategory(productDto.getCategory());
         product.setPrice(productDto.getPrice());
+        product.setQuantity(productDto.getQuantity());
+        product.setBaseprice(productDto.getBase_price());
+        product.setDiscount(productDto.getDiscount());
+        product.setSupplierID(productDto.getSupplierID());
         product.setDescription(productDto.getDescription());
         product.preUpdate();
 
@@ -97,5 +104,16 @@ public class ProductService {
                 .orElseThrow(() -> new Exception("Product not found with id: " + id));
     	fileStorageService.deleteFile(product.getImageFileName());
     	repo.delete(product);
+    }
+    
+    public List<Product> searchProducts(String category, float minPrice, float maxPrice) {
+    	
+    	List<Product> products = repo.searchProducts(category, minPrice, maxPrice);
+//        System.out.println("Mapped Products:");
+//        for (Product product : products) {
+//            System.out.println(product); // Assuming toString is implemented in Product
+//        }
+
+        return products;
     }
 }

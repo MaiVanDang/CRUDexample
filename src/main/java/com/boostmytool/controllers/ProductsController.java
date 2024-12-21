@@ -1,6 +1,5 @@
 package com.boostmytool.controllers;
 
-import java.nio.file.*;
 import java.util.Date;
 import java.util.List;
 
@@ -96,6 +95,11 @@ public class ProductsController {
 			productDto.setBrand(product.getBrand());
 			productDto.setCategory(product.getCategory());
 			productDto.setPrice(product.getPrice());
+			productDto.setBase_price(product.getBaseprice());
+			productDto.setDiscount(product.getDiscount());
+			productDto.setQuantity(product.getQuantity());
+			productDto.setSupplierID(product.getSupplierID());
+			productDto.setSupplierID(product.getSupplierID());
 			productDto.setCreatedAt(product.getCreatedAt());
 			productDto.setDescription(product.getDescription());
 

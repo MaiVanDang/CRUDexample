@@ -35,32 +35,88 @@
 
 			<!-- Main content -->
 			<section class="content">
-
-				<div class="box">
+				<h1>Trang quản trị</h1>
+				<div class="box box-info">
 					<div class="box-header with-border">
-						<h3 class="box-title">Products</h3>
+						<div class="row">
+							<div class="col-lg-6" style="width: 40%">
+								<h3 class="box-title">Loại sản phẩm</h3>
+								<!-- /input-group -->
+							</div>
+							<!-- /.col-lg-6 -->
+							<div class="col-lg-6" style="width: 40%">
+								<h3 class="box-title">Giá thành</h3>
+								<!-- /input-group -->
+							</div>
+							<!-- /.col-lg-6 -->
+						</div>
 					</div>
 					<div class="box-body">
-						<table class="table">
-							<thead>
-								<tr>
-									<th>ID</th>
-									<th>Name</th>
-									<th>Category</th>
-									<th>supplierID</th>
-									<th>Price</th>
-									<th>Base_Price</th>
-									<th>Discount</th>
-									<th>Quantity</th>
-									<th>Image</th>
-									<th>Brand</th>
-									<th>Created</th>
-									<th>Updated</th>
-									<th>Action</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="product : ${products}">
+						<div class="row">
+							<div class="col-lg-6" style="width: 40%">
+								<div class="input-group">
+									<input id="searchInputByCategory" type="text"
+										class="form-control" placeholder="Điện thoại">
+								</div>
+								<!-- /input-group -->
+							</div>
+							<div class="col-lg-6" style="width: 40%">
+								<div class="input-group">
+									<input id="searchMinValue" type="number" class="form-control"
+										placeholder="Từ"> <span class="input-group-addon">-</span>
+									<input id="searchMaxValue" type="number" class="form-control"
+										placeholder="đến"> <span class="input-group-addon">$</span>
+								</div>
+								<!-- /input-group -->
+							</div>
+							<!-- /.col-lg-6 -->
+							<div class="input-group input-group-sm">
+								<span class="input-group-btn">
+									<button id="searchButton" type="submit"
+										class="btn btn-info btn-flat">Tìm kiếm</button>
+								</span>
+							</div>
+						</div>
+						<!-- /.row -->
+						<!-- /input-group -->
+					</div>
+					<!-- /.box-body -->
+				</div>
+
+				<!-- /Table -->
+				<div class="box">
+					<div class="box-header"></div>
+					<!-- /.box-header -->
+					<div class="box-body">
+						<div id="example2_wrapper"
+							class="dataTables_wrapper form-inline dt-bootstrap">
+							<div class="row">
+								<div class="col-sm-6"></div>
+								<div class="col-sm-6"></div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12">
+									<table id="resultTable"
+										class="table table-bordered table-hover dataTable" role="grid">
+										<thead>
+											<tr>
+												<th>ID</th>
+												<th>Name</th>
+												<th>Category</th>
+												<th>Supplier ID</th>
+												<th>Price</th>
+												<th>Base Price</th>
+												<th>Discount</th>
+												<th>Quantity</th>
+												<th>Image</th>
+												<th>Brand</th>
+												<th>Created</th>
+												<th>Updated</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="product : ${products}">
 									<td th:text="${product.id}"></td>
 									<td th:text="${product.name}"></td>
 									<td th:text="${product.category}"></td>
@@ -88,11 +144,14 @@
 										th:href="@{/products/delete(id=${product.id})}"
 										onclick="return confirm('Are you sure?')">Delete</a></td>
 								</tr>
-							</tbody>
-						</table>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
 					</div>
+					<!-- /.box-body -->
 				</div>
-				<!-- /.box -->
 			</section>
 			<!-- /.content -->
 		</div>

@@ -21,13 +21,14 @@
 			<!-- search form -->
 			<div
 				style="min-width: 550px; display: flex; align-items: center; padding: 20px;">
-				<select name="searchType"
+				<select id="searchType"
 					style="max-width: 150px; padding: 10px; border-radius: 5px; border: 1px solid #007bff;">
 					<option value="customers" selected="">customers</option>
 					<option value="products">products</option>
 					<option value="orders">orders</option>
-				</select> <input type="text" class="form-control border border-primay"
-					name="navbarsearch"
+					<option value="suppliers">suppliers</option>
+				</select> <input id="searchInput" type="text"
+					class="form-control border border-primay" name="navbarsearch"
 					style="border-radius: 5px; border: 1px solid #007bff; margin-left: 5px; height: 40px; width: 250px;">
 				<button class="btn btn-outline-primary" type="submit"
 					style="margin-left: 10px; background-color: #007bff; color: white; border: none; cursor: pointer; transition: background-color 0.3s;; padding: 10px; border-radius: 5px;"
@@ -48,10 +49,14 @@
 								<tr>
 									<th>ID</th>
 									<th>Name</th>
-									<th>Brand</th>
 									<th>Category</th>
+									<th>supplierID</th>
 									<th>Price</th>
+									<th>Base_Price</th>
+									<th>Discount</th>
+									<th>Quantity</th>
 									<th>Image</th>
+									<th>Brand</th>
 									<th>Created</th>
 									<th>Updated</th>
 									<th>Action</th>
@@ -59,24 +64,32 @@
 							</thead>
 							<tbody>
 								<tr th:if="${product}">
-									<td th:value="${product.id}"></td>
+									<td th:text="${product.id}"></td>
 									<td th:text="${product.name}"></td>
-									<td th:text="${product.brand}"></td>
 									<td th:text="${product.category}"></td>
+									<td th:text="${product.supplierID}"></td>
 									<td th:text="@{${product.price} + '$'}"></td>
-									<td><img th:src="@{'/images/' + ${product.imageFileName}}"
-										alt="..." width="100"></td>
-									<td
-										th:text="${#dates.format(product.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
-									<td
-										th:text="${#dates.format(product.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+									<td th:text="@{${product.baseprice} + '$'}"></td>
+									<td th:text="${product.discount}"></td>
+									<td th:text="${product.quantity}"></td>
+									<td ><img th:src="@{'/images/' + ${product.imageFileName}}" alt="..." width="50"></td>
+									<td th:text="${product.brand}"></td>
+									<td>
+									  <span th:text="${#dates.format(product.createdAt, 'dd/MM/yyyy')}"></span>
+									  <br>
+									  <span th:text="${#dates.format(product.createdAt, 'HH:mm:ss')}"></span>
+									</td>
+									<td>
+									  <span th:text="${#dates.format(product.updatedAt, 'dd/MM/yyyy')}"></span>
+									  <br>
+									  <span th:text="${#dates.format(product.updatedAt, 'HH:mm:ss')}"></span>
+									</td>
 									<td style="white-space: nowrap"><a
 										class="btn btn-primary btn-sm"
 										th:href="@{/products/edit(id=${product.id})}">Edit</a> <a
 										class="btn btn-danger btn-sm"
 										th:href="@{/products/delete(id=${product.id})}"
 										onclick="return confirm('Are you sure?')">Delete</a></td>
-								</tr>
 							</tbody>
 						</table>
 					</div>

@@ -19,6 +19,18 @@ public class ProductDto {
 	private Date createdAt;
 	
 	@Min(0)
+	private double base_price;
+	
+	@Min(0)
+	private int discount;
+	
+	@Min(0)
+	private int quantity;
+	
+	@NotEmpty(message = "The supplierId is required")
+	private String supplierID;
+	
+	@Min(0)
 	private double price;
 	
 	@Size(min = 10, message = "The description should be at least 10 characters")
@@ -81,6 +93,38 @@ public class ProductDto {
 
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public double getBase_price() {
+		return base_price;
+	}
+
+	public void setBase_price(double base_price) {
+		this.base_price = base_price;
+	}
+
+	public int getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(int discount) {
+		this.discount = discount;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public String getSupplierID() {
+		return supplierID;
+	}
+
+	public void setSupplierID(String supplierID) {
+		this.supplierID = supplierID;
 	}
 	
 	
