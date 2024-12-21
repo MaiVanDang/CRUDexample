@@ -1,5 +1,7 @@
 package com.boostmytool.controllers;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +39,14 @@ public class CustomersController {
 	@GetMapping("/create")
 	public String showCreatePage(Model model) {
 		CustomerDto customerDto = new CustomerDto();
+		
+		LocalDate currentDate = LocalDate.now();
+	    Date sqlDate = Date.valueOf(currentDate);
+	    customerDto.setCustomerDateCreated(sqlDate);    
+	    customerDto.setCustomerDateUpdated(sqlDate);   
+		
 		model.addAttribute("customerDto", customerDto);
-		return "customers/CreateCustomer";
+		return "admin/customers/CreateCustomer";
 	}
 	
 	@PostMapping("/create")
@@ -47,8 +55,13 @@ public class CustomersController {
 			BindingResult result
 			) {
 		
+		// Kiểm tra xem customerID đã tồn tại hay chưa
+	    if (repo.existsById(customerDto.getCustomerID())) {
+	        result.rejectValue("customerID", "error.customerDto", "Customer ID đã tồn tại. Vui lòng nhập lại.");
+	    }
+		
 		if(result.hasErrors()) {
-			return "customers/CreateCustomer";
+			return "admin/customers/CreateCustomer";
 		}
 		
 		Customer customer = new Customer(); 
@@ -60,6 +73,7 @@ public class CustomersController {
 		customer.setCustomerPhone(customerDto.getCustomerPhone());
 		customer.setCustomerEmail(customerDto.getCustomerEmail());
 		customer.setCustomerDateCreated(customerDto.getCustomerDateCreated());
+		
 		customer.setCustomerDateUpdated(customerDto.getCustomerDateUpdated());
 		customer.setCustomerPaidAmount(customerDto.getCustomerPaidAmount());
 		customer.setCustomerSumDebt(customerDto.getCustomerSumDebt());
@@ -88,7 +102,14 @@ public class CustomersController {
 			customerDto.setCustomerPhone(customer.getCustomerPhone());
 			customerDto.setCustomerEmail(customer.getCustomerEmail());
 			customerDto.setCustomerDateCreated(customer.getCustomerDateCreated());
-			customerDto.setCustomerDateUpdated(customer.getCustomerDateUpdated());
+			
+			
+			LocalDate currentDate = LocalDate.now();
+		    Date sqlDate = Date.valueOf(currentDate);    
+		    customerDto.setCustomerDateUpdated(sqlDate);
+			
+//			customerDto.setCustomerDateUpdated(customer.getCustomerDateUpdated());
+		    
 			customerDto.setCustomerPaidAmount(customer.getCustomerPaidAmount());
 			customerDto.setCustomerSumDebt(customer.getCustomerSumDebt());
 			customerDto.setCustomerType(customer.getCustomerType());
@@ -101,7 +122,7 @@ public class CustomersController {
 		}
 			
 		
-		return "customers/EditCustomer";
+		return "admin/customers/EditCustomer";
 	}	
 	
 	@PostMapping("/edit")
@@ -117,7 +138,7 @@ public class CustomersController {
 			model.addAttribute("customer", customer);
 			
 			if(result.hasErrors()) {
-				return "customers/EditCustomer";
+				return "admin/customers/EditCustomer";
 			}
 			
 			customer.setCustomerID(customerDto.getCustomerID());
@@ -158,5 +179,49 @@ public class CustomersController {
 		
 		return "redirect:/customers";
 	}	
-		
+
+	
+	@GetMapping("/search")
+	public String searchCustomers(@RequestParam("keyword") String keyword, Model model) {
+	    List<Customer> customers = repo.findByKeyword(keyword);
+	    model.addAttribute("customers", customers);
+	    model.addAttribute("keyword", keyword); // Truyền từ khóa về view
+	    return "customers/SearchCustomer"; // Tên file HTML
+	}
+	
+	@GetMapping("/report")
+	public String viewCustomerReport(
+	        @RequestParam(value = "statType", required = false, defaultValue = "") String statType,
+	        Model model) {
+	    
+	    List<Object[]> chartData;
+	    switch (statType) {
+	        case "ageGroup":
+	            chartData = repo.findStatisticsByAgeGroup();
+	            break;
+	        case "customerType":
+	            chartData = repo.findStatisticsByCustomerType();
+	            break;
+	        case "customerAddress":
+	            chartData = repo.findStatisticsByLocation();
+	            break;
+	        case "totalSpending":
+	            chartData = repo.findStatisticsByTotalSpending();
+	            break;
+	        case "customerDebt":
+	            chartData = repo.findStatisticsByDebt();
+	            break;
+	        case "newCustomer":
+	            chartData = repo.findStatisticsByNewCustomers();
+	            break;
+	        default:
+	            chartData = null; // Trả về danh sách rỗng
+	            break;
+	    }
+	    
+	    model.addAttribute("chartData", chartData);
+	    model.addAttribute("statType", statType);
+	    return "admin/customers/ReportCustomer";
+	}
+	
 }

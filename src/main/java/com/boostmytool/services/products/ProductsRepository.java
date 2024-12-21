@@ -1,6 +1,5 @@
 package com.boostmytool.services.products;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +15,7 @@ public interface ProductsRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findByNameContaining(String name);
     
-    @Query(nativeQuery = true, value = "SELECT * FROM search_inf_products('Cameras',10.0, 20.0)")
+    @Query(nativeQuery = true, value = "SELECT * FROM search_inf_products(:category, :minPrice, :maxPrice)")
     List<Object[]> findProductsByCustomSearch(
         @Param("category") String category, 
         @Param("minPrice") Float minPrice, // Changed to Float

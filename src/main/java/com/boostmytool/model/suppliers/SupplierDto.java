@@ -19,7 +19,30 @@ public class SupplierDto {
 	private String description;
 	
 	private MultipartFile imageLogo;
+    @NotEmpty(message = "The phone is required")
+    @Pattern(regexp = "\\d{10,15}", message = "The phone must be a valid number with 10-15 digits")
+    private String phone;
 
+    @NotEmpty(message = "The email is required")
+    @Email(message = "The email must be a valid email address")
+    private String email;
+
+    // Getter và Setter
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 	public String getName() {
 		return name;
 	}

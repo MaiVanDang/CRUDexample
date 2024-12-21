@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
-<head th:replace="patials/head :: head"></head>
+<head th:replace="fragment/head :: head"></head>
 <body class="hold-transition skin-blue sidebar-mini">
 	<!-- Site wrapper -->
-	<header th:replace="patials/header :: header"
+	<header th:replace="fragment/header :: header"
 		style="position: fixed; width: 100%;"></header>
 	<div class="wrapper">
 
 		<!-- =============================================== -->
 
 		<!-- Left side column. contains the sidebar -->
-		<div th:replace="patials/sidebar :: sidebar"></div>
+		<div th:replace="fragment/sidebar :: sidebar"></div>
 
 		<!-- =============================================== -->
 
@@ -119,12 +119,11 @@
 	<!-- /.content -->
 	<!-- /.content -->
 	<!-- /.content-wrapper -->
-
-	<footer th:replace="patials/footer :: footer"></footer>
+	<footer th:replace="fragment/footer :: footer"></footer>
 	<!-- ./wrapper -->
 
 	<!-- jQuery 3 -->
 
-	<div th:replace="patials/script :: script"></div>
+	<div th:replace="fragment/script :: script"></div>
 </body>
 </html>

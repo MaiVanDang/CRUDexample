@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragment/head :: head"></head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<header th:replace="fragment/header :: header" ></header>
+	<div class="wrapper">
+
+		<!-- =============================================== -->
+
+		<!-- Left side column. contains the sidebar -->
+		<div th:replace="fragment/sidebar :: sidebar"></div>
+
+		<!-- =============================================== -->
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper" style="display: flex;justify-content: center;">
+			<div class="col-md-6" style="margin-top: 40px;">
+			<div class="box box-primary">
+            <div class="box-header with-border" style="text-align: center;">
+              <h3 class="box-title">New Customer</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form method="post" th:object="${customerDto}">
+              <div class="box-body">
+              <div class="form-group">
+					<label>ID</label>
+					<div>
+						<input class="form-control" th:field="${customerDto.customerID}">
+						<p th:if="${#fields.hasErrors('customerID')}"
+							th:errorclass="text-danger" th:errors="${customerDto.customerID}"></p>
+					</div>
+				</div>
+                <div class="form-group">
+                	<label>Name</label>
+					<div>
+						<input class="form-control" th:field="${customerDto.customerName}">
+						<p th:if="${#fields.hasErrors('customerName')}"
+							th:errorclass="text-danger" th:errors="${customerDto.customerName}"></p>
+					</div>
+				</div>
+                <div class="form-group">
+					<label>Gender</label>
+					<div>
+						<select class="form-select" th:field="${customerDto.customerGender}">
+							<option value="Female">Female</option>
+							<option value="Male">Male</option>
+							<option value="Other">Other</option>
+						</select>
+						<p th:if="${#fields.hasErrors('customerGender')}" 
+							th:errorclass="text-danger" th:errors="${customerDto.customerGender}"></p>
+					</div>
+				</div>	
+                <div class="form-group">
+					<label>Date of Birth</label>
+					<div>
+						<input type="date" class="form-control" th:field="${customerDto.customerDOB}">
+						<p th:if="${#fields.hasErrors('customerDOB')}" 
+							th:errorclass="text-danger" th:errors="${customerDto.customerDOB}"></p>
+					</div>
+				</div>
+                <div class="form-group">
+					<label>Address</label>
+					<div>
+						<input class="form-control" th:field="${customerDto.customerAddress}">
+						<p th:if="${#fields.hasErrors('customerAddress')}" 
+							th:errorclass="text-danger" th:errors="${customerDto.customerAddress}"></p>
+						</div>
+				</div> 
+                <div class="form-group">
+					<label>Phone Number</label>
+					<div>
+						<input class="form-control" th:field="${customerDto.customerPhone}">
+						<p th:if="${#fields.hasErrors('customerPhone')}" 
+							th:errorclass="text-danger" th:errors="${customerDto.customerPhone}"></p>
+					</div>
+				</div>	
+				<div class="form-group">
+					<label>Email Address</label>
+					<div>
+						<input class="form-control" th:field="${customerDto.customerEmail}">
+						<p th:if="${#fields.hasErrors('customerEmail')}" 
+							th:errorclass="text-danger" th:errors="${customerDto.customerEmail}"></p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label>Created Date</label>
+					<div>			
+						<!-- Hiển thị Customer Created Date dưới dạng văn bản -->
+						<p class="form-control-plaintext" th:text="${customerDto.customerDateCreated}"></p>
+																				        
+						<!-- Input ẩn để gửi Customer Created Date trong form -->
+						<input type="hidden" th:field="*{customerDateCreated}">	
+					</div>
+				</div>	
+				<div class="form-group">
+					<label>Updated Date</label>
+					<div>
+						<!-- Hiển thị Customer Updated Date dưới dạng văn bản -->
+						<p class="form-control-plaintext" th:text="${customerDto.customerDateUpdated}"></p>
+																																		        
+						<!-- Input ẩn để gửi Customer Updated Date trong form -->
+						<input type="hidden" th:field="*{customerDateUpdated}">	
+					</div>
+				</div>								
+				<div class="form-group">
+					<label>Paid Amount</label>
+					<div>
+						<input class="form-control" th:field="${customerDto.customerPaidAmount}">
+						<p th:if="${#fields.hasErrors('customerPaidAmount')}" 
+							th:errorclass="text-danger" th:errors="${customerDto.customerPaidAmount}"></p>
+					</div>
+				</div>					
+				<div class="form-group">
+					<label>Debt</label>
+					<div>
+						<input class="form-control" th:field="${customerDto.customerSumDebt}">
+						<p th:if="${#fields.hasErrors('customerSumDebt')}" 
+							th:errorclass="text-danger" th:errors="${customerDto.customerSumDebt}"></p>
+					</div>
+				</div>						
+				<div class="form-group">
+					<label>Type</label>
+					<div>
+						<select class="form-select" th:field="${customerDto.customerType}">
+							<option value="Casual">Casual</option>
+							<option value="Regular">Regular</option>
+							<option value="VIP">VIP</option>
+						</select>
+						<p th:if="${#fields.hasErrors('customerType')}" 
+							th:errorclass="text-danger" th:errors="${customerDto.customerType}"></p>
+					</div>
+				</div>
+              </div>
+              <!-- /.box-body -->
+
+              <div class="box-footer">
+                <div class="row">
+					<div class="col-sm-6" style="display: flex;justify-content: flex-start;">
+						<a class="btn btn-outline-primary" href="/customers" role="button" style="background-color: red;color: white;">Cancel</a>
+					</div>
+					<div class="col-sm-6" style="display: flex;justify-content: flex-end;">
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</div>
+				</div>
+              </div>
+            </form>
+          </div>
+			</div>
+		</div>
+	<!-- /.content-wrapper -->
+
+	</div>
+	<!-- ./wrapper -->
+
+	<!-- jQuery 3 -->
+
+	<div th:replace="fragment/script :: script"></div>
+</body>
+</html>

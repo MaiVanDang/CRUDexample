@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Order Report</h1>
+	
+	<div>
+	    <form action="/orders/report" method="get" style="display:inline;">
+	        <input type="hidden" name="statType" value="reneuveDay">
+	        <button type="submit">Thống kê doanh thu theo ngày</button>
+	    </form>
+	    <form action="/orders/report" method="get" style="display:inline;">
+	        <input type="hidden" name="statType" value="reneuveMonth">
+	        <button type="submit">Thống kê doanh thu theo tháng</button>
+	    </form>
+	    <form action="/orders/report" method="get" style="display:inline;">
+	        <input type="hidden" name="statType" value="reneuveYear">
+	        <button type="submit">Thống kê doanh thu theo năm</button>
+	    </form>
+			
+		<form action="/orders/report" method="get" style="display:inline;">
+			<input type="hidden" name="statType" value="quantityDay">
+			<button type="submit">Thống kê số đơn theo ngày</button>
+		</form>
+		<form action="/orders/report" method="get" style="display:inline;">
+			<input type="hidden" name="statType" value="quantityMonth">
+			<button type="submit">Thống kê số đơn theo tháng</button>
+		</form>
+		<form action="/orders/report" method="get" style="display:inline;">
+			<input type="hidden" name="statType" value="quantityYear">
+			<button type="submit">Thống kê số đơn theo năm</button>
+		</form>			
+			
+		</form>	    
+	</div>
+
+
+	<div id="chartContainer" th:if="${chartData != null}" style="display: flex; justify-content: center; align-items: center; height: 66vh;">
+	    <canvas id="chart" style="max-width: 66vw; max-height: 66vh;"></canvas>
+	    <script th:inline="javascript">
+	        var chartData = /*[[${chartData}]]*/ [];
+			
+			chartData = chartData.filter(item => Array.isArray(item) && typeof item[0] !== 'undefined')
+			                     .map(item => [String(item[0]), item[1]]) // Chuyển a[0] thành chuỗi
+			                     .sort((a, b) => a[0].localeCompare(b[0]));
+					
+	        var labels = chartData.map(item => item[0]);
+	        var values = chartData.map(item => item[1]);
+
+	        var ctx = document.getElementById('chart').getContext('2d');
+	        new Chart(ctx, {
+	            type: 'bar', // Change to 'pie' or 'line' for different charts
+	            data: {
+	                labels: labels,
+	                datasets: [{
+	                    label: 'Statistics',
+	                    data: values,
+	                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+	                    borderColor: 'rgba(75, 192, 192, 1)',
+	                    borderWidth: 1
+	                }]
+	            },
+	            options: {
+	                responsive: true,
+	                maintainAspectRatio: false, // Allow custom aspect ratio
+	                scales: {
+	                    y: { beginAtZero: true }
+	                }
+	            }
+	        });
+	    </script>
+	</div>
+
+
+</body>
+</html>
