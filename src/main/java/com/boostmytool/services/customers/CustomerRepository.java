@@ -10,7 +10,7 @@ import com.boostmytool.model.customers.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, String>{
 	@Query("SELECT c FROM Customer c WHERE " +
-		"LOWER(c.customerID) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+		"CAST(c.id AS string) = :keyword OR " +
 		"LOWER(c.customerName) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
 		"LOWER(c.customerEmail) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
 		"LOWER(c.customerAddress) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +

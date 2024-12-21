@@ -9,8 +9,11 @@ import jakarta.persistence.*;
 @Table(name = "Customer")
 public class Customer {
 	
+
 	@Id
-	private String customerID;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int customerID;
+	
 	private String customerName;
 	private Date customerDOB;
 	private String customerGender;
@@ -22,10 +25,10 @@ public class Customer {
 	private double customerPaidAmount;
 	private double customerSumDebt;
 	private String customerType;
-	public String getCustomerID() {
+	public int getCustomerID() {
 		return customerID;
 	}
-	public void setCustomerID(String customerID) {
+	public void setCustomerID(int customerID) {
 		this.customerID = customerID;
 	}
 	public String getCustomerName() {

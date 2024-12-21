@@ -56,16 +56,16 @@ public class CustomersController {
 			) {
 		
 		// Kiểm tra xem customerID đã tồn tại hay chưa
-	    if (repo.existsById(customerDto.getCustomerID())) {
-	        result.rejectValue("customerID", "error.customerDto", "Customer ID đã tồn tại. Vui lòng nhập lại.");
-	    }
+//	    if (repo.existsById(customerDto.getCustomerID())) {
+//	        result.rejectValue("customerID", "error.customerDto", "Customer ID đã tồn tại. Vui lòng nhập lại.");
+//	    }
 		
-		if(result.hasErrors()) {
-			return "customers/CreateCustomer";
-		}
+//		if(result.hasErrors()) {
+//			return "customers/CreateCustomer";
+//		}
 		
 		Customer customer = new Customer(); 
-		customer.setCustomerID(customerDto.getCustomerID());
+//		customer.setCustomerID(customerDto.getCustomerID());
 		customer.setCustomerName(customerDto.getCustomerName());
 		customer.setCustomerDOB(customerDto.getCustomerDOB());
 		customer.setCustomerGender(customerDto.getCustomerGender());
