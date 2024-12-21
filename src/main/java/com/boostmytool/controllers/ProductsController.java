@@ -17,10 +17,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.boostmytool.model.customers.Customer;
 import com.boostmytool.model.products.Product;
 import com.boostmytool.model.products.ProductDto;
-import com.boostmytool.services.products.ProductService;
-import com.boostmytool.services.products.ProductsRepository;
+import com.boostmytool.service.products.ProductService;
+import com.boostmytool.service.products.ProductsRepository;
 
 import jakarta.validation.Valid;
 
@@ -49,8 +50,8 @@ public class ProductsController {
 	}
 
 	@GetMapping("/search")
-	public String searchProducts(@RequestParam("name") String name, Model model) {
-		return productService.searchByName(name, model);
+	public String searchCustomers(@RequestParam("keyword") String keyword, Model model) {
+	    return productService.searchByKeyword(keyword, model); // Tên file HTML
 	}
 
 	@GetMapping("/create")

@@ -1,4 +1,4 @@
-package com.boostmytool.services.products;
+package com.boostmytool.service.products;
 
 import java.util.Collections;
 import java.util.Date;
@@ -14,6 +14,13 @@ import com.boostmytool.model.products.Product;
 public interface ProductsRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findByNameContaining(String name);
+    
+    @Query(value = "SELECT * FROM products WHERE " +
+            "LOWER(name) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(category) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(brand) LIKE LOWER(CONCAT('%', :keyword, '%'))", 
+            nativeQuery = true)
+     List<Product> findByKeyword(@Param("keyword") String keyword);
     
     @Query(nativeQuery = true, value = "SELECT * FROM search_inf_products(:category, :minPrice, :maxPrice)")
     List<Object[]> findProductsByCustomSearch(

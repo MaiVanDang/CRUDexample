@@ -27,12 +27,6 @@ public class CustomerDto {
 	private Date customerDateUpdated;
 	
 	private String customerGender;
-	
-	private double customerPaidAmount;
-	
-	private double customerSumDebt;
-	
-	private String customerType;
 
 	public String getCustomerID() {
 		return customerID;
@@ -104,30 +98,6 @@ public class CustomerDto {
 
 	public void setCustomerGender(String customerGender) {
 		this.customerGender = customerGender;
-	}
-
-	public double getCustomerPaidAmount() {
-		return customerPaidAmount;
-	}
-
-	public void setCustomerPaidAmount(double customerPaidAmount) {
-		this.customerPaidAmount = customerPaidAmount;
-	}
-
-	public double getCustomerSumDebt() {
-		return customerSumDebt;
-	}
-
-	public void setCustomerSumDebt(double customerSumDebt) {
-		this.customerSumDebt = customerSumDebt;
-	}
-
-	public String getCustomerType() {
-		return customerType;
-	}
-
-	public void setCustomerType(String customerType) {
-		this.customerType = customerType;
 	}
 
 }

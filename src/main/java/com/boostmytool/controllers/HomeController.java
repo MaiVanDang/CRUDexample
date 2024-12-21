@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.boostmytool.model.products.Product;
-import com.boostmytool.services.products.ProductService;
+import com.boostmytool.service.products.ProductService;
 
 @Controller
 @RequestMapping("/admin")

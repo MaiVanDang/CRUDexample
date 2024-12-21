@@ -66,9 +66,6 @@
 									<th>Gender</th>
 									<th>Phone Number</th>
 									<th>Email</th>
-									<th>Paid Amount</th>
-									<th>Total Debt</th>
-									<th>Type</th>
 									<th>Created Date</th>
 									<th>Updated Date</th>
 									<th>Action</th>
@@ -83,9 +80,6 @@
 						<td th:text="${customer.customerGender}"></td>
 						<td th:text="${customer.customerPhone}"></td>
 						<td th:text="${customer.customerEmail}"></td>
-						<td th:text="${customer.customerPaidAmount}"></td>
-						<td th:text="${customer.customerSumDebt}"></td>
-						<td th:text="${customer.customerType}"></td>
 						<td th:text="${customer.customerDateCreated.toString().substring(0, 10)}"></td>
 						<td th:text="${customer.customerDateUpdated.toString().substring(0, 10)}"></td>
 						<td style="white-space:nowrap">

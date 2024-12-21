@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.boostmytool.model.suppliers.Supplier;
 import com.boostmytool.model.suppliers.SupplierDto;
-import com.boostmytool.services.suppliers.SuppliersRepository;
+import com.boostmytool.service.suppliers.SuppliersRepository;
 
 import jakarta.validation.Valid;
 

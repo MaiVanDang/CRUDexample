@@ -19,9 +19,6 @@ public class Customer {
 	private String customerEmail;
 	private Date customerDateCreated;
 	private Date customerDateUpdated;
-	private double customerPaidAmount;
-	private double customerSumDebt;
-	private String customerType;
 	public String getCustomerID() {
 		return customerID;
 	}
@@ -75,24 +72,6 @@ public class Customer {
 	}
 	public void setCustomerDateUpdated(Date customerDateUpdated) {
 		this.customerDateUpdated = customerDateUpdated;
-	}
-	public double getCustomerPaidAmount() {
-		return customerPaidAmount;
-	}
-	public void setCustomerPaidAmount(double customerPaidAmount) {
-		this.customerPaidAmount = customerPaidAmount;
-	}
-	public double getCustomerSumDebt() {
-		return customerSumDebt;
-	}
-	public void setCustomerSumDebt(double customerSumDebt) {
-		this.customerSumDebt = customerSumDebt;
-	}
-	public String getCustomerType() {
-		return customerType;
-	}
-	public void setCustomerType(String customerType) {
-		this.customerType = customerType;
 	}
 	
 //	@Column(columnDefinition = "TEXT")

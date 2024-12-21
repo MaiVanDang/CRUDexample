@@ -1,4 +1,4 @@
-package com.boostmytool.services.products;
+package com.boostmytool.service.products;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,12 +21,6 @@ public class ProductService {
     
     @Autowired
     private FileStorageService fileStorageService;
-
-    public String searchByName(String name, Model model) {
-		List<Product> products = repo.findByNameContaining(name);
-		model.addAttribute("products",products);
-		return "admin/products/showListProduct";
-	}
 
     public String searchById(int id, Model model) {
     	try {
@@ -115,5 +109,12 @@ public class ProductService {
 //        }
 
         return products;
+    }
+    
+    public String searchByKeyword(String keyword, Model model) {
+    	List<Product> products = repo.findByKeyword(keyword);
+    	model.addAttribute("products", products);
+	    model.addAttribute("keyword", keyword); // Truyền từ khóa về view
+        return "admin/products/showListProduct";
     }
 }

@@ -20,7 +20,7 @@ import com.boostmytool.model.orders.Order;
 import com.boostmytool.model.orders.OrderDto;
 import com.boostmytool.model.products.Product;
 import com.boostmytool.service.orders.OrdersRepository;
-import com.boostmytool.services.products.ProductsRepository;
+import com.boostmytool.service.products.ProductsRepository;
 
 import jakarta.validation.Valid;
 

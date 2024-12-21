@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.boostmytool.model.customers.Customer;
 import com.boostmytool.model.customers.CustomerDto;
-import com.boostmytool.services.customers.CustomerRepository;
+import com.boostmytool.service.customers.CustomerRepository;
 
 import jakarta.validation.Valid;
 
@@ -75,10 +75,7 @@ public class CustomersController {
 		customer.setCustomerDateCreated(customerDto.getCustomerDateCreated());
 		
 		customer.setCustomerDateUpdated(customerDto.getCustomerDateUpdated());
-		customer.setCustomerPaidAmount(customerDto.getCustomerPaidAmount());
-		customer.setCustomerSumDebt(customerDto.getCustomerSumDebt());
-		customer.setCustomerType(customerDto.getCustomerType());
-		
+
 		repo.save(customer);
 		
 		return "redirect:/customers";
@@ -107,13 +104,7 @@ public class CustomersController {
 			LocalDate currentDate = LocalDate.now();
 		    Date sqlDate = Date.valueOf(currentDate);    
 		    customerDto.setCustomerDateUpdated(sqlDate);
-			
-//			customerDto.setCustomerDateUpdated(customer.getCustomerDateUpdated());
-		    
-			customerDto.setCustomerPaidAmount(customer.getCustomerPaidAmount());
-			customerDto.setCustomerSumDebt(customer.getCustomerSumDebt());
-			customerDto.setCustomerType(customer.getCustomerType());
-			
+		
 			model.addAttribute("customerDto",customerDto);
 		}
 		catch(Exception ex){
@@ -150,10 +141,7 @@ public class CustomersController {
 			customer.setCustomerEmail(customerDto.getCustomerEmail());
 			customer.setCustomerDateCreated(customerDto.getCustomerDateCreated());
 			customer.setCustomerDateUpdated(customerDto.getCustomerDateUpdated());
-			customer.setCustomerPaidAmount(customerDto.getCustomerPaidAmount());
-			customer.setCustomerSumDebt(customerDto.getCustomerSumDebt());
-			customer.setCustomerType(customerDto.getCustomerType());
-			
+
 			repo.save(customer);
 		}
 		catch(Exception ex){
@@ -186,7 +174,7 @@ public class CustomersController {
 	    List<Customer> customers = repo.findByKeyword(keyword);
 	    model.addAttribute("customers", customers);
 	    model.addAttribute("keyword", keyword); // Truyền từ khóa về view
-	    return "customers/SearchCustomer"; // Tên file HTML
+	    return "admin/customers/SearchCustomer"; // Tên file HTML
 	}
 	
 	@GetMapping("/report")
@@ -199,17 +187,8 @@ public class CustomersController {
 	        case "ageGroup":
 	            chartData = repo.findStatisticsByAgeGroup();
 	            break;
-	        case "customerType":
-	            chartData = repo.findStatisticsByCustomerType();
-	            break;
 	        case "customerAddress":
 	            chartData = repo.findStatisticsByLocation();
-	            break;
-	        case "totalSpending":
-	            chartData = repo.findStatisticsByTotalSpending();
-	            break;
-	        case "customerDebt":
-	            chartData = repo.findStatisticsByDebt();
 	            break;
 	        case "newCustomer":
 	            chartData = repo.findStatisticsByNewCustomers();

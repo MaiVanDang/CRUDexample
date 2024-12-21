@@ -15,18 +15,8 @@
 		<!-- =============================================== -->
 
 		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper">
+		<div class="content-wrapper" style="margin-top: 50px;">
 			<!-- Content Header (Page header) -->
-			<section class="content-header">
-				<h1>
-					Blank page <small>it all starts here</small>
-				</h1>
-				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-					<li><a href="#">Examples</a></li>
-					<li class="active">Blank page</li>
-				</ol>
-			</section>
 
 			<!-- Main content -->
 			<section class="content">
@@ -66,9 +56,6 @@
 									<th>Gender</th>
 									<th>Phone Number</th>
 									<th>Email</th>
-									<th>Paid Amount</th>
-									<th>Total Debt</th>
-									<th>Type</th>
 									<th>Created Date</th>
 									<th>Updated Date</th>
 									<th>Action</th>
@@ -83,9 +70,6 @@
 						<td th:text="${customer.customerGender}"></td>
 						<td th:text="${customer.customerPhone}"></td>
 						<td th:text="${customer.customerEmail}"></td>
-						<td th:text="${customer.customerPaidAmount}"></td>
-						<td th:text="${customer.customerSumDebt}"></td>
-						<td th:text="${customer.customerType}"></td>
 						<td th:text="${customer.customerDateCreated.toString().substring(0, 10)}"></td>
 						<td th:text="${customer.customerDateUpdated.toString().substring(0, 10)}"></td>
 						<td style="white-space:nowrap">

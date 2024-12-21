@@ -1,4 +1,4 @@
-package com.boostmytool.services.suppliers;
+package com.boostmytool.service.suppliers;
 
 import java.util.List;
 
