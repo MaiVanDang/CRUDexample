@@ -43,12 +43,6 @@ public class ProductsController {
 		return "admin/products/index";
 	}
 
-	// Search
-	@GetMapping("/ID/{id}")
-	public String searchProductById(Model model, @PathVariable int id) {
-		return productService.searchById(id, model);
-	}
-
 	@GetMapping("/search")
 	public String searchCustomers(@RequestParam("keyword") String keyword, Model model) {
 	    return productService.searchByKeyword(keyword, model); // Tên file HTML
@@ -99,7 +93,6 @@ public class ProductsController {
 			productDto.setBase_price(product.getBaseprice());
 			productDto.setDiscount(product.getDiscount());
 			productDto.setQuantity(product.getQuantity());
-			productDto.setSupplierID(product.getSupplierID());
 			productDto.setSupplierID(product.getSupplierID());
 			productDto.setCreatedAt(product.getCreatedAt());
 			productDto.setDescription(product.getDescription());

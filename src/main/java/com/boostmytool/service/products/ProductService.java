@@ -21,22 +21,6 @@ public class ProductService {
     
     @Autowired
     private FileStorageService fileStorageService;
-
-    public String searchById(int id, Model model) {
-    	try {
-	        Optional<Product> productOptional = repo.findById(id);
-	        if (productOptional.isPresent()) {
-	            model.addAttribute("product", productOptional.get()); // Extract the actual Product
-	            return "admin/products/showProductById";
-	        } else {
-	            model.addAttribute("error", "Sản phẩm không tồn tại!");
-	            return "admin/Error";
-	        }
-	    } catch (Exception ex) {
-	        System.out.println("Exception: " + ex.getMessage());
-	        return "redirect:/products";
-	    }
-    }
     
     public Product createProduct(ProductDto productDto) throws IOException {
         // Kiểm tra và validate file ảnh
@@ -112,9 +96,22 @@ public class ProductService {
     }
     
     public String searchByKeyword(String keyword, Model model) {
-    	List<Product> products = repo.findByKeyword(keyword);
-    	model.addAttribute("products", products);
-	    model.addAttribute("keyword", keyword); // Truyền từ khóa về view
+        try {
+            int number = Integer.parseInt(keyword);
+            Optional<Product> productOptional = repo.findById(number);
+            if (productOptional.isPresent()) {
+                List<Product> products = List.of(productOptional.get());
+                model.addAttribute("products", products);
+            } else {
+                model.addAttribute("error", "Sản phẩm không tồn tại!");
+                return "admin/Error";
+            }
+        } catch (NumberFormatException e) {
+            List<Product> products = repo.findByKeyword(keyword);
+            model.addAttribute("products", products);
+        }
+        
+        model.addAttribute("keyword", keyword);
         return "admin/products/showListProduct";
     }
 }

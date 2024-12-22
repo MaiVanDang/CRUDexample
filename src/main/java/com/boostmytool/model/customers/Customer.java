@@ -10,7 +10,9 @@ import jakarta.persistence.*;
 public class Customer {
 	
 	@Id
-	private String customerID;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	
 	private String customerName;
 	private Date customerDOB;
 	private String customerGender;
@@ -19,11 +21,11 @@ public class Customer {
 	private String customerEmail;
 	private Date customerDateCreated;
 	private Date customerDateUpdated;
-	public String getCustomerID() {
-		return customerID;
+	public int getId() {
+		return id;
 	}
-	public void setCustomerID(String customerID) {
-		this.customerID = customerID;
+	public void setId(int id) {
+		this.id = id;
 	}
 	public String getCustomerName() {
 		return customerName;

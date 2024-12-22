@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.boostmytool.model.customers.Customer;
 import com.boostmytool.model.customers.CustomerDto;
 import com.boostmytool.service.customers.CustomerRepository;
+import com.boostmytool.service.customers.CustomerService;
 
 import jakarta.validation.Valid;
 
@@ -29,9 +30,12 @@ public class CustomersController {
 	@Autowired
 	private CustomerRepository repo;
 	
+	@Autowired
+	private CustomerService customerService;
+	
 	@GetMapping({"", "/"})
 	public String showCustomerList(Model model) {
-		List<Customer> customers = repo.findAll(Sort.by(Sort.Direction.DESC, "customerID"));
+		List<Customer> customers = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));
 		model.addAttribute("customers", customers);
 		return "admin/customers/index";
 	}
@@ -54,44 +58,22 @@ public class CustomersController {
 			@Valid @ModelAttribute CustomerDto customerDto,
 			BindingResult result
 			) {
-		
-		// Kiểm tra xem customerID đã tồn tại hay chưa
-	    if (repo.existsById(customerDto.getCustomerID())) {
-	        result.rejectValue("customerID", "error.customerDto", "Customer ID đã tồn tại. Vui lòng nhập lại.");
-	    }
-		
-		if(result.hasErrors()) {
+		if (result.hasErrors()) {
 			return "admin/customers/CreateCustomer";
 		}
-		
-		Customer customer = new Customer(); 
-		customer.setCustomerID(customerDto.getCustomerID());
-		customer.setCustomerName(customerDto.getCustomerName());
-		customer.setCustomerDOB(customerDto.getCustomerDOB());
-		customer.setCustomerGender(customerDto.getCustomerGender());
-		customer.setCustomerAddress(customerDto.getCustomerAddress());
-		customer.setCustomerPhone(customerDto.getCustomerPhone());
-		customer.setCustomerEmail(customerDto.getCustomerEmail());
-		customer.setCustomerDateCreated(customerDto.getCustomerDateCreated());
-		
-		customer.setCustomerDateUpdated(customerDto.getCustomerDateUpdated());
-
-		repo.save(customer);
-		
-		return "redirect:/customers";
+		return customerService.createCustomer(customerDto);
 	}
 	
 	@GetMapping("/edit")
 	public String showEditPage(
 			Model model,
-			@RequestParam String id) {
+			@RequestParam int id) {
 		
 		try {
 			Customer customer = repo.findById(id).get();
 			model.addAttribute("customer", customer);
 			
 			CustomerDto customerDto = new CustomerDto(); 
-			customerDto.setCustomerID(customer.getCustomerID());
 			customerDto.setCustomerName(customer.getCustomerName());
 			customerDto.setCustomerDOB(customer.getCustomerDOB());
 			customerDto.setCustomerGender(customer.getCustomerGender());
@@ -119,62 +101,28 @@ public class CustomersController {
 	@PostMapping("/edit")
 	public String updateCustomer(
 			Model model,
-			@RequestParam String id,
+			@RequestParam int id,
 			@Valid @ModelAttribute CustomerDto customerDto,
 			BindingResult result
 			) {
-		
-		try {
-			Customer customer = repo.findById(id).get();
-			model.addAttribute("customer", customer);
-			
-			if(result.hasErrors()) {
-				return "admin/customers/EditCustomer";
-			}
-			
-			customer.setCustomerID(customerDto.getCustomerID());
-			customer.setCustomerName(customerDto.getCustomerName());
-			customer.setCustomerDOB(customerDto.getCustomerDOB());
-			customer.setCustomerGender(customerDto.getCustomerGender());
-			customer.setCustomerAddress(customerDto.getCustomerAddress());
-			customer.setCustomerPhone(customerDto.getCustomerPhone());
-			customer.setCustomerEmail(customerDto.getCustomerEmail());
-			customer.setCustomerDateCreated(customerDto.getCustomerDateCreated());
-			customer.setCustomerDateUpdated(customerDto.getCustomerDateUpdated());
-
-			repo.save(customer);
-		}
-		catch(Exception ex){
-			System.out.println("Exception: " + ex.getMessage());
+		if(result.hasErrors()) {
+			return "admin/customers/EditCustomer";
 		}
 		
-		return "redirect:/customers";
+		return customerService.updateCustomer(customerDto, id, model);
 	}	
 	
 	@GetMapping("/delete")
 	public String deleteCustomer(
-			@RequestParam String id
+			@RequestParam int id
 			) {
-		
-		try {
-			Customer product = repo.findById(id).get();
-			
-			//delete the product
-			repo.delete(product);
-		}catch(Exception ex){
-			System.out.println("Exception: " + ex.getMessage());
-		}
-		
-		return "redirect:/customers";
+		return customerService.deleteCustomer(id);
 	}	
 
 	
 	@GetMapping("/search")
 	public String searchCustomers(@RequestParam("keyword") String keyword, Model model) {
-	    List<Customer> customers = repo.findByKeyword(keyword);
-	    model.addAttribute("customers", customers);
-	    model.addAttribute("keyword", keyword); // Truyền từ khóa về view
-	    return "admin/customers/SearchCustomer"; // Tên file HTML
+	    return customerService.searchCustomers(keyword, model); // Tên file HTML
 	}
 	
 	@GetMapping("/report")

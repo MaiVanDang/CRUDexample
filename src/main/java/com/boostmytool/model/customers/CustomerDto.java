@@ -5,8 +5,6 @@ import java.sql.Date;
 import jakarta.validation.constraints.*;
 
 public class CustomerDto {
-	@NotEmpty(message = "The Customer ID is required")
-	private String customerID;
 	
 	@NotEmpty(message = "The Customer Name is required")
 	private String customerName;
@@ -27,14 +25,6 @@ public class CustomerDto {
 	private Date customerDateUpdated;
 	
 	private String customerGender;
-
-	public String getCustomerID() {
-		return customerID;
-	}
-
-	public void setCustomerID(String customerID) {
-		this.customerID = customerID;
-	}
 
 	public String getCustomerName() {
 		return customerName;

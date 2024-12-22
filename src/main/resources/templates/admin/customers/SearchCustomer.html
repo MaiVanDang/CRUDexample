@@ -59,7 +59,7 @@
 						<table class="table">
 							<thead>
 								<tr>
-									<th>Customer ID</th>
+									<th>ID</th>
 									<th>Name</th>
 									<th>Address</th>
 									<th>Date of Birth</th>
@@ -73,7 +73,7 @@
 							</thead>
 							<tbody>
 								<tr th:each="customer : ${customers}">
-						<td th:text="${customer.customerID}"></td>
+						<td th:text="${customer.id}"></td>
 						<td th:text="${customer.customerName}"></td>
 						<td th:text="${customer.customerAddress}"></td>
 						<td th:text="${customer.customerDOB.toString().substring(0, 10)}"></td>
@@ -84,9 +84,9 @@
 						<td th:text="${customer.customerDateUpdated.toString().substring(0, 10)}"></td>
 						<td style="white-space:nowrap">
 							<a class="btn btn-primary btn-sm"
-								th:href="@{/customers/edit(id=${customer.customerID})}">Edit</a> 
+								th:href="@{/customers/edit(id=${customer.id})}">Edit</a> 
 							<a class="btn btn-danger btn-sm"
-								th:href="@{/customers/delete(id=${customer.customerID})}"
+								th:href="@{/customers/delete(id=${customer.id})}"
 								onclick="return confirm('Are you sure?')">Delete</a>
 						</td>
 					</tr>
@@ -113,7 +113,6 @@
 	<!-- /.content -->
 	<!-- /.content -->
 	<!-- /.content-wrapper -->
-	<footer th:replace="fragment/footer :: footer"></footer>
 	<!-- ./wrapper -->
 
 	<!-- jQuery 3 -->
