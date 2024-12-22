@@ -74,12 +74,12 @@ public class CustomersController {
 			model.addAttribute("customer", customer);
 			
 			CustomerDto customerDto = new CustomerDto(); 
-			customerDto.setCustomerName(customer.getCustomerName());
-			customerDto.setCustomerDOB(customer.getCustomerDOB());
-			customerDto.setCustomerGender(customer.getCustomerGender());
-			customerDto.setCustomerAddress(customer.getCustomerAddress());
-			customerDto.setCustomerPhone(customer.getCustomerPhone());
-			customerDto.setCustomerEmail(customer.getCustomerEmail());
+			customerDto.setName(customer.getName());
+			customerDto.setDob(customer.getDob());
+			customerDto.setCustomerGender(customer.getGender());
+			customerDto.setAddress(customer.getAddress());
+			customerDto.setPhone(customer.getPhone());
+			customerDto.setEmail(customer.getEmail());
 			customerDto.setCustomerDateCreated(customer.getCustomerDateCreated());
 			
 			

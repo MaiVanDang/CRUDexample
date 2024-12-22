@@ -2,23 +2,11 @@ package com.boostmytool.model.customers;
 
 import java.sql.Date;
 
-import jakarta.validation.constraints.*;
+import com.boostmytool.model.person.Persons;
 
-public class CustomerDto {
-	
-	@NotEmpty(message = "The Customer Name is required")
-	private String customerName;
-	
-	@NotEmpty(message = "The Customer Address is required")
-	private String customerAddress;
-	
-	@NotEmpty(message = "The Customer Phone Number is required")
-	private String customerPhone;
-	
-	@NotEmpty(message = "The Customer Email Address is required")
-	private String customerEmail;
-	
-	private Date customerDOB;
+import jakarta.validation.constraints.NotEmpty;
+
+public class CustomerDto extends Persons{
 	
 	private Date customerDateCreated;
 	
@@ -26,46 +14,54 @@ public class CustomerDto {
 	
 	private String customerGender;
 
-	public String getCustomerName() {
-		return customerName;
-	}
+	// No-argument constructor
+    public CustomerDto() {}
 
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
-	}
+    // Ghi đè getter và setter cho các thuộc tính kế thừa
+    @NotEmpty(message = "The Customer Name is required")
+    @Override
+    public String getName() {
+        return super.getName();
+    }
+    
+    @Override
+    public void setName(String name) {
+        super.setName(name);
+    }
+    
+    @NotEmpty(message = "The Customer Address is required")
+    @Override
+    public String getAddress() {
+        return super.getAddress();
+    }
 
-	public Date getCustomerDOB() {
-		return customerDOB;
-	}
+    @Override
+    public void setAddress(String address) {
+        super.setAddress(address);
+    }
+    
+    @NotEmpty(message = "The Customer Phone Number is required")
+    @Override
+    public String getPhone() {
+        return super.getPhone();
+    }
 
-	public void setCustomerDOB(Date customerDOB) {
-		this.customerDOB = customerDOB;
-	}
+    @Override
+    public void setPhone(String phone) {
+        super.setPhone(phone);
+    }
+    
+    @NotEmpty(message = "The Customer Email Address is required")
+    @Override
+    public String getEmail() {
+        return super.getEmail();
+    }
 
-	public String getCustomerAddress() {
-		return customerAddress;
-	}
-
-	public void setCustomerAddress(String customerAddress) {
-		this.customerAddress = customerAddress;
-	}
-
-	public String getCustomerPhone() {
-		return customerPhone;
-	}
-
-	public void setCustomerPhone(String customerPhone) {
-		this.customerPhone = customerPhone;
-	}
-
-	public String getCustomerEmail() {
-		return customerEmail;
-	}
-
-	public void setCustomerEmail(String customerEmail) {
-		this.customerEmail = customerEmail;
-	}
-
+    @Override
+    public void setEmail(String email) {
+        super.setEmail(email);
+    }
+    
 	public Date getCustomerDateCreated() {
 		return customerDateCreated;
 	}

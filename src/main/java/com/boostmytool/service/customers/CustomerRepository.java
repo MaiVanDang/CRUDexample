@@ -10,19 +10,19 @@ import com.boostmytool.model.customers.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, Integer>{
 	@Query("SELECT c FROM Customer c WHERE " +
-		"LOWER(c.customerName) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
-		"LOWER(c.customerEmail) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
-		"LOWER(c.customerAddress) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
-		"c.customerPhone LIKE CONCAT('%', :keyword, '%')")
+		"LOWER(c.name) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+		"LOWER(c.email) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+		"LOWER(c.address) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+		"c.phone LIKE CONCAT('%', :keyword, '%')")
 	List<Customer> findByKeyword(@Param("keyword") String keyword);
 	
 	
 	// Thống kê theo nhóm tuổi
     @Query("SELECT " +
            "CASE " +
-           "  WHEN YEAR(CURRENT_DATE) - YEAR(c.customerDOB) < 18 THEN '< 18 tuổi' " +
-           "  WHEN YEAR(CURRENT_DATE) - YEAR(c.customerDOB) BETWEEN 18 AND 30 THEN '18 - 30 tuổi' " +
-           "  WHEN YEAR(CURRENT_DATE) - YEAR(c.customerDOB) BETWEEN 31 AND 50 THEN '31 - 50 tuổi' " +
+           "  WHEN YEAR(CURRENT_DATE) - YEAR(c.dob) < 18 THEN '< 18 tuổi' " +
+           "  WHEN YEAR(CURRENT_DATE) - YEAR(c.dob) BETWEEN 18 AND 30 THEN '18 - 30 tuổi' " +
+           "  WHEN YEAR(CURRENT_DATE) - YEAR(c.dob) BETWEEN 31 AND 50 THEN '31 - 50 tuổi' " +
            "  ELSE 'Trên 50' " +
            "END AS ageGroup, " +
            "COUNT(c) " +
@@ -31,9 +31,9 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer>{
     List<Object[]> findStatisticsByAgeGroup();
     
     // Thống kê theo địa chỉ (lấy phần tỉnh từ địa chỉ)
-    @Query("SELECT SUBSTRING_INDEX(c.customerAddress, ',', -1) AS province, COUNT(c) " +
+    @Query("SELECT SUBSTRING_INDEX(c.address, ',', -1) AS province, COUNT(c) " +
            "FROM Customer c " +
-           "GROUP BY SUBSTRING_INDEX(c.customerAddress, ',', -1)")
+           "GROUP BY SUBSTRING_INDEX(c.address, ',', -1)")
     List<Object[]> findStatisticsByLocation();
     
     // Thống kê khách hàng mới (đăng ký hàng tháng trong năm hiện tại)

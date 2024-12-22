@@ -12,12 +12,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.boostmytool.model.customers.Customer;
 import com.boostmytool.model.products.Product;
 import com.boostmytool.model.products.ProductDto;
 import com.boostmytool.service.products.ProductService;

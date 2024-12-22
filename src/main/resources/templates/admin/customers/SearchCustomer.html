@@ -74,12 +74,12 @@
 							<tbody>
 								<tr th:each="customer : ${customers}">
 						<td th:text="${customer.id}"></td>
-						<td th:text="${customer.customerName}"></td>
-						<td th:text="${customer.customerAddress}"></td>
-						<td th:text="${customer.customerDOB.toString().substring(0, 10)}"></td>
-						<td th:text="${customer.customerGender}"></td>
-						<td th:text="${customer.customerPhone}"></td>
-						<td th:text="${customer.customerEmail}"></td>
+						<td th:text="${customer.name}"></td>
+						<td th:text="${customer.address}"></td>
+						<td th:text="${customer.dob.toString().substring(0, 10)}"></td>
+						<td th:text="${customer.gender}"></td>
+						<td th:text="${customer.phone}"></td>
+						<td th:text="${customer.email}"></td>
 						<td th:text="${customer.customerDateCreated.toString().substring(0, 10)}"></td>
 						<td th:text="${customer.customerDateUpdated.toString().substring(0, 10)}"></td>
 						<td style="white-space:nowrap">

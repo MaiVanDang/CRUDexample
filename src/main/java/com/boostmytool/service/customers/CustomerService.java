@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 
 import com.boostmytool.model.customers.Customer;
 import com.boostmytool.model.customers.CustomerDto;
-import com.boostmytool.model.products.Product;
 
 @Service
 public class CustomerService {
@@ -21,12 +20,12 @@ public class CustomerService {
 		
 
 		Customer customer = new Customer();
-		customer.setCustomerName(customerDto.getCustomerName());
-		customer.setCustomerDOB(customerDto.getCustomerDOB());
-		customer.setCustomerGender(customerDto.getCustomerGender());
-		customer.setCustomerAddress(customerDto.getCustomerAddress());
-		customer.setCustomerPhone(customerDto.getCustomerPhone());
-		customer.setCustomerEmail(customerDto.getCustomerEmail());
+		customer.setName(customerDto.getName());
+		customer.setDob(customerDto.getDob());
+		customer.setGender(customerDto.getGender());
+		customer.setAddress(customerDto.getAddress());
+		customer.setPhone(customerDto.getPhone());
+		customer.setEmail(customerDto.getEmail());
 		customer.setCustomerDateCreated(customerDto.getCustomerDateCreated());
 
 		customer.setCustomerDateUpdated(customerDto.getCustomerDateUpdated());
@@ -41,12 +40,12 @@ public class CustomerService {
 			Customer customer = repo.findById(id).get();
 			model.addAttribute("customer", customer);
 			
-			customer.setCustomerName(customerDto.getCustomerName());
-			customer.setCustomerDOB(customerDto.getCustomerDOB());
-			customer.setCustomerGender(customerDto.getCustomerGender());
-			customer.setCustomerAddress(customerDto.getCustomerAddress());
-			customer.setCustomerPhone(customerDto.getCustomerPhone());
-			customer.setCustomerEmail(customerDto.getCustomerEmail());
+			customer.setName(customerDto.getName());
+			customer.setDob(customerDto.getDob());
+			customer.setGender(customerDto.getGender());
+			customer.setAddress(customerDto.getAddress());
+			customer.setPhone(customerDto.getPhone());
+			customer.setEmail(customerDto.getEmail());
 			customer.setCustomerDateCreated(customerDto.getCustomerDateCreated());
 			customer.setCustomerDateUpdated(customerDto.getCustomerDateUpdated());
 

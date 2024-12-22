@@ -2,23 +2,19 @@ package com.boostmytool.model.customers;
 
 import java.sql.Date;
 
+import com.boostmytool.model.person.Persons;
+
 import jakarta.persistence.*;
 
 
 @Entity
 @Table(name = "Customer")
-public class Customer {
+public class Customer extends Persons{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private String customerName;
-	private Date customerDOB;
-	private String customerGender;
-	private String customerAddress;
-	private String customerPhone;
-	private String customerEmail;
 	private Date customerDateCreated;
 	private Date customerDateUpdated;
 	public int getId() {
@@ -26,42 +22,6 @@ public class Customer {
 	}
 	public void setId(int id) {
 		this.id = id;
-	}
-	public String getCustomerName() {
-		return customerName;
-	}
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
-	}
-	public Date getCustomerDOB() {
-		return customerDOB;
-	}
-	public void setCustomerDOB(Date customerDOB) {
-		this.customerDOB = customerDOB;
-	}
-	public String getCustomerGender() {
-		return customerGender;
-	}
-	public void setCustomerGender(String customerGender) {
-		this.customerGender = customerGender;
-	}
-	public String getCustomerAddress() {
-		return customerAddress;
-	}
-	public void setCustomerAddress(String customerAddress) {
-		this.customerAddress = customerAddress;
-	}
-	public String getCustomerPhone() {
-		return customerPhone;
-	}
-	public void setCustomerPhone(String customerPhone) {
-		this.customerPhone = customerPhone;
-	}
-	public String getCustomerEmail() {
-		return customerEmail;
-	}
-	public void setCustomerEmail(String customerEmail) {
-		this.customerEmail = customerEmail;
 	}
 	public Date getCustomerDateCreated() {
 		return customerDateCreated;
