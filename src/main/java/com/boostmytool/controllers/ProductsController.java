@@ -57,7 +57,7 @@ public class ProductsController {
 	}
 
 	@PostMapping("/create")
-	public String createProduct(@Valid @ModelAttribute ProductDto productDto, BindingResult result) {
+	public String createProduct(@Valid @ModelAttribute ProductDto productDto, BindingResult result, Model model) {
 		// Kiểm tra validation
 		if (productDto.getImageFile().isEmpty()) {
 			result.addError(new FieldError("productDto", "imageFile", "The image file is required"));
@@ -71,7 +71,11 @@ public class ProductsController {
 			// Gọi service để tạo sản phẩm
 			productService.createProduct(productDto);
 			return "redirect:/products";
-		} catch (Exception ex) {
+		}catch (IllegalArgumentException e) {
+			result.rejectValue("supplierID", "error.supplierID", 
+                    "Mã nhà cung cấp không tồn tại");
+			return "admin/products/CreateProduct";
+        }catch (Exception ex) {
 			// Xử lý ngoại lệ nếu cần
 			result.addError(new FieldError("productDto", "", "Error creating product"));
 			return "admin/products/CreateProduct";

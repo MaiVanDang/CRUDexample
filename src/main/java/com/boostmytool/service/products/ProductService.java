@@ -7,7 +7,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.boostmytool.model.products.Product;
 import com.boostmytool.model.products.ProductDto;
+import com.boostmytool.model.suppliers.Supplier;
 import com.boostmytool.service.FileStorageService;
+import com.boostmytool.service.suppliers.SuppliersRepository;
 
 import java.io.IOException;
 import java.util.List;
@@ -20,18 +22,35 @@ public class ProductService {
     private ProductsRepository repo;
     
     @Autowired
+    private SuppliersRepository repoS;
+    
+    @Autowired
     private FileStorageService fileStorageService;
     
     public Product createProduct(ProductDto productDto) throws IOException {
         // Kiểm tra và validate file ảnh
-        if (productDto.getImageFile().isEmpty()) {
-            throw new IllegalArgumentException("The image file is required");
+        if (productDto.getImageFile() == null || productDto.getImageFile().isEmpty()) {
+            throw new IllegalArgumentException("image:The image file is required");
         }
 
         MultipartFile image = productDto.getImageFile();
-        
+
+        // Kiểm tra sự tồn tại của nhà cung cấp trước khi lưu file
+        int supplierID;
+        try {
+            supplierID = Integer.parseInt(productDto.getSupplierID().replaceAll("[^0-9]", ""));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("supplierID:Mã nhà cung cấp không hợp lệ");
+        }
+
+        Optional<Supplier> supplierOptional = repoS.findById(supplierID);
+        if (!supplierOptional.isPresent()) {
+            throw new IllegalArgumentException("supplierID:Mã nhà cung cấp không tồn tại");
+        }
+
         // Lưu file và lấy tên file
         String storageFileName = fileStorageService.saveFile(image);
+        
         // Tạo đối tượng Product
         Product product = new Product();
         product.setName(productDto.getName());
