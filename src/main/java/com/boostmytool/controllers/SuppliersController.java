@@ -19,7 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.boostmytool.model.suppliers.Supplier;
 import com.boostmytool.model.suppliers.SupplierDto;
-import com.boostmytool.services.suppliers.SuppliersRepository;
+import com.boostmytool.service.suppliers.SupplierService;
+import com.boostmytool.service.suppliers.SuppliersRepository;
 
 import jakarta.validation.Valid;
 
@@ -31,86 +32,37 @@ public class SuppliersController {
 
     @Autowired
     private SuppliersRepository repo;
-
+    @Autowired
+	private SupplierService supplierService;
     @GetMapping({"", "/"})
     public String showSupplierList(Model model) {
         List<Supplier> suppliers = repo.findAll();
         model.addAttribute("suppliers", suppliers);
-        return "suppliers/index";
+        return "admin/suppliers/index";
     }
 
     // Tìm kiếm nhà cung cấp
     @GetMapping("/search")
     public String searchSuppliers(@RequestParam("keyword") String keyword, Model model) {
-        List<Supplier> suppliers;
-        if (keyword == null || keyword.isEmpty()) {
-            // Nếu không có từ khóa, khong tra ve gi
-            suppliers = null;
-        } else {
-            // Tìm kiếm nhà cung cấp theo từ khóa trên nhiều trường
-            suppliers = repo.searchSuppliersByKeyword(keyword);
-        }
-        
-        // Tìm kiếm nhà cung cấp theo từ khóa trên nhiều trường
-        model.addAttribute("suppliers", suppliers);
-        model.addAttribute("keyword", keyword); // Giữ lại từ khóa để hiển thị trên form
-        return "suppliers/SearchSupplier";
+        return supplierService.searchByKeyword(keyword, model);
     }
 
     @GetMapping("/create")
     public String showCreatePage(Model model) {
         SupplierDto supplierDto = new SupplierDto();
         model.addAttribute("supplierDto", supplierDto);
-        return "suppliers/CreateSupplier";
+        return "admin/suppliers/CreateSupplier";
     }
 
     @PostMapping("/create")
-    public String createSupplier(
-            @Valid @ModelAttribute SupplierDto supplierDto,
-            BindingResult result) {
+    public String createSupplier(@Valid @ModelAttribute SupplierDto supplierDto,BindingResult result) {
         if (supplierDto.getImageLogo().isEmpty()) {
             result.addError(new FieldError("supplierDto", "imageLogo", "The Logo file is required"));
         }
-
-        if (repo.existsById(supplierDto.getId())) {
-            result.addError(new FieldError("supplierDto", "id", "This ID already exists. Please choose another ID."));
-        }
-
         if (result.hasErrors()) {
-            return "suppliers/CreateSupplier";
+            return "admin/suppliers/CreateSupplier";
         }
-
-        Supplier supplier = new Supplier();
-        supplier.setId(supplierDto.getId());
-        supplier.setName(supplierDto.getName());
-        supplier.setAddress(supplierDto.getAddress());
-        supplier.setDescription(supplierDto.getDescription());
-        supplier.setPhone(supplierDto.getPhone());
-        supplier.setEmail(supplierDto.getEmail());
-
-        Date createAt = new Date();
-        supplier.setCreatedAt(createAt);
-        supplier.setUpdatedAt(createAt);
-
-        // Lưu ảnh và thêm thông tin ảnh
-        MultipartFile image = supplierDto.getImageLogo();
-        String storageFileName = createAt.getTime() + "_" + image.getOriginalFilename();
-        String uploadDir = "public/imageLogo/";
-        try {
-            Path uploadPath = Paths.get(uploadDir);
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
-            try (InputStream inputStream = image.getInputStream()) {
-                Files.copy(inputStream, uploadPath.resolve(storageFileName), StandardCopyOption.REPLACE_EXISTING);
-            }
-            supplier.setImageLogo(storageFileName);
-        } catch (Exception e) {
-            System.out.println("Error uploading image: " + e.getMessage());
-        }
-
-        repo.save(supplier);
-        return "redirect:/suppliers";
+        return supplierService.createSupplier(supplierDto);
     }
 
 
@@ -118,10 +70,10 @@ public class SuppliersController {
     @GetMapping("/edit")
     public String showEditPage(
             Model model,
-            @RequestParam(value = "id", required = true) String id) {
+            @RequestParam(value = "id", required = true) int id) {
 
         try {
-            Supplier supplier = repo.findById(id).orElseThrow(() -> new RuntimeException("Supplier not found"));
+            Supplier supplier = repo.findById(id).get();
             model.addAttribute("supplier", supplier);
 
             SupplierDto supplierDto = new SupplierDto();
@@ -137,78 +89,25 @@ public class SuppliersController {
             return "redirect:/suppliers";
         }
 
-        return "suppliers/EditSupplier";
+        return "admin/suppliers/EditSupplier";
     }
 
     @PostMapping("/edit")
     public String updateSupplier(
             Model model,
-            @RequestParam(value = "id", required = true) String id,
+            @RequestParam(value = "id", required = true) int id,
             @Valid @ModelAttribute SupplierDto supplierDto,
             BindingResult result) {
-
-        try {
-            Supplier supplier = repo.findById(id).orElseThrow(() -> new RuntimeException("Supplier not found"));
-
             if (result.hasErrors()) {
-                model.addAttribute("supplier", supplier);
-                return "suppliers/EditSupplier";
+                return "admin/suppliers/EditSupplier";
             }
-
-            supplier.setName(supplierDto.getName());
-            supplier.setEmail(supplierDto.getEmail());
-            supplier.setPhone(supplierDto.getPhone());
-            supplier.setAddress(supplierDto.getAddress());
-            supplier.setDescription(supplierDto.getDescription());
-            supplier.setPhone(supplierDto.getPhone());
-            supplier.setEmail(supplierDto.getEmail());
-
-            // Cập nhật ảnh nếu được tải lên
-            if (!supplierDto.getImageLogo().isEmpty()) {
-                String uploadDir = "public/imageLogo/";
-                Path oldImagePath = Paths.get(uploadDir + supplier.getImageLogo());
-                try {
-                    Files.deleteIfExists(oldImagePath);
-                } catch (Exception ex) {
-                    System.out.println("Error deleting old image: " + ex.getMessage());
-                }
-
-                MultipartFile image = supplierDto.getImageLogo();
-                String storageFileName = new Date().getTime() + "_" + image.getOriginalFilename();
-                try (InputStream inputStream = image.getInputStream()) {
-                    Files.copy(inputStream, Paths.get(uploadDir + storageFileName), StandardCopyOption.REPLACE_EXISTING);
-                }
-                supplier.setImageLogo(storageFileName);
-            }
-
-            supplier.setUpdatedAt(new Date());
-            repo.save(supplier);
-
-        } catch (Exception e) {
-            System.out.println("Error updating supplier: " + e.getMessage());
-        }
-
-        return "redirect:/suppliers";
+            return supplierService.updateSupplier(supplierDto, id, model);
     }
 
 
     @GetMapping("/delete")
     public String deleteSupplier(
-            @RequestParam(value = "id", required = true) String id) {
-        try {
-            Supplier supplier = repo.findById(id).orElseThrow(() -> new RuntimeException("Supplier not found"));
-            // delete supplier images
-            Path imagePath = Paths.get("public/imageLogo/" + supplier.getImageLogo());
-            try {
-                Files.deleteIfExists(imagePath);
-            } catch (Exception ex) {
-                System.out.println("Exception: " + ex.getMessage());
-            }
-
-            repo.delete(supplier);
-        } catch (Exception ex) {
-            System.out.println("Exception: " + ex.getMessage());
-        }
-        return "redirect:/suppliers";
+            @RequestParam(value = "id", required = true) int id) {
+    	return supplierService.deleteSupplier(id);
     }
 }
