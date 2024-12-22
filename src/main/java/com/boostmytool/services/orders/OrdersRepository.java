@@ -1,4 +1,4 @@
-package com.boostmytool.service.orders;
+package com.boostmytool.services.orders;
 
 import java.util.List;
 
