@@ -2,8 +2,9 @@ package com.boostmytool.service.employee;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.boostmytool.model.employee.Employee;
-import com.boostmytool.model.employee.EmployeeDto;
+
+import com.boostmytool.model.person.Employee;
+import com.boostmytool.model.person.EmployeeDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -62,13 +63,13 @@ public class EmployeeService {
     // Chuyển đổi từ DTO sang Entity
     private Employee mapDtoToEntity(EmployeeDto employeeDto) {
         Employee employee = new Employee();
-        employee.setEmployeeID(employeeDto.getEmployeeID());
-        employee.setEmployeeName(employeeDto.getEmployeeName());
+        employee.setId(employeeDto.getEmployeeID());
+        employee.setName(employeeDto.getEmployeeName());
         employee.setGender(employeeDto.getGender());
-        employee.setDateOfBirth(new java.sql.Date(employeeDto.getDateOfBirth().getTime()));
-        employee.setEmployeeAddress(employeeDto.getEmployeeAddress());
-        employee.setEmployeePhoneNumber(employeeDto.getEmployeePhoneNumber());
-        employee.setEmployeeEmail(employeeDto.getEmployeeEmail());
+        employee.setDOB(employeeDto.getDateOfBirth());
+        employee.setAddress(employeeDto.getEmployeeAddress());
+        employee.setPhone(employeeDto.getEmployeePhoneNumber());
+        employee.setEmail(employeeDto.getEmployeeEmail());
         employee.setPosition(employeeDto.getPosition());
         employee.setSalary((float) employeeDto.getSalary());
         employee.setEmployeeStatus(employeeDto.getEmployeeStatus());
@@ -77,12 +78,12 @@ public class EmployeeService {
 
     // Cập nhật Entity bằng DTO
     private void updateEntityWithDto(Employee employee, EmployeeDto employeeDto) {
-        employee.setEmployeeName(employeeDto.getEmployeeName());
+        employee.setName(employeeDto.getEmployeeName());
         employee.setGender(employeeDto.getGender());
-        employee.setDateOfBirth(new java.sql.Date(employeeDto.getDateOfBirth().getTime()));
-        employee.setEmployeeAddress(employeeDto.getEmployeeAddress());
-        employee.setEmployeePhoneNumber(employeeDto.getEmployeePhoneNumber());
-        employee.setEmployeeEmail(employeeDto.getEmployeeEmail());
+        employee.setDOB(employeeDto.getDateOfBirth());
+        employee.setAddress(employeeDto.getEmployeeAddress());
+        employee.setPhone(employeeDto.getEmployeePhoneNumber());
+        employee.setEmail(employeeDto.getEmployeeEmail());
         employee.setPosition(employeeDto.getPosition());
         employee.setSalary((float) employeeDto.getSalary());
         employee.setEmployeeStatus(employeeDto.getEmployeeStatus());

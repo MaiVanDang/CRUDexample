@@ -1,5 +1,6 @@
-package com.boostmytool.model.employee;
+package com.boostmytool.model.person;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import jakarta.validation.constraints.*;
@@ -7,7 +8,7 @@ import jakarta.validation.constraints.*;
 public class EmployeeDto {
     
     @NotEmpty(message = "The employee ID is required")
-    private String employeeID;
+    private int employeeID;
 
     @NotEmpty(message = "The employee name is required")
     @Size(min = 3, message = "The employee name should have at least 3 characters")
@@ -18,7 +19,7 @@ public class EmployeeDto {
     private String gender;
 
     @NotNull(message = "The date of birth is required")
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @NotEmpty(message = "The address is required")
     private String employeeAddress;
@@ -41,12 +42,12 @@ public class EmployeeDto {
     private String employeeStatus;
 
     // Getter and Setter methods
-    public String getEmployeeID() {
+    public int getEmployeeID() {
         return employeeID;
     }
 
-    public void setEmployeeID(String employeeID) {
-        this.employeeID = employeeID;
+    public void setEmployeeID(int i) {
+        this.employeeID = i;
     }
 
     public String getEmployeeName() {
@@ -65,15 +66,17 @@ public class EmployeeDto {
         this.gender = gender;
     }
 
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
+    
 
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
+    public LocalDate getDateOfBirth() {
+		return dateOfBirth;
+	}
 
-    public String getEmployeeAddress() {
+	public void setDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public String getEmployeeAddress() {
         return employeeAddress;
     }
 

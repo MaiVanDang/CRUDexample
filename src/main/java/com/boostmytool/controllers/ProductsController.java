@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.boostmytool.model.customers.Customer;
+import com.boostmytool.model.person.Customer;
 import com.boostmytool.model.products.Product;
 import com.boostmytool.model.products.ProductDto;
 import com.boostmytool.service.products.ProductService;

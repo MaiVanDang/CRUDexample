@@ -1,6 +1,7 @@
-package com.boostmytool.model.customers;
+package com.boostmytool.model.person;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import jakarta.validation.constraints.*;
 
@@ -18,7 +19,7 @@ public class CustomerDto {
 	@NotEmpty(message = "The Customer Email Address is required")
 	private String customerEmail;
 	
-	private Date customerDOB;
+	private LocalDate customerDOB;
 	
 	private Date customerDateCreated;
 	
@@ -34,11 +35,11 @@ public class CustomerDto {
 		this.customerName = customerName;
 	}
 
-	public Date getCustomerDOB() {
+	public LocalDate getCustomerDOB() {
 		return customerDOB;
 	}
 
-	public void setCustomerDOB(Date customerDOB) {
+	public void setCustomerDOB(LocalDate customerDOB) {
 		this.customerDOB = customerDOB;
 	}
 

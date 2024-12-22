@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import com.boostmytool.model.customers.Customer;
-import com.boostmytool.model.customers.CustomerDto;
+import com.boostmytool.model.person.Customer;
+import com.boostmytool.model.person.CustomerDto;
 import com.boostmytool.model.products.Product;
 
 @Service
@@ -21,12 +21,12 @@ public class CustomerService {
 		
 
 		Customer customer = new Customer();
-		customer.setCustomerName(customerDto.getCustomerName());
-		customer.setCustomerDOB(customerDto.getCustomerDOB());
-		customer.setCustomerGender(customerDto.getCustomerGender());
-		customer.setCustomerAddress(customerDto.getCustomerAddress());
-		customer.setCustomerPhone(customerDto.getCustomerPhone());
-		customer.setCustomerEmail(customerDto.getCustomerEmail());
+		customer.setName(customerDto.getCustomerName());
+		customer.setDOB(customerDto.getCustomerDOB());
+		customer.setGender(customerDto.getCustomerGender());
+		customer.setAddress(customerDto.getCustomerAddress());
+		customer.setPhone(customerDto.getCustomerPhone());
+		customer.setEmail(customerDto.getCustomerEmail());
 		customer.setCustomerDateCreated(customerDto.getCustomerDateCreated());
 
 		customer.setCustomerDateUpdated(customerDto.getCustomerDateUpdated());
@@ -41,12 +41,12 @@ public class CustomerService {
 			Customer customer = repo.findById(id).get();
 			model.addAttribute("customer", customer);
 			
-			customer.setCustomerName(customerDto.getCustomerName());
-			customer.setCustomerDOB(customerDto.getCustomerDOB());
-			customer.setCustomerGender(customerDto.getCustomerGender());
-			customer.setCustomerAddress(customerDto.getCustomerAddress());
-			customer.setCustomerPhone(customerDto.getCustomerPhone());
-			customer.setCustomerEmail(customerDto.getCustomerEmail());
+			customer.setName(customerDto.getCustomerName());
+			customer.setDOB(customerDto.getCustomerDOB());
+			customer.setGender(customerDto.getCustomerGender());
+			customer.setAddress(customerDto.getCustomerAddress());
+			customer.setPhone(customerDto.getCustomerPhone());
+			customer.setEmail(customerDto.getCustomerEmail());
 			customer.setCustomerDateCreated(customerDto.getCustomerDateCreated());
 			customer.setCustomerDateUpdated(customerDto.getCustomerDateUpdated());
 

@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.boostmytool.model.customers.Customer;
-import com.boostmytool.model.customers.CustomerDto;
+import com.boostmytool.model.person.Customer;
+import com.boostmytool.model.person.CustomerDto;
 import com.boostmytool.service.customers.CustomerRepository;
 import com.boostmytool.service.customers.CustomerService;
 
@@ -74,12 +74,12 @@ public class CustomersController {
 			model.addAttribute("customer", customer);
 			
 			CustomerDto customerDto = new CustomerDto(); 
-			customerDto.setCustomerName(customer.getCustomerName());
-			customerDto.setCustomerDOB(customer.getCustomerDOB());
-			customerDto.setCustomerGender(customer.getCustomerGender());
-			customerDto.setCustomerAddress(customer.getCustomerAddress());
-			customerDto.setCustomerPhone(customer.getCustomerPhone());
-			customerDto.setCustomerEmail(customer.getCustomerEmail());
+			customerDto.setCustomerName(customer.getName());
+			customerDto.setCustomerDOB(customer.getDOB());
+			customerDto.setCustomerGender(customer.getGender());
+			customerDto.setCustomerAddress(customer.getAddress());
+			customerDto.setCustomerPhone(customer.getPhone());
+			customerDto.setCustomerEmail(customer.getEmail());
 			customerDto.setCustomerDateCreated(customer.getCustomerDateCreated());
 			
 			

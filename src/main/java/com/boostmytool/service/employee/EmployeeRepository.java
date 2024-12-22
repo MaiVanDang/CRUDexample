@@ -2,7 +2,9 @@ package com.boostmytool.service.employee;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import com.boostmytool.model.employee.Employee;
+
+import com.boostmytool.model.person.Employee;
+
 import java.util.List;
 
 public interface EmployeeRepository extends JpaRepository<Employee, String> {

@@ -1,5 +1,6 @@
 package com.boostmytool.controllers;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -10,8 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import com.boostmytool.model.employee.Employee;
-import com.boostmytool.model.employee.EmployeeDto;
+import com.boostmytool.model.person.Employee;
+import com.boostmytool.model.person.EmployeeDto;
 import com.boostmytool.service.employee.EmployeeService;
 
 import jakarta.validation.Valid;
@@ -56,7 +57,7 @@ public class EmployeeController {
     @GetMapping("/create")
     public String showCreatePage(Model model) {
         EmployeeDto employeeDto = new EmployeeDto();
-        employeeDto.setDateOfBirth(new Date());
+//        employeeDto.setDateOfBirth(now LocalDate());
         model.addAttribute("employeeDto", employeeDto);
         return "admin/employees/CreateEmployee";
     }
@@ -87,13 +88,13 @@ public class EmployeeController {
             model.addAttribute("employee", employee);
 
             EmployeeDto employeeDto = new EmployeeDto();
-            employeeDto.setEmployeeID(employee.getEmployeeID());
-            employeeDto.setEmployeeName(employee.getEmployeeName());
+            employeeDto.setEmployeeID(employee.getId());
+            employeeDto.setEmployeeName(employee.getName());
             employeeDto.setGender(employee.getGender());
-            employeeDto.setDateOfBirth(employee.getDateOfBirth());
-            employeeDto.setEmployeeAddress(employee.getEmployeeAddress());
-            employeeDto.setEmployeePhoneNumber(employee.getEmployeePhoneNumber());
-            employeeDto.setEmployeeEmail(employee.getEmployeeEmail());
+            employeeDto.setDateOfBirth(employee.getDOB());
+            employeeDto.setEmployeeAddress(employee.getAddress());
+            employeeDto.setEmployeePhoneNumber(employee.getPhone());
+            employeeDto.setEmployeeEmail(employee.getEmail());
             employeeDto.setPosition(employee.getPosition());
             employeeDto.setSalary(employee.getSalary());
             employeeDto.setEmployeeStatus(employee.getEmployeeStatus());
