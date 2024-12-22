@@ -5,8 +5,6 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.validation.constraints.*;
 
 public class SupplierDto {
-	@NotEmpty(message = "The ID is required")
-	private String id;
 	@NotEmpty(message = "The name is required")
 	private String name;
 	
@@ -75,15 +73,4 @@ public class SupplierDto {
 	public void setImageLogo(MultipartFile imageLogo) {
 		this.imageLogo = imageLogo;
 	}
-
-
-	public String getId() {
-		return id;
-	}
-
-
-	public void setId(String id) {
-		this.id = id;
-	}
-	
 }

@@ -25,14 +25,10 @@
 							<a class="btn btn-success" href="/suppliers/create">Create Supplier</a>
 							
 							<!-- Form tìm kiếm -->
-							<form class="mb-4" method="GET" action="/suppliers/search" style = "float: right">
-								<div class="input-group" style="
-								    display: flex; /* Căn ô input và nút Search cùng hàng */
-								    align-items: center;
-								    gap: 5px; /* Khoảng cách giữa input và nút Search */
-								">
-								<input class="form-control me-2" type="text" name="keyword" placeholder="Search suppliers..." aria-label="Search" >
-								<button class="btn btn-outline-success" type="submit">Search</button>
+							<form class="mb-4" method="GET" action="/suppliers/search" style="float: right">
+								<div class="input-group" style="display: flex; /* Căn ô input và nút Search cùng hàng */ align-items: center; gap: 5px;">
+									<input type="text" name="keyword" class="form-control" placeholder="Search by name" />
+									<button class="btn btn-primary" type="submit">Search</button>
 								</div>
 							</form>
 							

@@ -10,8 +10,8 @@ import jakarta.persistence.*;
 public class Supplier {
 
 	@Id
-//	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private String id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
 	
 	private String name;
 	@Column (columnDefinition = "TEXT")
@@ -40,10 +40,10 @@ public class Supplier {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getName() {

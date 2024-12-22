@@ -25,14 +25,6 @@
 					<form method="post" enctype="multipart/form-data" th:object="${supplierDto}">
 						<div class="box-body">
 							<div class="form-group">
-								<label>ID</label>
-								<div>
-									<input class="form-control" th:field="${supplierDto.id}">
-									<p th:if="${#fields.hasErrors('id')}"
-										th:errorclass="text-danger" th:errors="${supplierDto.id}"></p>
-								</div>
-							</div>
-							<div class="form-group">
 								<label>Name</label>
 								<div>
 									<input class="form-control" th:field="${supplierDto.name}">

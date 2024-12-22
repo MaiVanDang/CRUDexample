@@ -71,17 +71,11 @@ public class SuppliersController {
         if (supplierDto.getImageLogo().isEmpty()) {
             result.addError(new FieldError("supplierDto", "imageLogo", "The Logo file is required"));
         }
-
-        if (repo.existsById(supplierDto.getId())) {
-            result.addError(new FieldError("supplierDto", "id", "This ID already exists. Please choose another ID."));
-        }
-
         if (result.hasErrors()) {
             return "admin/suppliers/CreateSupplier";
         }
 
         Supplier supplier = new Supplier();
-        supplier.setId(supplierDto.getId());
         supplier.setName(supplierDto.getName());
         supplier.setAddress(supplierDto.getAddress());
         supplier.setDescription(supplierDto.getDescription());
@@ -118,10 +112,10 @@ public class SuppliersController {
     @GetMapping("/edit")
     public String showEditPage(
             Model model,
-            @RequestParam(value = "id", required = true) String id) {
+            @RequestParam(value = "id", required = true) int id) {
 
         try {
-            Supplier supplier = repo.findById(id).orElseThrow(() -> new RuntimeException("Supplier not found"));
+            Supplier supplier = repo.findById(id).get();
             model.addAttribute("supplier", supplier);
 
             SupplierDto supplierDto = new SupplierDto();
@@ -143,12 +137,12 @@ public class SuppliersController {
     @PostMapping("/edit")
     public String updateSupplier(
             Model model,
-            @RequestParam(value = "id", required = true) String id,
+            @RequestParam(value = "id", required = true) int id,
             @Valid @ModelAttribute SupplierDto supplierDto,
             BindingResult result) {
 
         try {
-            Supplier supplier = repo.findById(id).orElseThrow(() -> new RuntimeException("Supplier not found"));
+            Supplier supplier = repo.findById(id).get();
 
             if (result.hasErrors()) {
                 model.addAttribute("supplier", supplier);
@@ -194,9 +188,9 @@ public class SuppliersController {
 
     @GetMapping("/delete")
     public String deleteSupplier(
-            @RequestParam(value = "id", required = true) String id) {
+            @RequestParam(value = "id", required = true) int id) {
         try {
-            Supplier supplier = repo.findById(id).orElseThrow(() -> new RuntimeException("Supplier not found"));
+            Supplier supplier = repo.findById(id).get();
             // delete supplier images
             Path imagePath = Paths.get("public/images/" + supplier.getImageLogo());
             try {
