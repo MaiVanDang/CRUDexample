@@ -14,8 +14,7 @@ public interface SuppliersRepository extends JpaRepository<Supplier, Integer>{
             "LOWER(s.address) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
             "LOWER(s.description) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
             "LOWER(s.phone) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
-            "LOWER(s.email) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
-            "LOWER(FUNCTION('DATE_FORMAT', s.createdAt, '%Y-%m-%d')) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
-            "LOWER(FUNCTION('DATE_FORMAT', s.updatedAt, '%Y-%m-%d')) LIKE LOWER(CONCAT('%', :keyword, '%'))")
-    List<Supplier> searchSuppliersByKeyword(@Param("keyword") String keyword);	
+            "LOWER(s.email) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    List<Supplier> findByKeyword(@Param("keyword") String keyword);
+    
 }
