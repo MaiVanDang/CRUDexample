@@ -26,9 +26,9 @@
 							<div class="form-group">
 								<label>Name</label>
 								<div>
-									<input class="form-control" th:field="${employeeDto.employeeName}">
-									<p th:if="${#fields.hasErrors('employeeName')}"
-										th:errorclass="text-danger" th:errors="${employeeDto.employeeName}"></p>
+									<input class="form-control" th:field="${employeeDto.name}">
+									<p th:if="${#fields.hasErrors('name')}"
+										th:errorclass="text-danger" th:errors="${employeeDto.name}"></p>
 								</div>
 							</div>
 							<div class="form-group">
@@ -45,21 +45,21 @@
 							</div>
 							<div class="form-group">
 								<label>Date of Birth</label>
-								<input class="form-control" type="date" th:field="${employeeDto.dateOfBirth}">
-								<p th:if="${#fields.hasErrors('dateOfBirth')}"
-									th:errorclass="text-danger" th:errors="${employeeDto.dateOfBirth}"></p>
+								<input class="form-control" type="date" th:field="${employeeDto.dob}">
+								<p th:if="${#fields.hasErrors('dob')}"
+									th:errorclass="text-danger" th:errors="${employeeDto.dob}"></p>
 							</div>
 							<div class="form-group">
 								<label>Phone Number</label>
-								<input class="form-control" type="tel" th:field="${employeeDto.employeePhoneNumber}">
-								<p th:if="${#fields.hasErrors('employeePhoneNumber')}"
-									th:errorclass="text-danger" th:errors="${employeeDto.employeePhoneNumber}"></p>
+								<input class="form-control" type="tel" th:field="${employeeDto.phone}">
+								<p th:if="${#fields.hasErrors('phone')}"
+									th:errorclass="text-danger" th:errors="${employeeDto.phone}"></p>
 							</div>
 							<div class="form-group">
 								<label>Email</label>
-								<input class="form-control" type="email" th:field="${employeeDto.employeeEmail}">
-								<p th:if="${#fields.hasErrors('employeeEmail')}"
-									th:errorclass="text-danger" th:errors="${employeeDto.employeeEmail}"></p>
+								<input class="form-control" type="email" th:field="${employeeDto.email}">
+								<p th:if="${#fields.hasErrors('email')}"
+									th:errorclass="text-danger" th:errors="${employeeDto.email}"></p>
 							</div>
 							<div class="form-group">
 								<label>Position</label>

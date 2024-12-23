@@ -1,6 +1,5 @@
 package com.boostmytool.controllers;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,19 +43,10 @@ public class EmployeeController {
         }
     }
 
-    // Tìm kiếm nhân viên theo tên
-    @GetMapping("/search")
-    public String searchEmployees(@RequestParam("name") String name, Model model) {
-        List<Employee> employees = employeeService.searchEmployeesByName(name);
-        model.addAttribute("employees", employees);
-        return "admin/employees/index";
-    }
-
     // Hiển thị trang tạo mới nhân viên
     @GetMapping("/create")
     public String showCreatePage(Model model) {
         EmployeeDto employeeDto = new EmployeeDto();
-        employeeDto.setDateOfBirth(new Date());
         model.addAttribute("employeeDto", employeeDto);
         return "admin/employees/CreateEmployee";
     }
@@ -88,12 +78,12 @@ public class EmployeeController {
 
             EmployeeDto employeeDto = new EmployeeDto();
             employeeDto.setEmployeeID(employee.getEmployeeID());
-            employeeDto.setEmployeeName(employee.getEmployeeName());
+            employeeDto.setName(employee.getName());
             employeeDto.setGender(employee.getGender());
-            employeeDto.setDateOfBirth(employee.getDateOfBirth());
-            employeeDto.setEmployeeAddress(employee.getEmployeeAddress());
-            employeeDto.setEmployeePhoneNumber(employee.getEmployeePhoneNumber());
-            employeeDto.setEmployeeEmail(employee.getEmployeeEmail());
+            employeeDto.setDob(employee.getDob());
+            employeeDto.setAddress(employee.getAddress());
+            employeeDto.setPhone(employee.getPhone());
+            employeeDto.setEmail(employee.getEmail());
             employeeDto.setPosition(employee.getPosition());
             employeeDto.setSalary(employee.getSalary());
             employeeDto.setEmployeeStatus(employee.getEmployeeStatus());

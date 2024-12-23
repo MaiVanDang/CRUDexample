@@ -1,35 +1,13 @@
 package com.boostmytool.model.employee;
 
-import java.util.Date;
+import com.boostmytool.model.person.Persons;
 
 import jakarta.validation.constraints.*;
 
-public class EmployeeDto {
+public class EmployeeDto extends Persons{
     
     @NotEmpty(message = "The employee ID is required")
     private String employeeID;
-
-    @NotEmpty(message = "The employee name is required")
-    @Size(min = 3, message = "The employee name should have at least 3 characters")
-    private String employeeName;
-
-    @NotEmpty(message = "The gender is required")
-    @Pattern(regexp = "Male|Female|Other", message = "Gender must be Male, Female, or Other")
-    private String gender;
-
-    @NotNull(message = "The date of birth is required")
-    private Date dateOfBirth;
-
-    @NotEmpty(message = "The address is required")
-    private String employeeAddress;
-
-    @NotEmpty(message = "The phone number is required")
-    @Pattern(regexp = "\\d{10,15}", message = "Phone number must be between 10 to 15 digits")
-    private String employeePhoneNumber;
-
-    @NotEmpty(message = "The email is required")
-    @Email(message = "The email format is invalid")
-    private String employeeEmail;
 
     @NotEmpty(message = "The position is required")
     private String position;
@@ -47,54 +25,6 @@ public class EmployeeDto {
 
     public void setEmployeeID(String employeeID) {
         this.employeeID = employeeID;
-    }
-
-    public String getEmployeeName() {
-        return employeeName;
-    }
-
-    public void setEmployeeName(String employeeName) {
-        this.employeeName = employeeName;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getEmployeeAddress() {
-        return employeeAddress;
-    }
-
-    public void setEmployeeAddress(String employeeAddress) {
-        this.employeeAddress = employeeAddress;
-    }
-
-    public String getEmployeePhoneNumber() {
-        return employeePhoneNumber;
-    }
-
-    public void setEmployeePhoneNumber(String employeePhoneNumber) {
-        this.employeePhoneNumber = employeePhoneNumber;
-    }
-
-    public String getEmployeeEmail() {
-        return employeeEmail;
-    }
-
-    public void setEmployeeEmail(String employeeEmail) {
-        this.employeeEmail = employeeEmail;
     }
 
     public String getPosition() {
@@ -119,5 +49,50 @@ public class EmployeeDto {
 
     public void setEmployeeStatus(String employeeStatus) {
         this.employeeStatus = employeeStatus;
+    }
+    
+ // Ghi đè getter và setter cho các thuộc tính kế thừa
+    @NotEmpty(message = "The Employee Name is required")
+    @Override
+    public String getName() {
+        return super.getName();
+    }
+    
+    @Override
+    public void setName(String name) {
+        super.setName(name);
+    }
+    
+    @NotEmpty(message = "The Employee Address is required")
+    @Override
+    public String getAddress() {
+        return super.getAddress();
+    }
+
+    @Override
+    public void setAddress(String address) {
+        super.setAddress(address);
+    }
+    
+    @NotEmpty(message = "The Employee Phone Number is required")
+    @Override
+    public String getPhone() {
+        return super.getPhone();
+    }
+
+    @Override
+    public void setPhone(String phone) {
+        super.setPhone(phone);
+    }
+    
+    @NotEmpty(message = "The Employee Email Address is required")
+    @Override
+    public String getEmail() {
+        return super.getEmail();
+    }
+
+    @Override
+    public void setEmail(String email) {
+        super.setEmail(email);
     }
 }

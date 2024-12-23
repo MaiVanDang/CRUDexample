@@ -24,11 +24,6 @@ public class EmployeeService {
                 .orElseThrow(() -> new Exception("Employee not found with ID: " + employeeID));
     }
 
-    // Tìm nhân viên theo tên
-    public List<Employee> searchEmployeesByName(String name) {
-        return employeeRepository.findByEmployeeNameContaining(name);
-    }
-
     // Lấy danh sách nhân viên theo trạng thái
     public List<Employee> getEmployeesByStatus(String status) {
         return employeeRepository.findByEmployeeStatus(status);
@@ -62,12 +57,12 @@ public class EmployeeService {
     private Employee mapDtoToEntity(EmployeeDto employeeDto) {
         Employee employee = new Employee();
         employee.setEmployeeID(employeeDto.getEmployeeID());
-        employee.setEmployeeName(employeeDto.getEmployeeName());
+        employee.setName(employeeDto.getName());
         employee.setGender(employeeDto.getGender());
-        employee.setDateOfBirth(new java.sql.Date(employeeDto.getDateOfBirth().getTime()));
-        employee.setEmployeeAddress(employeeDto.getEmployeeAddress());
-        employee.setEmployeePhoneNumber(employeeDto.getEmployeePhoneNumber());
-        employee.setEmployeeEmail(employeeDto.getEmployeeEmail());
+        employee.setDob(new java.sql.Date(employeeDto.getDob().getTime()));
+        employee.setAddress(employeeDto.getAddress());
+        employee.setPhone(employeeDto.getPhone());
+        employee.setEmail(employeeDto.getEmail());
         employee.setPosition(employeeDto.getPosition());
         employee.setSalary((float) employeeDto.getSalary());
         employee.setEmployeeStatus(employeeDto.getEmployeeStatus());
@@ -76,12 +71,12 @@ public class EmployeeService {
 
     // Cập nhật Entity bằng DTO
     private void updateEntityWithDto(Employee employee, EmployeeDto employeeDto) {
-        employee.setEmployeeName(employeeDto.getEmployeeName());
+        employee.setName(employeeDto.getName());
         employee.setGender(employeeDto.getGender());
-        employee.setDateOfBirth(new java.sql.Date(employeeDto.getDateOfBirth().getTime()));
-        employee.setEmployeeAddress(employeeDto.getEmployeeAddress());
-        employee.setEmployeePhoneNumber(employeeDto.getEmployeePhoneNumber());
-        employee.setEmployeeEmail(employeeDto.getEmployeeEmail());
+        employee.setDob(new java.sql.Date(employeeDto.getDob().getTime()));
+        employee.setAddress(employeeDto.getAddress());
+        employee.setPhone(employeeDto.getPhone());
+        employee.setEmail(employeeDto.getEmail());
         employee.setPosition(employeeDto.getPosition());
         employee.setSalary((float) employeeDto.getSalary());
         employee.setEmployeeStatus(employeeDto.getEmployeeStatus());
