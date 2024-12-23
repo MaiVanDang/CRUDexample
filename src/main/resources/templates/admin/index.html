@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head th:replace="fragment/head :: head"></head>
+<head th:replace="~{fragment/head :: head}"></head>
 <body class="hold-transition skin-blue sidebar-mini">
 	<!-- Site wrapper -->
 	<header th:replace="fragment/header :: header"
@@ -15,32 +15,176 @@
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper" style="margin-top: 50px;">
 			<!-- Content Header (Page header) -->
-			<!-- search form -->
-			<div
-				style="min-width: 550px; display: flex; align-items: center; padding: 20px;">
-				<select id="searchType"
-					style="max-width: 150px; padding: 10px; border-radius: 5px; border: 1px solid #007bff;">
-					<option value="customers" selected="">customers</option>
-					<option value="products">products</option>
-					<option value="orders">orders</option>
-					<option value="suppliers">suppliers</option>
-				</select> <input id="searchInput" type="text"
-					class="form-control border border-primay" name="navbarsearch"
-					style="border-radius: 5px; border: 1px solid #007bff; margin-left: 5px; height: 40px; width: 250px;">
-				<button class="btn btn-outline-primary" type="submit"
-					style="margin-left: 10px; background-color: #007bff; color: white; border: none; cursor: pointer; transition: background-color 0.3s;; padding: 10px; border-radius: 5px;"
-					onclick="searchProduct()">Tìm kiếm</button>
-			</div>
-			<!-- /.search form -->
+
 
 			<!-- Main content -->
-			<section class="content">
+			<section class="content" style = "min-height: 70px">
 			<h1>Trang quản trị</h1>
 			</section>
-			<!-- /.content -->
+			
+			<div class="row" style = "padding: 0 10px">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="fa fa-envelope-o"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Customer</span>
+              <span class="info-box-number">1,410</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Product</span>
+              <span class="info-box-number">410</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Orders</span>
+              <span class="info-box-number">13,648</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Suppliers</span>
+              <span class="info-box-number">93,139</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+      </div>
+			
+					
+		<div class="row" style="background-color: white; margin: 10px;">
+		    <!-- Best Selling Product -->
+		    <div class="col-md-3 text-center bg-primary text-white" style="padding: 20px;">
+		        <div class = "icon">
+		    	<i class="fa fa-shopping-cart fa-3x" aria-hidden="true"></i>
+		    	</div>
+				<h4 class="mt-3">Best Selling Products</h4>
+		    </div>
+		
+		    <!-- Top Products -->
+		    <div class="col-md-3 text-center" style="padding-top: 30px;">
+		    	<div class = "icon">
+		    	<i class="fa fa-archive fa-2x" aria-hidden="true"></i>
+		    	</div>
+		        
+		        <h5 class="mt-3">TOP 1</h5>
+		        <p>20</p>
+		    </div>
+		    <div class="col-md-3 text-center" style="padding-top: 30px;">
+		        <div class = "icon">
+		    	<i class="fa fa-archive fa-2x" aria-hidden="true"></i>
+		    	</div>
+		        <h5 class="mt-3">TOP 2</h5>
+		        <p>15</p>
+		    </div>
+		    <div class="col-md-3 text-center" style="padding-top: 30px;">
+		        <div class = "icon">
+		    	<i class="fa fa-archive fa-2x" aria-hidden="true"></i>
+		    	</div>
+		        <h5 class="mt-3">TOP 3</h5>
+		        <p>2</p>
+		    </div>
 		</div>
-		<!-- /.box-body -->
-	</div>
+		
+		<div class="row" style="background-color: white; margin: 10px;">
+		    <!-- Best Selling Product -->
+		    <div class="col-md-3 text-center bg-primary text-white" style="padding: 20px; background-color: yellowgreen">
+		        <div class = "icon">
+		    	<i class="fa fa-industry fa-3x" aria-hidden="true"></i>
+		    	</div>
+		        <h4 class="mt-3">Highest Reneuve Suppliers</h4>
+		    </div>
+		
+		    <!-- Top Products -->
+		    <div class="col-md-3 text-center" style="padding-top: 30px;">
+		        <div class = "icon">
+		    	<i class="fa fa-cubes fa-2x" aria-hidden="true"></i>
+		    	</div>
+		        <h5 class="mt-3">TOP 1</h5>
+		        <p>20</p>
+		    </div>
+		    <div class="col-md-3 text-center" style="padding-top: 30px;">
+		        <div class = "icon">
+		    	<i class="fa fa-cubes fa-2x" aria-hidden="true"></i>
+		    	</div>
+		        <h5 class="mt-3">TOP 2</h5>
+		        <p>15</p>
+		    </div>
+		    <div class="col-md-3 text-center" style="padding-top: 30px;">
+		        <div class = "icon">
+		    	<i class="fa fa-cubes fa-2x" aria-hidden="true"></i>
+		    	</div>
+		        <h5 class="mt-3">TOP 3</h5>
+		        <p>2</p>
+		    </div>
+		</div>
+
+		<div class="row" style="background-color: white; margin: 10px;">
+		    <!-- Best Selling Product -->
+		    <div class="col-md-3 text-center bg-primary text-white" style="padding: 20px; background-color: orange">
+		    	<div class = "icon">
+		    	<i class="fa fa-users fa-3x" aria-hidden="true"></i>
+		    	</div>
+		   
+		        <h4 class="mt-3">Buy Much Customer</h4>
+		    </div>
+		
+		    <!-- Top Products -->
+		    <div class="col-md-3 text-center" style="padding-top: 30px;">
+		        <div class = "icon">
+		    	<i class="fa fa-user fa-2x" aria-hidden="true"></i>
+		    	</div>
+		        <h5 class="mt-3">TOP 1</h5>
+		        <p>20</p>
+		    </div>
+		    <div class="col-md-3 text-center" style="padding-top: 30px;">
+		        <div class = "icon">
+		    	<i class="fa fa-user fa-2x" aria-hidden="true"></i>
+		    	</div>
+		        <h5 class="mt-3">TOP 2</h5>
+		        <p>15</p>
+		    </div>
+		    <div class="col-md-3 text-center" style="padding-top: 30px;">
+		        <div class = "icon">
+		    	<i class="fa fa-user fa-2x" aria-hidden="true"></i>
+		    	</div>
+		        <h5 class="mt-3">TOP 3</h5>
+		        <p>2</p>
+		    </div>
+		</div>
+<!-- /.box-body -->
+        </div>
+			
+      </div>
+			
+			<!-- /.content-wrapper -->
+		
 	<!-- /.box -->
 
 	<!-- /.content -->
