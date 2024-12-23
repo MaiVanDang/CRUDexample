@@ -40,12 +40,13 @@
 						<table class="table">
 							<thead>
 								<tr>
-									<th>Employee ID</th>
+									<th>ID</th>
 									<th>Name</th>
 									<th>Gender</th>
 									<th>Date of Birth</th>
 									<th>Phone Number</th>
 									<th>Email</th>
+									<th>Address</th>
 									<th>Position</th>
 									<th>Salary</th>
 									<th>Status</th>
@@ -54,18 +55,19 @@
 							</thead>
 							<tbody>
 								<tr th:each="employee : ${employees}">
-									<td th:text="${employee.employeeID}"></td>
+									<td th:text="${employee.id}"></td>
 									<td th:text="${employee.name}"></td>
 									<td th:text="${employee.gender}"></td>
 									<td th:text="${#dates.format(employee.Dob, 'yyyy-MM-dd')}"></td>
 									<td th:text="${employee.phone}"></td>
 									<td th:text="${employee.email}"></td>
+									<td th:text="${employee.address}"></td>
 									<td th:text="${employee.position}"></td>
 									<td th:text="${employee.salary}"></td>
-									<td th:text="${employee.employeeStatus}"></td>
+									<td th:text="${employee.status}"></td>
 									<td style="white-space: nowrap">
-										<a class="btn btn-primary btn-sm" th:href="@{/employees/edit(employeeID=${employee.employeeID})}">Edit</a>
-										<a class="btn btn-danger btn-sm" th:href="@{/employees/delete(employeeID=${employee.employeeID})}" onclick="return confirm('Are you sure?')">Delete</a>
+										<a class="btn btn-primary btn-sm" th:href="@{/employees/edit(employeeID=${employee.id})}">Edit</a>
+										<a class="btn btn-danger btn-sm" th:href="@{/employees/delete(employeeID=${employee.id})}" onclick="return confirm('Are you sure?')">Delete</a>
 									</td>
 								</tr>
 							</tbody>

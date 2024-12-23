@@ -32,7 +32,7 @@ public class EmployeeController {
 
     // Tìm kiếm nhân viên theo ID
     @GetMapping("/ID/{employeeID}")
-    public String searchEmployeeById(Model model, @PathVariable String employeeID) {
+    public String searchEmployeeById(Model model, @PathVariable int employeeID) {
         try {
             Employee employee = employeeService.getEmployeeById(employeeID);
             model.addAttribute("employee", employee);
@@ -71,22 +71,21 @@ public class EmployeeController {
 
     // Hiển thị trang chỉnh sửa nhân viên
     @GetMapping("/edit")
-    public String showEditPage(Model model, @RequestParam String employeeID) {
+    public String showEditPage(Model model, @RequestParam int employeeID) {
         try {
             Employee employee = employeeService.getEmployeeById(employeeID);
             model.addAttribute("employee", employee);
 
             EmployeeDto employeeDto = new EmployeeDto();
-            employeeDto.setEmployeeID(employee.getEmployeeID());
             employeeDto.setName(employee.getName());
             employeeDto.setGender(employee.getGender());
             employeeDto.setDob(employee.getDob());
             employeeDto.setAddress(employee.getAddress());
             employeeDto.setPhone(employee.getPhone());
             employeeDto.setEmail(employee.getEmail());
-            employeeDto.setPosition(employee.getPosition());
             employeeDto.setSalary(employee.getSalary());
-            employeeDto.setEmployeeStatus(employee.getEmployeeStatus());
+            employeeDto.setStatus(employee.getStatus());
+            employeeDto.setPosition(employee.getPosition());
 
             model.addAttribute("employeeDto", employeeDto);
         } catch (Exception ex) {
@@ -98,7 +97,7 @@ public class EmployeeController {
 
     // Cập nhật thông tin nhân viên
     @PostMapping("/edit")
-    public String updateEmployee(Model model, @RequestParam String employeeID, @Valid @ModelAttribute EmployeeDto employeeDto, BindingResult result) {
+    public String updateEmployee(Model model, @RequestParam int employeeID, @Valid @ModelAttribute EmployeeDto employeeDto, BindingResult result) {
         if (result.hasErrors()) {
             model.addAttribute("employeeDto", employeeDto); // Thêm lại dữ liệu để hiển thị
             return "admin/employees/EditEmployee";
@@ -115,7 +114,7 @@ public class EmployeeController {
 
     // Xóa nhân viên
     @GetMapping("/delete")
-    public String deleteEmployee(@RequestParam String employeeID, Model model) {
+    public String deleteEmployee(@RequestParam int employeeID, Model model) {
         try {
             employeeService.deleteEmployee(employeeID);
             return "redirect:/employees";

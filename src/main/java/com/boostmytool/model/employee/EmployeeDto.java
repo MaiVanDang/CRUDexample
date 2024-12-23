@@ -6,35 +6,15 @@ import jakarta.validation.constraints.*;
 
 public class EmployeeDto extends Persons{
     
-    @NotEmpty(message = "The employee ID is required")
-    private String employeeID;
-
-    @NotEmpty(message = "The position is required")
-    private String position;
-
     @Min(value = 0, message = "Salary must be at least 0")
     private double salary;
 
     @NotEmpty(message = "The employee status is required")
-    private String employeeStatus;
+    private String status;
 
-    // Getter and Setter methods
-    public String getEmployeeID() {
-        return employeeID;
-    }
-
-    public void setEmployeeID(String employeeID) {
-        this.employeeID = employeeID;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
+    @NotEmpty(message = "The employee position is required")
+    private String position;
+    
     public double getSalary() {
         return salary;
     }
@@ -43,12 +23,12 @@ public class EmployeeDto extends Persons{
         this.salary = salary;
     }
 
-    public String getEmployeeStatus() {
-        return employeeStatus;
+    public String getStatus() {
+        return status;
     }
 
-    public void setEmployeeStatus(String employeeStatus) {
-        this.employeeStatus = employeeStatus;
+    public void setStatus(String status) {
+        this.status = status;
     }
     
  // Ghi đè getter và setter cho các thuộc tính kế thừa
@@ -95,4 +75,14 @@ public class EmployeeDto extends Persons{
     public void setEmail(String email) {
         super.setEmail(email);
     }
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
+    
+    
 }
