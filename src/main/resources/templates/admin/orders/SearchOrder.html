@@ -59,7 +59,7 @@
 						<table class="table">
 								<thead>
 									<tr>
-										<th>OrderID</th>
+										<th>ID</th>
 										<th>CustomerID</th>
 										<th>ProductID</th>
 										<th>Quantity</th>
@@ -77,7 +77,7 @@
 								</thead>
 								<tbody>
 									<tr th:each="order : ${orders}">
-										<td th:text="${order.orderID}"></td>
+										<td th:text="${order.id}"></td>
 										<td th:text="${order.customerID}"></td>
 										<td th:text="${order.productID}"></td>
 										<td th:text="${order.quantity}"></td>
@@ -92,9 +92,9 @@
 										<td th:text="${#dates.format(order.estimatedDeliveryDate, 'yyyy-MM-dd')}"></td>
 										<td style="white-space:nowrap">
 											<a class="btn btn-primary btn-sm"
-												th:href="@{/orders/edit(id=${order.orderID})}">Edit</a> 
+												th:href="@{/orders/edit(id=${order.id})}">Edit</a> 
 											<a class="btn btn-danger btn-sm"
-												th:href="@{/orders/delete(id=${order.orderID})}"
+												th:href="@{/orders/delete(id=${order.id})}"
 												onclick="return confirm('Are you sure?')">Delete</a>
 										</td>
 									</tr>

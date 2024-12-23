@@ -5,8 +5,6 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 public class OrderDto {
 	@NotEmpty(message = "The quantity is required")
-	private String orderID;
-	@NotEmpty(message = "The quantity is required")
 	private String customerID;
 	
 	@NotEmpty(message = "The quantity is required")
@@ -17,6 +15,9 @@ public class OrderDto {
 	 
 	 @Min(0)
 	 private float price;
+	 
+	 @Min(0)
+	 private float cost;
 	 
 	 @NotEmpty(message = "The quantity is required")
 	 private String promotion;
@@ -38,12 +39,6 @@ public class OrderDto {
 	 
 	 @Size(max = 2000, message = "The note cannot exceed 2000 characters")
 	 private String note;
-	public String getOrderID() {
-		return orderID;
-	}
-	public void setOrderID(String orderID) {
-		this.orderID = orderID;
-	}
 	public String getCustomerID() {
 		return customerID;
 	}
@@ -67,6 +62,12 @@ public class OrderDto {
 	}
 	public void setPrice(float price) {
 		this.price = price;
+	}
+	public float getCost() {
+		return cost;
+	}
+	public void setCost(float cost) {
+		this.cost = cost;
 	}
 	public String getPromotion() {
 		return promotion;

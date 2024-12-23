@@ -27,14 +27,8 @@
 						th:object="${orderDto}">
 						<div class="box-body">
 							<div class="form-group">
-								<label>Order ID</label>
-								<div>
-									<!-- Hiển thị Customer ID dưới dạng văn bản -->
-									<p class="form-control-plaintext" th:text="${orderDto.orderID}"></p>
-
-									<!-- Input ẩn để gửi Customer ID trong form -->
-									<input type="hidden" th:field="*{orderID}">
-								</div>
+								<label>ID:</label> <span readonly class="form-control-plaintext"
+									th:text="${order.id}"></span>
 							</div>
 							<div class="form-group">
 								<label>Customer ID</label>

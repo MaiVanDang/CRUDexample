@@ -35,7 +35,7 @@ public class OrdersController {
 
 	@GetMapping({ "", "/" })
 	public String showOrdersList(Model model) {
-		List<Order> orders = repo.findAll(Sort.by(Sort.Direction.DESC, "orderID"));
+		List<Order> orders = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));
 		model.addAttribute("orders", orders);
 		return "admin/orders/index";
 	}
@@ -49,10 +49,6 @@ public class OrdersController {
 
 	@PostMapping("/create")
 	public String createOrder(@Valid @ModelAttribute OrderDto orderDto, BindingResult result) {
-		if (repo.existsById(orderDto.getOrderID())) {
-			result.rejectValue("orderID", "error.orderDto", "Order ID is exist. Plese try again");
-		}
-
 		if (result.hasErrors()) {
 			return "admin/orders/CreateOrder";
 		}
@@ -61,18 +57,18 @@ public class OrdersController {
 	}
 
 	@GetMapping("/edit")
-	public String showEditPage(Model model, @RequestParam String id) {
+	public String showEditPage(Model model, @RequestParam int id) {
 
 		try {
 			Order order = repo.findById(id).get();
 			model.addAttribute("order", order);
 
 			OrderDto orderDto = new OrderDto();
-			orderDto.setOrderID(order.getOrderID());
 			orderDto.setCustomerID(order.getCustomerID());
 			orderDto.setProductID(order.getProductID());
 			orderDto.setQuantity(order.getQuantity());
 			orderDto.setPrice(order.getPrice());
+			orderDto.setCost(order.getCost());
 			orderDto.setPromotion(order.getPromotion());
 			orderDto.setCreatedAt(order.getCreatedAt());
 
@@ -96,7 +92,7 @@ public class OrdersController {
 	}
 
 	@PostMapping("/edit")
-	public String updateOrder(Model model, @RequestParam String id, @Valid @ModelAttribute OrderDto orderDto,
+	public String updateOrder(Model model, @RequestParam int id, @Valid @ModelAttribute OrderDto orderDto,
 			BindingResult result) {
 
 		try {
@@ -107,7 +103,7 @@ public class OrdersController {
 				return "admin/orders/EditOrder";
 			}
 
-			ordersService.editOrder(id, orderDto, order);
+			ordersService.editOrder(orderDto, order);
 
 		} catch (Exception ex) {
 			System.out.println("Exception: " + ex.getMessage());
@@ -118,7 +114,7 @@ public class OrdersController {
 	}
 
 	@GetMapping("/delete")
-	public String deleteOrder(@RequestParam String id) {
+	public String deleteOrder(@RequestParam int id) {
 		try {
 
 			// xoa order
