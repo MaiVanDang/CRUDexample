@@ -64,14 +64,12 @@
 										<th>ProductID</th>
 										<th>Quantity</th>
 										<th>Price</th>
-										<th>Promotion</th>
 										<th>Payment Method</th>
 										<th>Payment Status</th>
 										<th>Status</th>
 										<th>Note</th>
 										<th>Created Date</th>
 										<th>Updated Date</th>
-										<th>Estimated Delivery</th>
 										<th>Action</th>
 									</tr>
 								</thead>
@@ -82,14 +80,12 @@
 										<td th:text="${order.productID}"></td>
 										<td th:text="${order.quantity}"></td>
 										<td th:text="${order.price} "></td>
-										<td th:text="${order.promotion}"></td>
 										<td th:text="${order.paymentMethod}"></td>
 										<td th:text="${order.paymentStatus}"></td>
 										<td th:text="${order.orderStatus}"></td>
 										<td th:text="${order.note}"></td>
 										<td th:text="${#dates.format(order.createdAt, 'yyyy-MM-dd')}"></td>
 										<td th:text="${#dates.format(order.updatedAt, 'yyyy-MM-dd')}"></td>
-										<td th:text="${#dates.format(order.estimatedDeliveryDate, 'yyyy-MM-dd')}"></td>
 										<td style="white-space:nowrap">
 											<a class="btn btn-primary btn-sm"
 												th:href="@{/orders/edit(id=${order.id})}">Edit</a> 

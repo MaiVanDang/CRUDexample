@@ -27,7 +27,7 @@ public class OrdersService {
     @Autowired
 	private ProductsRepository repoP;
 
-    public String createNewOrder(OrderDto orderDto, BindingResult result){
+    public String createNewOrder(Model model,OrderDto orderDto, BindingResult result){
     	LocalDate currentDate = LocalDate.now();
 		Date sqlDate = Date.valueOf(currentDate);
 		orderDto.setCreatedAt(sqlDate);
@@ -41,7 +41,8 @@ public class OrdersService {
 
 			// Kiểm tra số lượng hàng
 			if (product.getQuantity() < orderDto.getQuantity()) {
-				result.reject("quantity", "Not enough stock available.");
+				result.rejectValue("quantity", "quantity.notavailable", "Not enough stock available.");
+	            model.addAttribute("orderDto", orderDto);
 				return "admin/orders/CreateOrder";
 			}
 
@@ -70,10 +71,8 @@ public class OrdersService {
 			order.setQuantity(orderDto.getQuantity());
 			order.setPrice(price_order);
 			order.setCost(cost_order);
-			order.setPromotion(orderDto.getPromotion());
 			order.setCreatedAt(orderDto.getCreatedAt());
 			order.setUpdatedAt(orderDto.getUpdatedAt());
-			order.setEstimatedDeliveryDate(orderDto.getEstimatedDeliveryDate());
 			order.setPaymentMethod(orderDto.getPaymentMethod());
 			order.setPaymentStatus(orderDto.getPaymentStatus());
 			order.setOrderStatus(orderDto.getOrderStatus());
@@ -81,38 +80,83 @@ public class OrdersService {
 
 			repo.save(order);
 		} else {
-			result.reject("product", "Product not found.");//Nếu hàng không tồn tại
+			result.rejectValue("productID", "product.notfound", "Product not found.");//Nếu hàng không tồn tại
+			model.addAttribute("orderDto", orderDto);
 			return "admin/orders/CreateOrder";
 		}
 		return "redirect:/orders";
 	}
 
-    public Order editOrder(OrderDto orderDto, Order order) {
-    	
-    	LocalDate currentDate = LocalDate.now();
-		Date sqlDate = Date.valueOf(currentDate);
-		orderDto.setUpdatedAt(sqlDate);
+    public String editOrder(Model model,OrderDto orderDto, Order order, BindingResult result) {
+        // Kiểm tra xem mã sản phẩm mới có tồn tại không
+        int newProductID = Integer.parseInt(orderDto.getProductID().replaceAll("[^0-9]", ""));
+        Optional<Product> newProductOptional = repoP.findById(newProductID);
+        if (!newProductOptional.isPresent()) {
+            result.rejectValue("productID", "product.notfound", "Product not found.");
+            model.addAttribute("order", order);
+            model.addAttribute("orderDto", orderDto);
+            return "admin/orders/EditOrder"; // Trả về trang chỉnh sửa với thông tin lỗi
+        }
 
-		order.setCustomerID(orderDto.getCustomerID());
-		order.setProductID(orderDto.getProductID());
-		order.setQuantity(orderDto.getQuantity());
-		order.setPrice(orderDto.getPrice());
-		order.setCost(orderDto.getCost());
-		order.setPromotion(orderDto.getPromotion());
-		order.setUpdatedAt(orderDto.getUpdatedAt());
-		order.setEstimatedDeliveryDate(orderDto.getEstimatedDeliveryDate());
-		order.setPaymentMethod(orderDto.getPaymentMethod());
-		order.setPaymentStatus(orderDto.getPaymentStatus());
-		order.setOrderStatus(orderDto.getOrderStatus());
-		order.setNote(orderDto.getNote());
+        // Trả lại lượng hàng về mã sản phẩm cũ
+        int oldProductID = Integer.parseInt(order.getProductID().replaceAll("[^0-9]", ""));
+        Product oldProduct = repoP.findById(oldProductID)
+            .orElseThrow(() -> new RuntimeException("Old product not found"));
+        int oldQuantity = order.getQuantity();
+        oldProduct.setQuantity(oldProduct.getQuantity() + oldQuantity); // Trả lại hàng
+        repoP.save(oldProduct);
 
-		return repo.save(order);
+        // Chỉnh mọi thứ cho loại mới
+        Product newProduct = newProductOptional.get();
+
+        // Kiểm tra số lượng hàng
+        if (newProduct.getQuantity() < orderDto.getQuantity()) {
+            result.rejectValue("quantity", "quantity.notavailable", "Not enough stock available.");
+            model.addAttribute("order", order);
+            model.addAttribute("orderDto", orderDto);
+            return "admin/orders/EditOrder"; // Trả về trang chỉnh sửa với thông tin lỗi
+        }
+
+        // Trừ số lượng hàng
+        newProduct.setQuantity(newProduct.getQuantity() - orderDto.getQuantity());
+        repoP.save(newProduct);
+
+        // Tính tiền sản phẩm
+        float discount = (float) newProduct.getDiscount();
+        float quantity = (float) orderDto.getQuantity();
+        float price_product = (float) newProduct.getPrice();
+        float cost_product = (float) newProduct.getBaseprice();
+        float price_order = price_product * quantity * (1 - discount / 100); // Tính giá sau khi giảm giá
+        float cost_order = cost_product * quantity;
+
+        LocalDate currentDate = LocalDate.now();
+        Date sqlDate = Date.valueOf(currentDate);
+
+        order.setCustomerID(orderDto.getCustomerID());
+        order.setProductID(orderDto.getProductID());
+        order.setQuantity(orderDto.getQuantity());
+        order.setPrice(price_order);
+        order.setCost(cost_order);
+        order.setUpdatedAt(sqlDate);
+        order.setPaymentMethod(orderDto.getPaymentMethod());
+        order.setPaymentStatus(orderDto.getPaymentStatus());
+        order.setOrderStatus(orderDto.getOrderStatus());
+        order.setNote(orderDto.getNote());
+
+        repo.save(order);
+        return "redirect:/orders";
     }
-    
+
     public void deleteOrders(int id) {
-    	Order order = repo.findById(id).get();
-    	// Delete the orders
-    	repo.delete(order);
+        Optional<Order> optionalOrder = repo.findById(id);
+        if (optionalOrder.isPresent()) {
+            Order order = optionalOrder.get();
+            // Delete the order
+            repo.delete(order);
+        } else {
+            // Có thể thêm xử lý khi không tìm thấy đơn hàng
+            throw new RuntimeException("Order not found for id: " + id);
+        }
     }
     
     public String searchOrders(String keyword, Model model) {

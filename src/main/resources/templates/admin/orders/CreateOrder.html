@@ -56,27 +56,15 @@
 										th:errorclass="text-danger" th:errors="${orderDto.quantity}"></p>
 								</div>
 							</div>
-
-							<div class="row mb-3">
-								<label class="col-sm-4 col-form-label">Promotion</label>
-								<div class="col-sm-8">
-									<select class="form-select" th:field="${orderDto.promotion}">
-										<option value="cash">None</option>
-										<option value="credit">SALE10%</option>
-										<option value="online">SALE15%</option>
-									</select>
-								</div>
-							</div>
-
 							<div class="row mb-3">
 								<label class="col-sm-4 col-form-label">Payment Method</label>
 								<div class="col-sm-8">
 									<select class="form-select"
 										th:field="${orderDto.paymentMethod}">
-										<option value="cash">Cash</option>
-										<option value="credit">Credit Card</option>
-										<option value="online">Online Payment</option>
-										<option value="debt">Debt</option>
+										<option value="Cash">Cash</option>
+										<option value="Credit Card">Credit Card</option>
+										<option value="Online Payment">Online Payment</option>
+										<option value="Debt">Debt</option>
 									</select>
 									<p th:if="${#fields.hasErrors('paymentMethod')}"
 										th:errorclass="text-danger"
@@ -89,9 +77,8 @@
 								<div class="col-sm-8">
 									<select class="form-select"
 										th:field="${orderDto.paymentStatus}">
-										<option value="done">Done</option>
-										<option value="debt">Debt</option>
-
+										<option value="Unpaid">Unpaid</option>
+										<option value="Paid">Paid</option>
 									</select>
 									<p th:if="${#fields.hasErrors('paymentStatus')}"
 										th:errorclass="text-danger"
@@ -103,26 +90,14 @@
 								<label class="col-sm-4 col-form-label">Status</label>
 								<div class="col-sm-8">
 									<select class="form-select" th:field="${orderDto.orderStatus}">
-										<option value="done">Done</option>
-										<option value="done">Already</option>
-										<option value="done">Shipping</option>
+										<option value="Done">Done</option>
+										<option value="Already">Already</option>
+										<option value="Shipping">Shipping</option>
 
 									</select>
 									<p th:if="${#fields.hasErrors('orderStatus')}"
 										th:errorclass="text-danger"
 										th:errors="${orderDto.orderStatus}"></p>
-								</div>
-							</div>
-
-							<div class="row mb-3">
-								<label class="col-sm-4 col-form-label">Estimated
-									Delivery Date</label>
-								<div class="col-sm-8">
-									<input type="date" class="form-control"
-										th:field="${orderDto.estimatedDeliveryDate}">
-									<p th:if="${#fields.hasErrors('estimatedDeliveryDate')}"
-										th:errorclass="text-danger"
-										th:errors="${orderDto.estimatedDeliveryDate}"></p>
 								</div>
 							</div>
 

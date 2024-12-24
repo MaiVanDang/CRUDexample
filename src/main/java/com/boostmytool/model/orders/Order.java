@@ -1,6 +1,7 @@
 package com.boostmytool.model.orders;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import jakarta.persistence.*;
 
@@ -17,12 +18,12 @@ public class Order {
 	private int quantity;
 	private float price;
 	private float cost;
-
-	@Column(columnDefinition = "TEXT")
-	private String promotion;
+	
 	private Date createdAt;
 	private Date updatedAt;
-	private Date estimatedDeliveryDate;
+	@Column(columnDefinition = "TEXT")
+	
+	
 	private String paymentMethod;
 	private String paymentStatus;
 	private String orderStatus;
@@ -76,14 +77,6 @@ public class Order {
 		this.cost = cost;
 	}
 
-	public String getPromotion() {
-		return promotion;
-	}
-
-	public void setPromotion(String promotion) {
-		this.promotion = promotion;
-	}
-
 	public Date getCreatedAt() {
 		return createdAt;
 	}
@@ -98,14 +91,6 @@ public class Order {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
-	}
-
-	public Date getEstimatedDeliveryDate() {
-		return estimatedDeliveryDate;
-	}
-
-	public void setEstimatedDeliveryDate(Date estimatedDeliveryDate) {
-		this.estimatedDeliveryDate = estimatedDeliveryDate;
 	}
 
 	public String getPaymentMethod() {

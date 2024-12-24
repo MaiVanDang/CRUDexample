@@ -1,5 +1,5 @@
 package com.boostmytool.model.orders;
-import java.sql.Date;
+import java.util.Date;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -19,14 +19,9 @@ public class OrderDto {
 	 @Min(0)
 	 private float cost;
 	 
-	 @NotEmpty(message = "The quantity is required")
-	 private String promotion;
-	 
 	 private Date createdAt;
 	 
 	 private Date updatedAt;
-	 
-	 private Date estimatedDeliveryDate;
 	 
 	 @NotEmpty(message = "The quantity is required")
 	 private String paymentMethod;//check lai
@@ -69,13 +64,6 @@ public class OrderDto {
 	public void setCost(float cost) {
 		this.cost = cost;
 	}
-	public String getPromotion() {
-		return promotion;
-	}
-	public void setPromotion(String promotion) {
-		this.promotion = promotion;
-	}
-	
 	public Date getCreatedAt() {
 		return createdAt;
 	}
@@ -87,12 +75,6 @@ public class OrderDto {
 	}
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
-	}
-	public Date getEstimatedDeliveryDate() {
-		return estimatedDeliveryDate;
-	}
-	public void setEstimatedDeliveryDate(Date estimatedDeliveryDate) {
-		this.estimatedDeliveryDate = estimatedDeliveryDate;
 	}
 	public String getPaymentMethod() {
 		return paymentMethod;

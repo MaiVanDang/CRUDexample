@@ -15,14 +15,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import com.boostmytool.model.suppliers.Supplier;
 import com.boostmytool.model.suppliers.SupplierDto;
-import com.boostmytool.service.FileStorageService;
-import com.boostmytool.service.products.ProductsRepository;
 @Service
 public class SupplierService {
 	@Autowired
     private SuppliersRepository repo;
-	@Autowired
-    private FileStorageService fileStorageService;
+
     public String searchByKeyword(String keyword, Model model) {
     	try {
             int number = Integer.parseInt(keyword);
