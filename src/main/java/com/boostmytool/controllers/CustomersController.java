@@ -124,31 +124,4 @@ public class CustomersController {
 	public String searchCustomers(@RequestParam("keyword") String keyword, Model model) {
 	    return customerService.searchCustomers(keyword, model); // Tên file HTML
 	}
-	
-	@GetMapping("/report")
-	public String viewCustomerReport(
-	        @RequestParam(value = "statType", required = false, defaultValue = "") String statType,
-	        Model model) {
-	    
-	    List<Object[]> chartData;
-	    switch (statType) {
-	        case "ageGroup":
-	            chartData = repo.findStatisticsByAgeGroup();
-	            break;
-	        case "customerAddress":
-	            chartData = repo.findStatisticsByLocation();
-	            break;
-	        case "newCustomer":
-	            chartData = repo.findStatisticsByNewCustomers();
-	            break;
-	        default:
-	            chartData = null; // Trả về danh sách rỗng
-	            break;
-	    }
-	    
-	    model.addAttribute("chartData", chartData);
-	    model.addAttribute("statType", statType);
-	    return "admin/customers/ReportCustomer";
-	}
-	
 }

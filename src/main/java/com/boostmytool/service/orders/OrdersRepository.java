@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import com.boostmytool.model.orders.*;
 
-
 @Repository
 public interface OrdersRepository extends JpaRepository<Order, Integer>{
 	
@@ -30,8 +29,8 @@ public interface OrdersRepository extends JpaRepository<Order, Integer>{
 	
     // Tổng giá trị các đơn hàng theo tháng
     @Query("SELECT MONTH(o.createdAt) AS month, " +
-    	       "SUM(o.cost * o.quantity) AS totalMonthlyCost, " +
-    	       "SUM(o.price * o.quantity) AS totalMonthlyPrice " +
+    	       "SUM(o.cost) AS totalMonthlyCost, " +
+    	       "SUM(o.price) AS totalMonthlyPrice " +
     	       "FROM Order o " +
     	       "WHERE o.createdAt IS NOT NULL " +  // Đảm bảo rằng trường createdAt không null
     	       "GROUP BY MONTH(o.createdAt) " +
@@ -40,8 +39,8 @@ public interface OrdersRepository extends JpaRepository<Order, Integer>{
     	
     	// Tổng giá trị các đơn hàng theo năm
         @Query("SELECT YEAR(o.createdAt) AS year, " +
-        	       "SUM(o.cost * o.quantity) AS totalYearlyCost, " +
-        	       "SUM(o.price * o.quantity) AS totalYearlyPrice " +
+        	       "SUM(o.cost) AS totalYearlyCost, " +
+        	       "SUM(o.price) AS totalYearlyPrice " +
         	       "FROM Order o " +
         	       "WHERE o.createdAt IS NOT NULL " +  // Đảm bảo rằng trường createdAt không null
         	       "GROUP BY YEAR(o.createdAt) " +
@@ -63,5 +62,8 @@ public interface OrdersRepository extends JpaRepository<Order, Integer>{
     	       "FROM Order o " +
     	       "GROUP BY YEAR(o.createdAt)")
     List<Object[]> findOrderCountByYear();
+    
+    @Query("SELECT COUNT(o) FROM Order o")
+    int totalNumberOrder(); 
     
 }

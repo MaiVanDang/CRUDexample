@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
@@ -127,5 +129,16 @@ public class SupplierService {
             System.out.println("Exception: " + ex.getMessage());
         }
         return "redirect:/suppliers";
+    }
+    
+    public int totalNumberSupplier() {
+    	return repo.totalNumberSupplier();
+    }
+    
+    public Supplier[] topSelling() {
+        Pageable pageable = PageRequest.of(0, 3);
+        List<Supplier> supplier = repo.findTop3SuppliersByRevenue(pageable);
+        return supplier.toArray(new Supplier[0]);
+        
     }
 }

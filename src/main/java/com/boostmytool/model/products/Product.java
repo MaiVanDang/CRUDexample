@@ -20,6 +20,7 @@ public class Product {
     private String supplierID;
     private int quantity;
     private int discount;
+    private int totalSold;
     
 	@Column (columnDefinition = "TEXT")
 	private String description;
@@ -122,6 +123,14 @@ public class Product {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public int getTotalSold() {
+		return totalSold;
+	}
+
+	public void setTotalSold(int totalSold) {
+		this.totalSold = totalSold;
 	}
 
 	public Date getCreatedAt() { return createdAt; }

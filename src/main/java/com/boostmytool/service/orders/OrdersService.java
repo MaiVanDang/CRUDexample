@@ -1,16 +1,20 @@
 package com.boostmytool.service.orders;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
-
+import com.boostmytool.model.customers.Customer;
 import com.boostmytool.model.orders.Order;
 import com.boostmytool.model.orders.OrderDto;
 import com.boostmytool.model.products.Product;
-
+import com.boostmytool.model.suppliers.Supplier;
+import com.boostmytool.service.customers.CustomerRepository;
 import com.boostmytool.service.products.ProductsRepository;
+import com.boostmytool.service.suppliers.SuppliersRepository;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -26,6 +30,10 @@ public class OrdersService {
     private OrdersRepository repo;
     @Autowired
 	private ProductsRepository repoP;
+    @Autowired
+	private SuppliersRepository repoS;
+    @Autowired
+	private CustomerRepository repoC;
 
     public String createNewOrder(Model model,OrderDto orderDto, BindingResult result){
     	LocalDate currentDate = LocalDate.now();
@@ -79,6 +87,19 @@ public class OrdersService {
 			order.setNote(orderDto.getNote());
 
 			repo.save(order);
+			if("Paid".equals(orderDto.getPaymentStatus())) {
+				int supplierID = Integer.parseInt(product.getSupplierID().replaceAll("[^0-9]", ""));
+				int customerID = Integer.parseInt(orderDto.getCustomerID().replaceAll("[^0-9]", ""));
+				Customer customer = repoC.findById(customerID).get();
+				customer.setTotalOrder(customer.getTotalOrder()+1);
+				repoC.save(customer);
+				Supplier supplier = repoS.findById(supplierID).get();
+				supplier.setTotalRevenue(supplier.getTotalRevenue() + price_order);
+				product.setTotalSold(product.getTotalSold()+orderDto.getQuantity());
+				repoP.save(product);
+				repoS.save(supplier);
+			}
+			
 		} else {
 			result.rejectValue("productID", "product.notfound", "Product not found.");//Nếu hàng không tồn tại
 			model.addAttribute("orderDto", orderDto);
@@ -143,6 +164,18 @@ public class OrdersService {
         order.setOrderStatus(orderDto.getOrderStatus());
         order.setNote(orderDto.getNote());
 
+        if("Paid".equals(orderDto.getPaymentStatus())) {
+			int supplierID = Integer.parseInt(newProduct.getSupplierID().replaceAll("[^0-9]", ""));
+			int customerID = Integer.parseInt(orderDto.getCustomerID().replaceAll("[^0-9]", ""));
+			Customer customer = repoC.findById(customerID).get();
+			customer.setTotalOrder(customer.getTotalOrder()+1);
+			repoC.save(customer);
+			Supplier supplier = repoS.findById(supplierID).get();
+			supplier.setTotalRevenue(supplier.getTotalRevenue() + price_order);
+			newProduct.setTotalSold(newProduct.getTotalSold()+orderDto.getQuantity());
+			repoP.save(newProduct);
+			repoS.save(supplier);
+		}
         repo.save(order);
         return "redirect:/orders";
     }
@@ -176,33 +209,6 @@ public class OrdersService {
         }
     	model.addAttribute("keyword", keyword);
         return "admin/orders/SearchOrder";
-	}
-    
-    public String reportOrders(String statType, Model model) {
-    	List<Object[]> chartData;
-		switch (statType) {
-		case "reneuveDay":
-			chartData = repo.findTotalValueByDay();
-			break;
-		case "reneuveYear":
-			chartData = repo.findTotalValueByYear();
-			break;
-		case "quantityDay":
-			chartData = repo.findOrderCountByDay();
-			break;
-		case "quantityMonth":
-			chartData = repo.findOrderCountByMonth();
-			break;
-		case "quantityYear":
-			chartData = repo.findOrderCountByYear();
-			break;
-		default:
-			chartData = null;
-		}
-
-		model.addAttribute("chartData", chartData);
-		model.addAttribute("statType", statType);
-		return "admin/orders/ReportOrder";
 	}
     
     public Map<String, double[]> getMonthlyYearlyStats() {
@@ -265,4 +271,9 @@ public class OrdersService {
 
         return stats;
     }
+    
+    public int totalNumberOrder() {
+    	return repo.totalNumberOrder();
+    }
+    
 }

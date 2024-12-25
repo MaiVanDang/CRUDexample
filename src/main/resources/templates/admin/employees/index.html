@@ -13,18 +13,6 @@
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper" style="margin-top: 50px;">
 			<!-- Content Header (Page header) -->
-			<!-- search form -->
-			<div style="min-width: 550px; display: flex; align-items: center; padding: 20px;">
-				<select id="searchType" style="max-width: 150px; padding: 10px; border-radius: 5px; border: 1px solid #007bff;">
-					<option value="employees" selected="">Employees</option>
-					<option value="products">Products</option>
-					<option value="orders">Orders</option>
-					<option value="suppliers">Suppliers</option>
-				</select>
-				<input id="searchInput" type="text" class="form-control border border-primary" name="navbarsearch" style="border-radius: 5px; border: 1px solid #007bff; margin-left: 5px; height: 40px; width: 250px;">
-				<button class="btn btn-outline-primary" type="submit" style="margin-left: 10px; background-color: #007bff; color: white; border: none; cursor: pointer; transition: background-color 0.3s; padding: 10px; border-radius: 5px;" onclick="searchEmployee()">Tìm kiếm</button>
-			</div>
-			<!-- /.search form -->
 
 			<!-- Main content -->
 			<section class="content">
@@ -79,8 +67,6 @@
 			<!-- /.content -->
 		</div>
 		<!-- /.content-wrapper -->
-
-		<footer th:replace="patials/footer :: footer"></footer>
 	</div>
 	<!-- ./wrapper -->
 

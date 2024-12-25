@@ -141,11 +141,4 @@ public class OrdersController {
 		return ordersService.searchOrders(keyword, model);
 	}
 
-	@GetMapping("/report")
-	public String viewOrderReport(
-			@RequestParam(value = "statType", required = false, defaultValue = "") String statType, Model model) {
-
-		return ordersService.reportOrders(statType, model);
-	}
-
 }

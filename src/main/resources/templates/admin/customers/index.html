@@ -24,23 +24,22 @@
 				<div class="box">
 					<div class="box-header with-border">
 						<h3 class="box-title">Customers</h3>
-						
-						
+
+
 						<!-- Xem report do chua co Report rieng trong menu -->
 
 						<div>
-							<a class="btn btn-success" href="/customers/create">Create Customer</a>
-							<a class="btn btn-info mb-3" href="/customers/report">View Customer Report</a>
+							<a class="btn btn-success" href="/customers/create">Create
+								Customer</a>
 							<!-- Thanh tìm kiếm -->
-							<form class="mb-4" method="GET" action="/customers/search" style = "float: right">
-							    <div class="input-group" style="
-									display: flex; /* Căn ô input và nút Search cùng hàng */
-									align-items: center;
-									gap: 5px; /* Khoảng cách giữa input và nút Search */"
-								>
-							        <input type="text" name="keyword" class="form-control" placeholder="Search by id, name, address, email, or phone number" />
-							        <button class="btn btn-primary" type="submit">Search</button>
-							    </div>
+							<form class="mb-4" method="GET" action="/customers/search"
+								style="float: right">
+								<div class="input-group"
+									style="display: flex; /* Căn ô input và nút Search cùng hàng */ align-items: center; gap: 5px;">
+									<input type="text" name="keyword" class="form-control"
+										placeholder="Search by id, name, address, email, or phone number" />
+									<button class="btn btn-primary" type="submit">Search</button>
+								</div>
 							</form>
 						</div>
 
@@ -63,23 +62,24 @@
 							</thead>
 							<tbody>
 								<tr th:each="customer : ${customers}">
-						<td th:text="${customer.id}"></td>
-						<td th:text="${customer.name}"></td>
-						<td th:text="${customer.address}"></td>
-						<td th:text="${customer.dob.toString().substring(0, 10)}"></td>
-						<td th:text="${customer.gender}"></td>
-						<td th:text="${customer.phone}"></td>
-						<td th:text="${customer.email}"></td>
-						<td th:text="${customer.customerDateCreated.toString().substring(0, 10)}"></td>
-						<td th:text="${customer.customerDateUpdated.toString().substring(0, 10)}"></td>
-						<td style="white-space:nowrap">
-							<a class="btn btn-primary btn-sm"
-								th:href="@{/customers/edit(id=${customer.id})}">Edit</a> 
-							<a class="btn btn-danger btn-sm"
-								th:href="@{/customers/delete(id=${customer.id})}"
-								onclick="return confirm('Are you sure?')">Delete</a>
-						</td>
-					</tr>
+									<td th:text="${customer.id}"></td>
+									<td th:text="${customer.name}"></td>
+									<td th:text="${customer.address}"></td>
+									<td th:text="${customer.dob.toString().substring(0, 10)}"></td>
+									<td th:text="${customer.gender}"></td>
+									<td th:text="${customer.phone}"></td>
+									<td th:text="${customer.email}"></td>
+									<td
+										th:text="${customer.customerDateCreated.toString().substring(0, 10)}"></td>
+									<td
+										th:text="${customer.customerDateUpdated.toString().substring(0, 10)}"></td>
+									<td style="white-space: nowrap"><a
+										class="btn btn-primary btn-sm"
+										th:href="@{/customers/edit(id=${customer.id})}">Edit</a> <a
+										class="btn btn-danger btn-sm"
+										th:href="@{/customers/delete(id=${customer.id})}"
+										onclick="return confirm('Are you sure?')">Delete</a></td>
+								</tr>
 							</tbody>
 						</table>
 					</div>

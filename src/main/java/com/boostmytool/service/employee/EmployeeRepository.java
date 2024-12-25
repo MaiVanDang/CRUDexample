@@ -13,4 +13,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     // Tìm nhân viên có mức lương lớn hơn hoặc bằng một giá trị
     @Query("SELECT e FROM Employee e WHERE e.salary >= :minSalary")
     List<Employee> findEmployeesWithSalaryGreaterThanEqual(float minSalary);
+    
+    @Query("SELECT COUNT(e) FROM Employee e")
+    int totalNumberEmployee(); 
 }

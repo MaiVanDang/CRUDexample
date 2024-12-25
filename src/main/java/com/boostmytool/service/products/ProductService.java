@@ -69,7 +69,7 @@ public class ProductService {
         return repo.save(product);
     }
     
-    public Product updateProduct(int id, ProductDto productDto) throws Exception {
+    public Product updateProduct(int id, ProductDto productDto) throws Exception,IOException {
         Product product = repo.findById(id)
             .orElseThrow(() -> new Exception("Product not found with id: " + id));
 
@@ -79,7 +79,20 @@ public class ProductService {
             String newImageFileName = fileStorageService.saveFile(productDto.getImageFile());
             product.setImageFileName(newImageFileName);
         }
+        
+     // Kiểm tra sự tồn tại của nhà cung cấp trước khi lưu file
+        int supplierID;
+        try {
+            supplierID = Integer.parseInt(productDto.getSupplierID().replaceAll("[^0-9]", ""));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("supplierID:Mã nhà cung cấp không hợp lệ");
+        }
 
+        Optional<Supplier> supplierOptional = repoS.findById(supplierID);
+        if (!supplierOptional.isPresent()) {
+            throw new IllegalArgumentException("supplierID:Mã nhà cung cấp không tồn tại");
+        }
+        
         // Cập nhật thông tin sản phẩm
         product.setName(productDto.getName());
         product.setBrand(productDto.getBrand());
@@ -132,5 +145,14 @@ public class ProductService {
         
         model.addAttribute("keyword", keyword);
         return "admin/products/showListProduct";
+    }
+    
+    public int totalNumberProduct() {
+    	return repo.totalNumberProduct();
+    }
+    
+    public Product[] topSelling() {
+        List<Product> products = repo.findTop3BestSellingProductsWithSoldCount();
+        return products.toArray(new Product[0]);
     }
 }

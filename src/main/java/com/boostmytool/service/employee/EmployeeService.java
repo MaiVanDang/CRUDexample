@@ -80,4 +80,8 @@ public class EmployeeService {
         employee.setStatus(employeeDto.getStatus());
         employee.setPosition(employeeDto.getPosition());
     }
+    
+    public int totalNumberEmployee() {
+    	return employeeRepository.totalNumberEmployee();
+    }
 }

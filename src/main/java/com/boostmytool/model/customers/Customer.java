@@ -8,13 +8,14 @@ import jakarta.persistence.*;
 
 
 @Entity
-@Table(name = "Customer")
+@Table(name = "customers")
 public class Customer extends Persons{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
+	private int totalOrder;
 	private Date customerDateCreated;
 	private Date customerDateUpdated;
 	public int getId() {
@@ -34,6 +35,12 @@ public class Customer extends Persons{
 	}
 	public void setCustomerDateUpdated(Date customerDateUpdated) {
 		this.customerDateUpdated = customerDateUpdated;
+	}
+	public int getTotalOrder() {
+		return totalOrder;
+	}
+	public void setTotalOrder(int totalOrder) {
+		this.totalOrder = totalOrder;
 	}
 	
 //	@Column(columnDefinition = "TEXT")

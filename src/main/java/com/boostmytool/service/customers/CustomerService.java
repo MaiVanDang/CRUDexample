@@ -1,14 +1,19 @@
 package com.boostmytool.service.customers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.boostmytool.model.customers.Customer;
 import com.boostmytool.model.customers.CustomerDto;
+import com.boostmytool.model.orders.Order;
+import com.boostmytool.model.suppliers.Supplier;
 
 @Service
 public class CustomerService {
@@ -87,5 +92,16 @@ public class CustomerService {
         
         model.addAttribute("keyword", keyword);
         return "admin/customers/SearchCustomer";
+    }
+	
+	public int totalNumberCustomer() {
+    	return repo.totalNumberCustomer();
+    }
+	
+	public Customer[] topSelling() {
+        Pageable pageable = PageRequest.of(0, 3);
+        List<Customer> customer = repo.findTop3SuppliersByRevenue(pageable);
+        return customer.toArray(new Customer[0]);
+        
     }
 }

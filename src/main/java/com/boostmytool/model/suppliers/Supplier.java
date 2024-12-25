@@ -12,15 +12,13 @@ public class Supplier {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	
-	private String name;
-	@Column (columnDefinition = "TEXT")
-	private String address;
-	
-	@Column (columnDefinition = "TEXT")
-	private String description;
 	private Date createdAt;
 	private Date updatedAt;
+	private String name;
+	private float totalRevenue;
+	@Column (columnDefinition = "TEXT")
+	private String address;
+	private String description;
 	private String imageLogo;
     private String phone;
     private String email;	
@@ -34,9 +32,19 @@ public class Supplier {
 //        this.imageLogo = imageLogo;
 //    }
 	
+    
 	public Date getUpdatedAt() {
 		return updatedAt;
 	}
+	
+	public float getTotalRevenue() {
+		return totalRevenue;
+	}
+
+	public void setTotalRevenue(float totalRevenue) {
+		this.totalRevenue = totalRevenue;
+	}
+
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
