@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragment/head :: head"></head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<header th:replace="fragment/header :: header"></header>
+	<div class="wrapper">
+		<!-- =============================================== -->
+
+		<!-- Left side column. contains the sidebar -->
+		<div th:replace="fragment/sidebar :: sidebar"></div>
+
+		<!-- =============================================== -->
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper"
+			style="display: flex; justify-content: center;">
+			<div class="col-md-6" style="margin-top: 40px;">
+				<div class="box box-primary">
+					<div class="box-header with-border" style="text-align: center;">
+						<h3 class="box-title">New Order</h3>
+					</div>
+					<!-- /.box-header -->
+					<!-- form start -->
+
+					<form method="post" enctype="multipart/form-data"
+						th:object="${orderDto}">
+						<div class="box-body">
+							<div class="form-group">
+								<label>Order ID</label>
+								<div>
+									<input class="form-control" th:field="${orderDto.orderID}"
+										placeholder="Enter order ID">
+									<p th:if="${#fields.hasErrors('orderID')}"
+										th:errorclass="text-danger" th:errors="${orderDto.orderID}"></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Customer ID</label>
+								<div>
+									<input class="form-control" th:field="${orderDto.customerID}"
+										placeholder="Enter customer ID">
+									<p th:if="${#fields.hasErrors('customerID')}"
+										th:errorclass="text-danger" th:errors="${orderDto.customerID}"></p>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label>Product ID</label>
+								<div>
+									<input class="form-control" th:field="${orderDto.productID}"
+										placeholder="Enter product ID">
+									<p th:if="${#fields.hasErrors('productID')}"
+										th:errorclass="text-danger" th:errors="${orderDto.productID}"></p>
+								</div>
+							</div>
+
+							<div class="row mb-3" style="padding-bottom: 4px">
+								<label class="col-sm-4 col-form-label">Quantity</label>
+								<div class="col-sm-8">
+									<input class="form-control" type="number" step="1" min="0"
+										th:field="${orderDto.quantity}" placeholder="Enter quantity"
+										value="0">
+									<p th:if="${#fields.hasErrors('quantity')}"
+										th:errorclass="text-danger" th:errors="${orderDto.quantity}"></p>
+								</div>
+							</div>
+
+							<div class="row mb-3">
+								<label class="col-sm-4 col-form-label">Promotion</label>
+								<div class="col-sm-8">
+									<select class="form-select" th:field="${orderDto.promotion}">
+										<option value="None">None</option>
+										<option value="SALE10%">SALE10%</option>
+										<option value="SALE15%">SALE15%</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="row mb-3">
+								<label class="col-sm-4 col-form-label">Payment Method</label>
+								<div class="col-sm-8">
+									<select class="form-select"
+										th:field="${orderDto.paymentMethod}">
+										<option value="Cash">Cash</option>
+										<option value="Credit Card">Credit Card</option>
+										<option value="Online Payment">Online Payment</option>
+										<option value="Debt">Debt</option>
+									</select>
+									<p th:if="${#fields.hasErrors('paymentMethod')}"
+										th:errorclass="text-danger"
+										th:errors="${orderDto.paymentMethod}"></p>
+								</div>
+							</div>
+
+							<div class="row mb-3">
+								<label class="col-sm-4 col-form-label">Payment Status</label>
+								<div class="col-sm-8">
+									<select class="form-select"
+										th:field="${orderDto.paymentStatus}">
+										<option value="Done">Done</option>
+										<option value="Debt">Debt</option>
+
+									</select>
+									<p th:if="${#fields.hasErrors('paymentStatus')}"
+										th:errorclass="text-danger"
+										th:errors="${orderDto.paymentStatus}"></p>
+								</div>
+							</div>
+
+							<div class="row mb-3">
+								<label class="col-sm-4 col-form-label">Status</label>
+								<div class="col-sm-8">
+									<select class="form-select" th:field="${orderDto.orderStatus}">
+										<option value="Done">Done</option>
+										<option value="Already">Already</option>
+										<option value="Shipping">Shipping</option>
+
+									</select>
+									<p th:if="${#fields.hasErrors('orderStatus')}"
+										th:errorclass="text-danger"
+										th:errors="${orderDto.orderStatus}"></p>
+								</div>
+							</div>
+
+							<div class="row mb-3">
+								<label class="col-sm-4 col-form-label">Estimated
+									Delivery Date</label>
+								<div class="col-sm-8">
+									<input type="date" class="form-control"
+										th:field="${orderDto.estimatedDeliveryDate}">
+									<p th:if="${#fields.hasErrors('estimatedDeliveryDate')}"
+										th:errorclass="text-danger"
+										th:errors="${orderDto.estimatedDeliveryDate}"></p>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label>Order Note</label>
+								<div>
+									<textarea class="form-control" th:field="${orderDto.note}"
+										placeholder="Enter any additional notes"></textarea>
+									<p th:if="${#fields.hasErrors('note')}"
+										th:errorclass="text-danger" th:errors="${orderDto.note}"></p>
+								</div>
+							</div>
+							<!-- /.box-body -->
+
+							<div class="box-footer">
+								<div class="row">
+									<div class="col-sm-6"
+										style="display: flex; justify-content: flex-start;">
+										<a class="btn btn-outline-primary" href="/orders"
+											role="button" style="background-color: red; color: white;">Cancel</a>
+									</div>
+									<div class="col-sm-6"
+										style="display: flex; justify-content: flex-end;">
+										<button type="submit" class="btn btn-primary">Submit</button>
+									</div>
+								</div>
+							</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /.content-wrapper -->
+
+
+	</div>
+	<!-- ./wrapper -->
+
+	<!-- jQuery 3 -->
+
+	<div th:replace="fragment/script :: script"></div>
+</body>
+</html>
