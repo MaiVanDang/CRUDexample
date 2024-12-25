@@ -1,123 +1,86 @@
 package com.boostmytool.model.employee;
 
-import java.util.Date;
+import com.boostmytool.model.person.Persons;
 
 import jakarta.validation.constraints.*;
 
-public class EmployeeDto {
-    
-    @NotEmpty(message = "The employee ID is required")
-    private String employeeID;
+public class EmployeeDto extends Persons {
 
-    @NotEmpty(message = "The employee name is required")
-    @Size(min = 3, message = "The employee name should have at least 3 characters")
-    private String employeeName;
+	@Min(value = 0, message = "Salary must be at least 0")
+	private double salary;
 
-    @NotEmpty(message = "The gender is required")
-    @Pattern(regexp = "Male|Female|Other", message = "Gender must be Male, Female, or Other")
-    private String gender;
+	@NotEmpty(message = "The employee status is required")
+	private String status;
 
-    @NotNull(message = "The date of birth is required")
-    private Date dateOfBirth;
+	@NotEmpty(message = "The employee position is required")
+	private String position;
 
-    @NotEmpty(message = "The address is required")
-    private String employeeAddress;
+	public double getSalary() {
+		return salary;
+	}
 
-    @NotEmpty(message = "The phone number is required")
-    @Pattern(regexp = "\\d{10,15}", message = "Phone number must be between 10 to 15 digits")
-    private String employeePhoneNumber;
+	public void setSalary(double salary) {
+		this.salary = salary;
+	}
 
-    @NotEmpty(message = "The email is required")
-    @Email(message = "The email format is invalid")
-    private String employeeEmail;
+	public String getStatus() {
+		return status;
+	}
 
-    @NotEmpty(message = "The position is required")
-    private String position;
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-    @Min(value = 0, message = "Salary must be at least 0")
-    private double salary;
+	// Ghi đè getter và setter cho các thuộc tính kế thừa
+	@NotEmpty(message = "The Employee Name is required")
+	@Override
+	public String getName() {
+		return super.getName();
+	}
 
-    @NotEmpty(message = "The employee status is required")
-    private String employeeStatus;
+	@Override
+	public void setName(String name) {
+		super.setName(name);
+	}
 
-    // Getter and Setter methods
-    public String getEmployeeID() {
-        return employeeID;
-    }
+	@NotEmpty(message = "The Employee Address is required")
+	@Override
+	public String getAddress() {
+		return super.getAddress();
+	}
 
-    public void setEmployeeID(String employeeID) {
-        this.employeeID = employeeID;
-    }
+	@Override
+	public void setAddress(String address) {
+		super.setAddress(address);
+	}
 
-    public String getEmployeeName() {
-        return employeeName;
-    }
+	@NotEmpty(message = "The Employee Phone Number is required")
+	@Override
+	public String getPhone() {
+		return super.getPhone();
+	}
 
-    public void setEmployeeName(String employeeName) {
-        this.employeeName = employeeName;
-    }
+	@Override
+	public void setPhone(String phone) {
+		super.setPhone(phone);
+	}
 
-    public String getGender() {
-        return gender;
-    }
+	@NotEmpty(message = "The Employee Email Address is required")
+	@Override
+	public String getEmail() {
+		return super.getEmail();
+	}
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
+	@Override
+	public void setEmail(String email) {
+		super.setEmail(email);
+	}
 
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
+	public String getPosition() {
+		return position;
+	}
 
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getEmployeeAddress() {
-        return employeeAddress;
-    }
-
-    public void setEmployeeAddress(String employeeAddress) {
-        this.employeeAddress = employeeAddress;
-    }
-
-    public String getEmployeePhoneNumber() {
-        return employeePhoneNumber;
-    }
-
-    public void setEmployeePhoneNumber(String employeePhoneNumber) {
-        this.employeePhoneNumber = employeePhoneNumber;
-    }
-
-    public String getEmployeeEmail() {
-        return employeeEmail;
-    }
-
-    public void setEmployeeEmail(String employeeEmail) {
-        this.employeeEmail = employeeEmail;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public double getSalary() {
-        return salary;
-    }
-
-    public void setSalary(double salary) {
-        this.salary = salary;
-    }
-
-    public String getEmployeeStatus() {
-        return employeeStatus;
-    }
-
-    public void setEmployeeStatus(String employeeStatus) {
-        this.employeeStatus = employeeStatus;
-    }
+	public void setPosition(String position) {
+		this.position = position;
+	}
 }

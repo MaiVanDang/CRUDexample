@@ -12,15 +12,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.boostmytool.model.products.Product;
 import com.boostmytool.model.products.ProductDto;
-import com.boostmytool.services.products.ProductService;
-import com.boostmytool.services.products.ProductsRepository;
+import com.boostmytool.service.products.ProductService;
+import com.boostmytool.service.products.ProductsRepository;
 
 import jakarta.validation.Valid;
 
@@ -42,15 +41,9 @@ public class ProductsController {
 		return "admin/products/index";
 	}
 
-	// Search
-	@GetMapping("/ID/{id}")
-	public String searchProductById(Model model, @PathVariable int id) {
-		return productService.searchById(id, model);
-	}
-
 	@GetMapping("/search")
-	public String searchProducts(@RequestParam("name") String name, Model model) {
-		return productService.searchByName(name, model);
+	public String searchCustomers(@RequestParam("keyword") String keyword, Model model) {
+		return productService.searchByKeyword(keyword, model); // Tên file HTML
 	}
 
 	@GetMapping("/create")
@@ -62,7 +55,7 @@ public class ProductsController {
 	}
 
 	@PostMapping("/create")
-	public String createProduct(@Valid @ModelAttribute ProductDto productDto, BindingResult result) {
+	public String createProduct(@Valid @ModelAttribute ProductDto productDto, BindingResult result, Model model) {
 		// Kiểm tra validation
 		if (productDto.getImageFile().isEmpty()) {
 			result.addError(new FieldError("productDto", "imageFile", "The image file is required"));
@@ -76,6 +69,9 @@ public class ProductsController {
 			// Gọi service để tạo sản phẩm
 			productService.createProduct(productDto);
 			return "redirect:/products";
+		} catch (IllegalArgumentException e) {
+			result.rejectValue("supplierID", "error.supplierID", "Mã nhà cung cấp không tồn tại");
+			return "admin/products/CreateProduct";
 		} catch (Exception ex) {
 			// Xử lý ngoại lệ nếu cần
 			result.addError(new FieldError("productDto", "", "Error creating product"));
@@ -99,7 +95,6 @@ public class ProductsController {
 			productDto.setDiscount(product.getDiscount());
 			productDto.setQuantity(product.getQuantity());
 			productDto.setSupplierID(product.getSupplierID());
-			productDto.setSupplierID(product.getSupplierID());
 			productDto.setCreatedAt(product.getCreatedAt());
 			productDto.setDescription(product.getDescription());
 
@@ -116,31 +111,31 @@ public class ProductsController {
 	public String updateProduct(Model model, @RequestParam int id, @Valid @ModelAttribute ProductDto productDto,
 			BindingResult result) {
 
-			Product product = repo.findById(id).get();
-			model.addAttribute("product", product);
+		Product product = repo.findById(id).get();
+		model.addAttribute("product", product);
 
-			if (result.hasErrors()) {
-				System.out.println("Có lỗi:");
-				result.getAllErrors().forEach(error -> {
-					System.out.println(error.getDefaultMessage());
-				});
-				result.getAllErrors().forEach(error -> {
-					System.out.println("Lỗi tại trường: " + error.getObjectName());
-					System.out.println("Thông điệp lỗi: " + error.getDefaultMessage());
-				});
-				model.addAttribute("product", product); // Thêm lại sản phẩm để hiển thị
-				return "admin/products/EditProduct";
-			}
+		if (result.hasErrors()) {
+			System.out.println("Có lỗi:");
+			result.getAllErrors().forEach(error -> {
+				System.out.println(error.getDefaultMessage());
+			});
+			result.getAllErrors().forEach(error -> {
+				System.out.println("Lỗi tại trường: " + error.getObjectName());
+				System.out.println("Thông điệp lỗi: " + error.getDefaultMessage());
+			});
+			model.addAttribute("product", product); // Thêm lại sản phẩm để hiển thị
+			return "admin/products/EditProduct";
+		}
 
-			try {
-				// Gọi service để cập nhật sản phẩm
-				productService.updateProduct(id, productDto);
-				return "redirect:/products";
-			} catch (Exception ex) {
-				// Xử lý ngoại lệ
-				model.addAttribute("errorMessage", "Error updating product: " + ex.getMessage());
-				return "admin/products/EditProduct";
-			}
+		try {
+			// Gọi service để cập nhật sản phẩm
+			productService.updateProduct(id, productDto);
+			return "redirect:/products";
+		} catch (Exception ex) {
+			// Xử lý ngoại lệ
+			model.addAttribute("errorMessage", "Error updating product: " + ex.getMessage());
+			return "admin/products/EditProduct";
+		}
 	}
 
 	@GetMapping("/delete")
@@ -148,7 +143,7 @@ public class ProductsController {
 
 		try {
 			productService.deleteProduct(id);
-            return "redirect:/products";
+			return "redirect:/products";
 		} catch (Exception ex) {
 			System.out.println("Exception: " + ex.getMessage());
 		}

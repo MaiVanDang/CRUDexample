@@ -1,8 +1,7 @@
 package com.boostmytool.model.orders;
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.List;
+
+import java.util.Date;
 
 import jakarta.persistence.*;
 
@@ -11,29 +10,31 @@ import jakarta.persistence.*;
 public class Order {
 
 	@Id
-	private String orderID;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
 	private String customerID;
 	private String productID;
 	private int quantity;
 	private float price;
-
-	@Column(columnDefinition = "TEXT")
-	private String promotion;
+	private float cost;
+	
 	private Date createdAt;
 	private Date updatedAt;
-	private Date estimatedDeliveryDate;
+	@Column(columnDefinition = "TEXT")
+	
+	
 	private String paymentMethod;
 	private String paymentStatus;
 	private String orderStatus;
 	private String note;
 
-	public String getOrderID() {
-		return orderID;
+	public int getId() {
+		return id;
 	}
 
-	public void setOrderID(String orderID) {
-		this.orderID = orderID;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getCustomerID() {
@@ -68,12 +69,12 @@ public class Order {
 		this.price = price;
 	}
 
-	public String getPromotion() {
-		return promotion;
+	public float getCost() {
+		return cost;
 	}
 
-	public void setPromotion(String promotion) {
-		this.promotion = promotion;
+	public void setCost(float cost) {
+		this.cost = cost;
 	}
 
 	public Date getCreatedAt() {
@@ -90,14 +91,6 @@ public class Order {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
-	}
-
-	public Date getEstimatedDeliveryDate() {
-		return estimatedDeliveryDate;
-	}
-
-	public void setEstimatedDeliveryDate(Date estimatedDeliveryDate) {
-		this.estimatedDeliveryDate = estimatedDeliveryDate;
 	}
 
 	public String getPaymentMethod() {
@@ -135,46 +128,4 @@ public class Order {
 	public Order() {
 
 	}
-
-	public Order(String orderID, String customerID, String productID, int quantity, float price, String promotion,
-			Date estimatedDeliveryDate, String paymentMethod, String paymentStatus, String orderStatus, String note) {
-		super();
-		this.orderID = orderID;
-		this.customerID = customerID;
-		this.productID = productID;
-		this.quantity = quantity;
-		this.price = price;
-		this.promotion = promotion;
-
-		LocalDate current_date = LocalDate.now();
-		Date current = Date.valueOf(current_date);
-		this.setCreatedAt(current);
-		this.setUpdatedAt(current);
-
-		this.estimatedDeliveryDate = estimatedDeliveryDate;
-		this.paymentMethod = paymentMethod;
-		this.paymentStatus = paymentStatus;
-		this.orderStatus = orderStatus;
-		this.note = note;
-	}
-
-	public Order(String orderID, String customerID, String productID, int quantity, float price, String promotion,
-			Date createdAt, Date updatedAt, Date estimatedDeliveryDate, String paymentMethod, String paymentStatus,
-			String orderStatus, String note) {
-		super();
-		this.orderID = orderID;
-		this.customerID = customerID;
-		this.productID = productID;
-		this.quantity = quantity;
-		this.price = price;
-		this.promotion = promotion;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
-		this.estimatedDeliveryDate = estimatedDeliveryDate;
-		this.paymentMethod = paymentMethod;
-		this.paymentStatus = paymentStatus;
-		this.orderStatus = orderStatus;
-		this.note = note;
-	}
-
 }

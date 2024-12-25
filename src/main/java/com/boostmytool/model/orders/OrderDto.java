@@ -1,11 +1,9 @@
 package com.boostmytool.model.orders;
-import java.sql.Date;
+import java.util.Date;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 public class OrderDto {
-	@NotEmpty(message = "The quantity is required")
-	private String orderID;
 	@NotEmpty(message = "The quantity is required")
 	private String customerID;
 	
@@ -18,14 +16,12 @@ public class OrderDto {
 	 @Min(0)
 	 private float price;
 	 
-	 @NotEmpty(message = "The quantity is required")
-	 private String promotion;
+	 @Min(0)
+	 private float cost;
 	 
 	 private Date createdAt;
 	 
 	 private Date updatedAt;
-	 
-	 private Date estimatedDeliveryDate;
 	 
 	 @NotEmpty(message = "The quantity is required")
 	 private String paymentMethod;//check lai
@@ -38,12 +34,6 @@ public class OrderDto {
 	 
 	 @Size(max = 2000, message = "The note cannot exceed 2000 characters")
 	 private String note;
-	public String getOrderID() {
-		return orderID;
-	}
-	public void setOrderID(String orderID) {
-		this.orderID = orderID;
-	}
 	public String getCustomerID() {
 		return customerID;
 	}
@@ -68,13 +58,12 @@ public class OrderDto {
 	public void setPrice(float price) {
 		this.price = price;
 	}
-	public String getPromotion() {
-		return promotion;
+	public float getCost() {
+		return cost;
 	}
-	public void setPromotion(String promotion) {
-		this.promotion = promotion;
+	public void setCost(float cost) {
+		this.cost = cost;
 	}
-	
 	public Date getCreatedAt() {
 		return createdAt;
 	}
@@ -86,12 +75,6 @@ public class OrderDto {
 	}
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
-	}
-	public Date getEstimatedDeliveryDate() {
-		return estimatedDeliveryDate;
-	}
-	public void setEstimatedDeliveryDate(Date estimatedDeliveryDate) {
-		this.estimatedDeliveryDate = estimatedDeliveryDate;
 	}
 	public String getPaymentMethod() {
 		return paymentMethod;

@@ -9,12 +9,10 @@ import org.springframework.stereotype.Repository;
 
 import com.boostmytool.model.orders.*;
 
-
 @Repository
-public interface OrdersRepository extends JpaRepository<Order, String>{
+public interface OrdersRepository extends JpaRepository<Order, Integer>{
 	
-	@Query("SELECT o FROM Order o WHERE " + 
-		       "LOWER(o.orderID) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +  
+	@Query("SELECT o FROM Order o WHERE " +  
 			   "LOWER(o.customerID) LIKE LOWER(CONCAT('%',  :keyword, '%')) OR " +  
 			   "LOWER(o.productID) LIKE LOWER(CONCAT('%',  :keyword, '%')) OR " +
 			   "LOWER(o.orderStatus) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " + 
@@ -30,16 +28,24 @@ public interface OrdersRepository extends JpaRepository<Order, String>{
     List<Object[]> findTotalValueByDay();
 	
     // Tổng giá trị các đơn hàng theo tháng
-    @Query("SELECT MONTH(o.createdAt) AS month,SUM(o.price * o.quantity) AS totalValue, YEAR(o.createdAt) AS year " +
-           "FROM Order o " +
-           "GROUP BY YEAR(o.createdAt), MONTH(o.createdAt)")
-    List<Object[]> findTotalValueByMonth();	
-	
-    // Tổng giá trị các đơn hàng theo năm
-    @Query("SELECT YEAR(o.createdAt) AS year, SUM(o.price * o.quantity) AS totalValue " +
-           "FROM Order o " +
-           "GROUP BY YEAR(o.createdAt)")
-    List<Object[]> findTotalValueByYear();	
+    @Query("SELECT MONTH(o.createdAt) AS month, " +
+    	       "SUM(o.cost) AS totalMonthlyCost, " +
+    	       "SUM(o.price) AS totalMonthlyPrice " +
+    	       "FROM Order o " +
+    	       "WHERE o.createdAt IS NOT NULL " +  // Đảm bảo rằng trường createdAt không null
+    	       "GROUP BY MONTH(o.createdAt) " +
+    	       "ORDER BY MONTH(o.createdAt)")  // Đảm bảo thứ tự theo tháng
+    	List<Object[]> findTotalValueByMonth();
+    	
+    	// Tổng giá trị các đơn hàng theo năm
+        @Query("SELECT YEAR(o.createdAt) AS year, " +
+        	       "SUM(o.cost) AS totalYearlyCost, " +
+        	       "SUM(o.price) AS totalYearlyPrice " +
+        	       "FROM Order o " +
+        	       "WHERE o.createdAt IS NOT NULL " +  // Đảm bảo rằng trường createdAt không null
+        	       "GROUP BY YEAR(o.createdAt) " +
+        	       "ORDER BY YEAR(o.createdAt)")  // Đảm bảo thứ tự theo năm
+        	List<Object[]> findTotalValueByYear();
     
     // Số lượng đơn hàng theo ngày
     @Query("SELECT DATE(o.createdAt) AS day,  COUNT(o) AS orderCount " +
@@ -56,5 +62,8 @@ public interface OrdersRepository extends JpaRepository<Order, String>{
     	       "FROM Order o " +
     	       "GROUP BY YEAR(o.createdAt)")
     List<Object[]> findOrderCountByYear();
+    
+    @Query("SELECT COUNT(o) FROM Order o")
+    int totalNumberOrder(); 
     
 }
