@@ -42,8 +42,4 @@ public class Customer extends Persons{
 	public void setTotalOrder(int totalOrder) {
 		this.totalOrder = totalOrder;
 	}
-	
-//	@Column(columnDefinition = "TEXT")
-	
-	
 }

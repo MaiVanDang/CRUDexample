@@ -105,7 +105,7 @@ public class OrdersController {
 	public String updateOrder(Model model, @RequestParam int id, @Valid @ModelAttribute OrderDto orderDto,
 			BindingResult result) {
 		if (result.hasErrors()) {
-			
+
 			// Nếu có lỗi, quay lại trang chỉnh sửa với thông tin đã nhập
 			Order order = repo.findById(id).orElse(null);
 			model.addAttribute("order", order);
@@ -114,7 +114,7 @@ public class OrdersController {
 
 		try {
 			Order order = repo.findById(id).orElseThrow(() -> new RuntimeException("Order not found"));
-			
+
 			return ordersService.editOrder(model, orderDto, order, result);
 		} catch (Exception ex) {
 			System.out.println("Exception: " + ex.getMessage());

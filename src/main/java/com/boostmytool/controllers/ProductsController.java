@@ -43,7 +43,7 @@ public class ProductsController {
 
 	@GetMapping("/search")
 	public String searchCustomers(@RequestParam("keyword") String keyword, Model model) {
-	    return productService.searchByKeyword(keyword, model); // Tên file HTML
+		return productService.searchByKeyword(keyword, model); // Tên file HTML
 	}
 
 	@GetMapping("/create")
@@ -69,11 +69,10 @@ public class ProductsController {
 			// Gọi service để tạo sản phẩm
 			productService.createProduct(productDto);
 			return "redirect:/products";
-		}catch (IllegalArgumentException e) {
-			result.rejectValue("supplierID", "error.supplierID", 
-                    "Mã nhà cung cấp không tồn tại");
+		} catch (IllegalArgumentException e) {
+			result.rejectValue("supplierID", "error.supplierID", "Mã nhà cung cấp không tồn tại");
 			return "admin/products/CreateProduct";
-        }catch (Exception ex) {
+		} catch (Exception ex) {
 			// Xử lý ngoại lệ nếu cần
 			result.addError(new FieldError("productDto", "", "Error creating product"));
 			return "admin/products/CreateProduct";
@@ -112,31 +111,31 @@ public class ProductsController {
 	public String updateProduct(Model model, @RequestParam int id, @Valid @ModelAttribute ProductDto productDto,
 			BindingResult result) {
 
-			Product product = repo.findById(id).get();
-			model.addAttribute("product", product);
+		Product product = repo.findById(id).get();
+		model.addAttribute("product", product);
 
-			if (result.hasErrors()) {
-				System.out.println("Có lỗi:");
-				result.getAllErrors().forEach(error -> {
-					System.out.println(error.getDefaultMessage());
-				});
-				result.getAllErrors().forEach(error -> {
-					System.out.println("Lỗi tại trường: " + error.getObjectName());
-					System.out.println("Thông điệp lỗi: " + error.getDefaultMessage());
-				});
-				model.addAttribute("product", product); // Thêm lại sản phẩm để hiển thị
-				return "admin/products/EditProduct";
-			}
+		if (result.hasErrors()) {
+			System.out.println("Có lỗi:");
+			result.getAllErrors().forEach(error -> {
+				System.out.println(error.getDefaultMessage());
+			});
+			result.getAllErrors().forEach(error -> {
+				System.out.println("Lỗi tại trường: " + error.getObjectName());
+				System.out.println("Thông điệp lỗi: " + error.getDefaultMessage());
+			});
+			model.addAttribute("product", product); // Thêm lại sản phẩm để hiển thị
+			return "admin/products/EditProduct";
+		}
 
-			try {
-				// Gọi service để cập nhật sản phẩm
-				productService.updateProduct(id, productDto);
-				return "redirect:/products";
-			} catch (Exception ex) {
-				// Xử lý ngoại lệ
-				model.addAttribute("errorMessage", "Error updating product: " + ex.getMessage());
-				return "admin/products/EditProduct";
-			}
+		try {
+			// Gọi service để cập nhật sản phẩm
+			productService.updateProduct(id, productDto);
+			return "redirect:/products";
+		} catch (Exception ex) {
+			// Xử lý ngoại lệ
+			model.addAttribute("errorMessage", "Error updating product: " + ex.getMessage());
+			return "admin/products/EditProduct";
+		}
 	}
 
 	@GetMapping("/delete")
@@ -144,7 +143,7 @@ public class ProductsController {
 
 		try {
 			productService.deleteProduct(id);
-            return "redirect:/products";
+			return "redirect:/products";
 		} catch (Exception ex) {
 			System.out.println("Exception: " + ex.getMessage());
 		}
