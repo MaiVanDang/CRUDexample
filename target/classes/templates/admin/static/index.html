@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragment/head :: head">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Thêm Chart.js -->
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<header th:replace="fragment/header :: header"
+		style="position: fixed; width: 100%;"></header>
+
+	<div class="wrapper">
+		<!-- Left side column. contains the sidebar -->
+		<div th:replace="fragment/sidebar :: sidebar"></div>
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper" style="margin-top: 50px;">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1>Biểu đồ thống kê</h1>
+			</section>
+
+			<!-- Main content -->
+			<div class="col-md-6">
+				<!-- LINE CHART -->
+				<div class="box box-info">
+					<div class="box-header with-border">
+						<h3 class="box-title">Month</h3>
+
+						<div class="box-tools pull-right">
+							<button type="button" class="btn btn-box-tool"
+								data-widget="collapse">
+								<i class="fa fa-minus"></i>
+							</button>
+							<button type="button" class="btn btn-box-tool"
+								data-widget="remove">
+								<i class="fa fa-times"></i>
+							</button>
+						</div>
+					</div>
+					<div class="box-body">
+						<div class="chart">
+							<canvas id="lineChart" style="height: 250px; width: 573px;"
+								height="312" width="716"></canvas>
+						</div>
+					</div>
+					<div class="box-footer" style="">
+						<div class="row">
+							<div class="col-sm-3 col-xs-6">
+								<div class="description-block border-right">
+									<span class="description-percentage text-green"><i
+										class="fa fa-caret-up"></i> 17%</span>
+									<h5 class="description-header">$<span th:text="${totalMonthlyRevenue}"></h5>
+									<span class="description-text">TOTAL REVENUE</span>
+								</div>
+								<!-- /.description-block -->
+							</div>
+							<!-- /.col -->
+							<div class="col-sm-3 col-xs-6">
+								<div class="description-block border-right">
+									<span class="description-percentage text-yellow"><i
+										class="fa fa-caret-left"></i> 0%</span>
+									<h5 class="description-header">$<span th:text="${totalMonthlyCosts}"></span></h5>
+									<span class="description-text">TOTAL COST</span>
+								</div>
+								<!-- /.description-block -->
+							</div>
+							<!-- /.col -->
+							<div class="col-sm-3 col-xs-6">
+								<div class="description-block border-right">
+									<span class="description-percentage text-green"><i
+										class="fa fa-caret-up"></i> 20%</span>
+									<h5 class="description-header">$<span th:text="${profitMonthly}"></span></h5>
+									<span class="description-text">TOTAL PROFIT</span>
+								</div>
+								<!-- /.description-block -->
+							</div>
+							<!-- /.col -->
+							<div class="col-sm-3 col-xs-6">
+								<div class="description-block">
+									<span class="description-percentage text-red"><i
+										class="fa fa-caret-down"></i> 18%</span>
+									<h5 class="description-header">1200</h5>
+									<span class="description-text">GOAL COMPLETIONS</span>
+								</div>
+								<!-- /.description-block -->
+							</div>
+						</div>
+						<!-- /.row -->
+					</div>
+					<!-- /.box-body -->
+				</div>
+				<!-- /.box -->
+			</div>
+			<div class="col-md-6">
+				<!-- BAR CHART -->
+				<div class="box box-success">
+					<div class="box-header with-border">
+						<h3 class="box-title">Year</h3>
+
+						<div class="box-tools pull-right">
+							<button type="button" class="btn btn-box-tool"
+								data-widget="collapse">
+								<i class="fa fa-minus"></i>
+							</button>
+							<button type="button" class="btn btn-box-tool"
+								data-widget="remove">
+								<i class="fa fa-times"></i>
+							</button>
+						</div>
+					</div>
+					<div class="box-body">
+						<div class="chart">
+							<canvas id="barChart" style="height: 250px; width: 573px;"
+								height="312" width="716"></canvas>
+						</div>
+					</div>
+					<div class="box-footer" style="">
+						<div class="row">
+							<div class="col-sm-3 col-xs-6">
+								<div class="description-block border-right">
+									<span class="description-percentage text-green"><i
+										class="fa fa-caret-up"></i> 17%</span>
+									<h5 class="description-header">$<span th:text="${totalYearlyRevenue}"></h5>
+									<span class="description-text">TOTAL REVENUE</span>
+								</div>
+								<!-- /.description-block -->
+							</div>
+							<!-- /.col -->
+							<div class="col-sm-3 col-xs-6">
+								<div class="description-block border-right">
+									<span class="description-percentage text-yellow"><i
+										class="fa fa-caret-left"></i> 0%</span>
+									<h5 class="description-header">$<span th:text="${totalYearlyCosts}"></h5>
+									<span class="description-text">TOTAL COST</span>
+								</div>
+								<!-- /.description-block -->
+							</div>
+							<!-- /.col -->
+							<div class="col-sm-3 col-xs-6">
+								<div class="description-block border-right">
+									<span class="description-percentage text-green"><i
+										class="fa fa-caret-up"></i> 20%</span>
+									<h5 class="description-header">$<span th:text="${profitYearly}"></h5>
+									<span class="description-text">TOTAL PROFIT</span>
+								</div>
+								<!-- /.description-block -->
+							</div>
+							<!-- /.col -->
+							<div class="col-sm-3 col-xs-6">
+								<div class="description-block">
+									<span class="description-percentage text-red"><i
+										class="fa fa-caret-down"></i> 18%</span>
+									<h5 class="description-header">1200</h5>
+									<span class="description-text">GOAL COMPLETIONS</span>
+								</div>
+								<!-- /.description-block -->
+							</div>
+						</div>
+						<!-- /.row -->
+					</div>
+					<!-- /.box-body -->
+				</div>
+				<!-- /.box -->
+
+			</div>
+			<!-- /.box -->
+		</div>
+		<!-- /.content-wrapper -->
+	</div>
+	<!-- ./wrapper -->
+
+	<script th:inline="javascript">
+		// Khởi tạo biểu đồ đường
+		const monthlyCosts = JSON.parse([[${monthlyCosts}]]);
+    	const monthlyPrices = JSON.parse([[${monthlyPrices}]]);
+
+		// Khởi tạo biểu đồ đường
+		const lineCtx = document.getElementById('lineChart').getContext('2d');
+		const lineChart = new Chart(lineCtx, {
+			type : 'line',
+			data : {
+				labels : [ 'January', 'February', 'March', 'April', 'May',
+						'June', 'July', 'August', 'September', 'October',
+						'November', 'December' ],
+				datasets : [ {
+					label : 'REVENUE',
+					data: monthlyPrices,
+					borderColor : 'rgba(75, 192, 192, 1)',
+					backgroundColor : 'rgba(75, 192, 192, 0.2)',
+					fill : true,
+					tension : 0.4,
+					borderWidth : 2,
+					pointRadius : 5,
+					pointBackgroundColor : 'rgba(75, 192, 192, 1)',
+					pointBorderColor : '#fff',
+					pointBorderWidth : 2,
+				}, {
+					label : 'COST',
+					data : monthlyCosts,
+					borderColor : 'rgba(255, 99, 132, 1)',
+					backgroundColor : 'rgba(255, 99, 132, 0.2)',
+					fill : true,
+					tension : 0.4,
+					borderWidth : 2,
+					pointRadius : 5,
+					pointBackgroundColor : 'rgba(255, 99, 132, 1)',
+					pointBorderColor : '#fff',
+					pointBorderWidth : 2,
+				} ]
+			},
+			options : {
+				responsive : true,
+				scales : {
+					y : {
+						beginAtZero : true,
+						grid : {
+							color : 'rgba(200, 200, 200, 0.5)',
+						}
+					},
+					x : {
+						grid : {
+							color : 'rgba(200, 200, 200, 0.5)',
+						}
+					}
+				}
+			}
+		});
+
+		// Khởi tạo biểu đồ đường
+		const yearlyPosts = JSON.parse([[${yearlyCosts}]]);
+    	const yearlyPrices = JSON.parse([[${yearlyPrices}]]);
+		// Khởi tạo biểu đồ cột
+		const ctx = document.getElementById('barChart').getContext('2d');
+		const barChart = new Chart(ctx, {
+			type : 'bar',
+			data : {
+				labels : [ '2022', '2023', '2024', '2025', '2026'],
+				datasets : [ {
+					label : 'REVENUE',
+					data : yearlyPosts,
+					backgroundColor : 'rgba(75, 192, 192, 1)',
+				}, {
+					label : 'COST',
+					data : yearlyPrices,
+					backgroundColor : 'rgba(201, 203, 207, 1)',
+				} ]
+			},
+			options : {
+				scales : {
+					y : {
+						beginAtZero : true
+					}
+				}
+			}
+		});
+	</script>
+
+	<div th:replace="fragment/script :: script"></div>
+</body>
+</html>

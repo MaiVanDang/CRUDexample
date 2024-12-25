@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="patials/head :: head"></head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<header th:replace="patials/header :: header"
+		style="position: fixed; width: 100%;"></header>
+	<div class="wrapper">
+		<!-- =============================================== -->
+
+		<!-- Left side column. contains the sidebar -->
+		<div th:replace="patials/sidebar :: sidebar"></div>
+		<!-- =============================================== -->
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<!-- Main content -->
+			<section class="content" style="margin-top: 50px;">
+
+				<div class="box">
+					<div class="box-header with-border">
+						<h3 class="box-title">Suppliers</h3>
+						<div>
+							<a class="btn btn-success" href="/suppliers/create">Create Supplier</a>
+							
+							<!-- Form tìm kiếm -->
+							<form class="mb-4" method="GET" action="/suppliers/search" style="float: right">
+								<div class="input-group" style="display: flex; /* Căn ô input và nút Search cùng hàng */ align-items: center; gap: 5px;">
+									<input type="text" name="keyword" class="form-control" placeholder="Search by name" />
+									<button class="btn btn-primary" type="submit">Search</button>
+								</div>
+							</form>
+							
+						</div>
+					</div>
+					<div class="box-body">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Name</th>
+									<th>Address</th>
+									<th>Description</th>
+									<th>Phone</th>
+									<th>Email</th>
+									<th>Created At</th>
+									<th>Updated At</th>
+									<th>Brand Logo</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="supplier : ${suppliers}">
+									<td th:text="${supplier.id}"></td>
+									<td th:text="${supplier.name}"></td>
+									<td th:text="${supplier.address}"></td>
+									<td th:text="${supplier.description}"></td>
+									<td th:text="${supplier.phone}"></td>
+									<td th:text="${supplier.email}"></td>
+									<td th:text="${#dates.format(supplier.createdAt, 'yyyy-MM-dd')}"></td>
+									<td th:text="${#dates.format(supplier.updatedAt, 'yyyy-MM-dd')}"></td>
+									<td>
+										<img th:src="@{'/images/' + ${supplier.imageLogo}}"
+											alt="Brand Logo" width="100">
+									</td>
+									<td>
+										<a class="btn btn-primary btn-sm"
+											th:href="@{/suppliers/edit(id=${supplier.id})}">Edit</a> 
+										<a class="btn btn-danger btn-sm"
+											th:href="@{/suppliers/delete(id=${supplier.id})}"
+											onclick="return confirm('Are you sure?')">Delete</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<!-- /.box -->
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.box-body -->
+		<div class="box-footer clearfix">
+			<ul class="pagination pagination-sm no-margin pull-right">
+				<li><a href="#">«</a></li>
+				<li><a href="#">1</a></li>
+				<li><a href="#">2</a></li>
+				<li><a href="#">3</a></li>
+				<li><a href="#">»</a></li>
+			</ul>
+		</div>
+	</div>
+	<!-- /.box -->
+	<!-- /.content-wrapper -->
+	<!-- ./wrapper -->
+
+	<!-- jQuery 3 -->
+	<div th:replace="patials/script :: script"></div>
+</body>
+</html>

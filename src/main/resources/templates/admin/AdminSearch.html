@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragment/head :: head"></head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<header th:replace="fragment/header :: header"
+		style="position: fixed; width: 100%;"></header>
+	<div class="wrapper">
+		<!-- =============================================== -->
+
+		<!-- Left side column. contains the sidebar -->
+		<div th:replace="fragment/sidebar :: sidebar"></div>
+		<!-- =============================================== -->
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper" style="margin-top: 50px;">
+			<!-- Content Header (Page header) -->
+			
+
+			<!-- Main content -->
+			<section class="content">
+				<h1>Tìm kiếm sản phẩm</h1>
+				<div class="box box-info">
+					<div class="box-header with-border">
+						<div class="row">
+							<div class="col-lg-6" style="width: 40%">
+								<h3 class="box-title">Loại sản phẩm</h3>
+								<!-- /input-group -->
+							</div>
+							<!-- /.col-lg-6 -->
+							<div class="col-lg-6" style="width: 40%">
+								<h3 class="box-title">Giá thành</h3>
+								<!-- /input-group -->
+							</div>
+							<!-- /.col-lg-6 -->
+						</div>
+					</div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-lg-6" style="width: 40%">
+								<div class="input-group">
+									<input id="searchInputByCategory" type="text"
+										class="form-control" placeholder="Điện thoại">
+								</div>
+								<!-- /input-group -->
+							</div>
+							<div class="col-lg-6" style="width: 40%">
+								<div class="input-group">
+									<input id="searchMinValue" type="number" class="form-control"
+										placeholder="Từ"> <span class="input-group-addon">-</span>
+									<input id="searchMaxValue" type="number" class="form-control"
+										placeholder="đến"> <span class="input-group-addon">$</span>
+								</div>
+								<!-- /input-group -->
+							</div>
+							<!-- /.col-lg-6 -->
+							<div class="input-group input-group-sm">
+								<span class="input-group-btn">
+									<button id="searchButton" type="submit"
+										class="btn btn-info btn-flat">Tìm kiếm</button>
+								</span>
+							</div>
+						</div>
+						<!-- /.row -->
+						<!-- /input-group -->
+					</div>
+					<!-- /.box-body -->
+				</div>
+
+				<!-- /Table -->
+				<div class="box" id="myTable" th:style="${showTable ? 'display: table;' : 'display: none;'}">
+					<div class="box-header">
+					<div class="box-tools pull-right">
+							<button type="button" class="btn btn-box-tool"
+								data-widget="collapse">
+								<i class="fa fa-minus"></i>
+							</button>
+							<button type="button" class="btn btn-box-tool"
+								data-widget="remove">
+								<i class="fa fa-times"></i>
+							</button>
+						</div>
+					</div>
+					<!-- /.box-header -->
+					<div class="box-body" >
+						<div id="example2_wrapper"
+							class="dataTables_wrapper form-inline dt-bootstrap">
+							<div class="row">
+								<div class="col-sm-6"></div>
+								<div class="col-sm-6"></div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12">
+									<table id="resultTable"
+										class="table table-bordered table-hover dataTable" role="grid">
+										<thead>
+											<tr>
+												<th>ID</th>
+												<th>Name</th>
+												<th>Category</th>
+												<th>Supplier ID</th>
+												<th>Price</th>
+												<th>Base Price</th>
+												<th>Discount</th>
+												<th>Quantity</th>
+												<th>Image</th>
+												<th>Brand</th>
+												<th>Created</th>
+												<th>Updated</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="product : ${products}">
+									<td th:text="${product.id}"></td>
+									<td th:text="${product.name}"></td>
+									<td th:text="${product.category}"></td>
+									<td th:text="${product.supplierID}"></td>
+									<td th:text="@{${product.price} + '$'}"></td>
+									<td th:text="@{${product.baseprice} + '$'}"></td>
+									<td th:text="${product.discount}"></td>
+									<td th:text="${product.quantity}"></td>
+									<td ><img th:src="@{'/images/' + ${product.imageFileName}}" alt="..." width="50"></td>
+									<td th:text="${product.brand}"></td>
+									<td>
+									  <span th:text="${#dates.format(product.createdAt, 'dd/MM/yyyy')}"></span>
+									  <br>
+									  <span th:text="${#dates.format(product.createdAt, 'HH:mm:ss')}"></span>
+									</td>
+									<td>
+									  <span th:text="${#dates.format(product.updatedAt, 'dd/MM/yyyy')}"></span>
+									  <br>
+									  <span th:text="${#dates.format(product.updatedAt, 'HH:mm:ss')}"></span>
+									</td>
+									<td style="white-space: nowrap"><a
+										class="btn btn-primary btn-sm"
+										th:href="@{/products/edit(id=${product.id})}">Edit</a> <a
+										class="btn btn-danger btn-sm"
+										th:href="@{/products/delete(id=${product.id})}"
+										onclick="return confirm('Are you sure?')">Delete</a></td>
+								</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /.box-body -->
+				</div>
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.box-body -->
+	</div>
+	<!-- /.box -->
+
+	<!-- /.content -->
+
+	<!-- /.content-wrapper -->
+<!-- ./wrapper -->
+
+	<!-- jQuery 3 -->
+	<div th:replace="fragment/script :: script"></div>
+
+</body>
+</html>

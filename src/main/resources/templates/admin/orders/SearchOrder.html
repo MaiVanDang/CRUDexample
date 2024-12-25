@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragment/head :: head"></head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<header th:replace="fragment/header :: header"
+		style="position: fixed; width: 100%;"></header>
+	<div class="wrapper">
+
+		<!-- =============================================== -->
+
+		<!-- Left side column. contains the sidebar -->
+		<div th:replace="fragment/sidebar :: sidebar"></div>
+		<!-- =============================================== -->
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1>
+					Blank page <small>it all starts here</small>
+				</h1>
+				<ol class="breadcrumb">
+					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="#">Examples</a></li>
+					<li class="active">Blank page</li>
+				</ol>
+			</section>
+
+			<!-- Main content -->
+			<section class="content">
+
+				<div class="box">
+					<div class="box-header with-border">
+						<h3 class="box-title">Orders</h3>
+						<div>
+							<a class="btn btn-success" href="/orders/create">Create Orders</a>
+							<!-- Thanh tìm kiếm -->
+							
+							<form class="mb-4" method="GET" action="/orders/search" style = "float: right">
+								<div class="input-group" style="
+								    display: flex; /* Căn ô input và nút Search cùng hàng */
+								    align-items: center;
+								    gap: 5px; /* Khoảng cách giữa input và nút Search */
+								">
+									<input type="text" name="keyword" class="form-control" placeholder="Search by Orderid, customer, product, status, payment status or payment method">
+									<button class="btn btn-primary" type="submit">Search</button>
+								</div>
+							</form>
+						
+						</div>
+						
+
+						
+					</div>
+					<div class="box-body" style = "font-size: 11px">
+						<table class="table">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>CustomerID</th>
+										<th>ProductID</th>
+										<th>Quantity</th>
+										<th>Price</th>
+										<th>Payment Method</th>
+										<th>Payment Status</th>
+										<th>Status</th>
+										<th>Note</th>
+										<th>Created Date</th>
+										<th>Updated Date</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="order : ${orders}">
+										<td th:text="${order.id}"></td>
+										<td th:text="${order.customerID}"></td>
+										<td th:text="${order.productID}"></td>
+										<td th:text="${order.quantity}"></td>
+										<td th:text="${order.price} "></td>
+										<td th:text="${order.paymentMethod}"></td>
+										<td th:text="${order.paymentStatus}"></td>
+										<td th:text="${order.orderStatus}"></td>
+										<td th:text="${order.note}"></td>
+										<td th:text="${#dates.format(order.createdAt, 'yyyy-MM-dd')}"></td>
+										<td th:text="${#dates.format(order.updatedAt, 'yyyy-MM-dd')}"></td>
+										<td style="white-space:nowrap">
+											<a class="btn btn-primary btn-sm"
+												th:href="@{/orders/edit(id=${order.id})}">Edit</a> 
+											<a class="btn btn-danger btn-sm"
+												th:href="@{/orders/delete(id=${order.id})}"
+												onclick="return confirm('Are you sure?')">Delete</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+					</div>
+				</div>
+				<!-- /.box -->
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.box-body -->
+		<div class="box-footer clearfix">
+			<ul class="pagination pagination-sm no-margin pull-right">
+				<li><a href="#">«</a></li>
+				<li><a href="#">1</a></li>
+				<li><a href="#">2</a></li>
+				<li><a href="#">3</a></li>
+				<li><a href="#">»</a></li>
+			</ul>
+		</div>
+	</div>
+	<!-- /.box -->
+	<!-- /.content -->
+	<!-- /.content -->
+	<!-- /.content-wrapper -->
+	<!-- ./wrapper -->
+
+	<!-- jQuery 3 -->
+	<div th:replace="fragment/script :: script"></div>
+</body>
+</html>
