@@ -11,6 +11,5 @@ Trang web quản lý bán hàng
 
 ## Installation
 
-```
 Cài đặt function SQL của pgadmin trong public/SQL
-```
+
