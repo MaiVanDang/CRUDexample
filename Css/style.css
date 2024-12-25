@@ -1,0 +1,29 @@
+p{
+    background-color: pink;
+    color: green;
+    font-family:sans-serif;
+    font-size:18px;
+ }
+
+ .le{
+    background-color: aqua;
+ }
+
+ .chan{
+    background-color: aliceblue;
+    border-style:solid;
+    border-width:5px;
+    border-color:black;
+
+ }
+
+ #para3{
+    background-color: lightgrey;
+    font-style:italic;
+    font-weight: 600;
+    text-decoration: underline;
+ }
+ body{
+    background: linear-gradient(skyblue,lightgreen);
+
+ }

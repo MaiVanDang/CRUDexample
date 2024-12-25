@@ -1,0 +1,14 @@
+/*body{
+    background: linear-gradient(to right,skyblue,lightgreen);
+    background-image: url("ThuyDuong.jpg");
+    background-repeat:no-repeat;Tránh lập lại
+    background-attachment:fixed;phủ toàn bộ trang wed
+    background-position:center;
+    background-size:cover;
+ }*/
+ button:hover{
+    background-color: red;
+ }
+ button:active{
+    background-color: green;
+ }
